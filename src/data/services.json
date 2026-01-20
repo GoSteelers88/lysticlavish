@@ -1,0 +1,202 @@
+{
+  "services": [
+    {
+      "id": "mini-facial",
+      "category": "Facials",
+      "name": "Mini Facial",
+      "description": "A quick refresh for your skin. Perfect for busy schedules or first-time facial experiences.",
+      "duration_minutes": 30,
+      "price_cents": 6500,
+      "is_active": true
+    },
+    {
+      "id": "basic-facial-women",
+      "category": "Facials",
+      "name": "Basic & Back Facials (Women)",
+      "description": "Complete facial treatment including back care. Deep cleansing, exfoliation, and hydration.",
+      "duration_minutes": 60,
+      "price_cents": 9500,
+      "is_active": true
+    },
+    {
+      "id": "basic-facial-men",
+      "category": "Facials",
+      "name": "Basic Back Facials (Men)",
+      "description": "Tailored facial treatment for men. Addressing specific skincare needs with professional care.",
+      "duration_minutes": 60,
+      "price_cents": 10500,
+      "is_active": true
+    },
+    {
+      "id": "acne-facial",
+      "category": "Facials",
+      "name": "Acne Facial (Grade 1 & 2)",
+      "description": "Targeted treatment for acne-prone skin. Helps clear breakouts and prevent future blemishes.",
+      "duration_minutes": 75,
+      "price_cents": 15500,
+      "is_active": true
+    },
+    {
+      "id": "lavish-glow",
+      "category": "Facials",
+      "name": "Full Lavish Hydrating Glow Facial (Women / Non-Bearded Men)",
+      "description": "Our signature treatment. Ultimate hydration and luminous glow for radiant, youthful skin.",
+      "duration_minutes": 90,
+      "price_cents": 19500,
+      "is_active": true
+    },
+    {
+      "id": "dapper-facial",
+      "category": "Facials",
+      "name": "Men's Custom Bearded \"Dapper than Ever\" Facial",
+      "description": "Specialized facial for bearded gentlemen. Skin and beard care combined for the perfect look.",
+      "duration_minutes": 75,
+      "price_cents": 15500,
+      "is_active": true
+    },
+    {
+      "id": "microdermabrasion",
+      "category": "Facials",
+      "name": "Microdermabrasion Facial",
+      "description": "Advanced exfoliation treatment for smoother, brighter skin. Reduces fine lines and improves texture.",
+      "duration_minutes": 60,
+      "price_cents": 15000,
+      "is_active": true
+    },
+    {
+      "id": "microneedling",
+      "category": "Facials",
+      "name": "Microneedling",
+      "description": "Collagen-boosting treatment for skin rejuvenation. Minimizes scars, wrinkles, and large pores.",
+      "duration_minutes": 60,
+      "price_cents": 17500,
+      "is_active": true
+    },
+    {
+      "id": "underarm-wax",
+      "category": "Waxing",
+      "name": "Underarm Waxing",
+      "description": "Quick and efficient underarm hair removal for smooth, confident arms.",
+      "duration_minutes": 30,
+      "price_cents": 2000,
+      "is_active": true
+    },
+    {
+      "id": "chin-wax",
+      "category": "Waxing",
+      "name": "Chin Waxing",
+      "description": "Precise hair removal for a smooth, defined chin area.",
+      "duration_minutes": 30,
+      "price_cents": 1500,
+      "is_active": true
+    },
+    {
+      "id": "brow-wax",
+      "category": "Waxing",
+      "name": "Brow Waxing",
+      "description": "Expert shaping for perfectly defined eyebrows.",
+      "duration_minutes": 20,
+      "price_cents": 1200,
+      "is_active": true
+    },
+    {
+      "id": "brow-lam-wax",
+      "category": "Waxing",
+      "name": "Brow Lamination & Waxing",
+      "description": "Lamination for fuller brows combined with expert waxing for perfect shape.",
+      "duration_minutes": 50,
+      "price_cents": 7700,
+      "is_active": true
+    },
+    {
+      "id": "full-arm-wax",
+      "category": "Waxing",
+      "name": "Full Arm Wax",
+      "description": "Complete arm hair removal from shoulder to wrist.",
+      "duration_minutes": 100,
+      "price_cents": 2500,
+      "is_active": true
+    },
+    {
+      "id": "leg-wax",
+      "category": "Waxing",
+      "name": "Leg Waxing",
+      "description": "Smooth, silky legs with long-lasting results.",
+      "duration_minutes": 50,
+      "price_cents": 7500,
+      "is_active": true
+    },
+    {
+      "id": "brow-wax-tint",
+      "category": "Waxing",
+      "name": "Brow Wax w/Tint",
+      "description": "Shape and enhance your brows with expert waxing and professional tinting.",
+      "duration_minutes": 25,
+      "price_cents": 3700,
+      "is_active": true
+    },
+    {
+      "id": "brow-full-combo",
+      "category": "Waxing",
+      "name": "Brow Lamination / Tint / Wax",
+      "description": "The complete brow transformation. Lamination, tinting, and precise waxing.",
+      "duration_minutes": 60,
+      "price_cents": 10200,
+      "is_active": true
+    },
+    {
+      "id": "brow-lam",
+      "category": "Eye Enhancement",
+      "name": "Brow Lamination",
+      "description": "Transform unruly brows into sleek, defined arches that last for weeks.",
+      "duration_minutes": 30,
+      "price_cents": 6500,
+      "is_active": true
+    },
+    {
+      "id": "brow-tint",
+      "category": "Eye Enhancement",
+      "name": "Brow Tint ONLY",
+      "description": "Enhance your brows with professional tinting for added definition and depth.",
+      "duration_minutes": 20,
+      "price_cents": 2500,
+      "is_active": true
+    },
+    {
+      "id": "brow-lam-tint",
+      "category": "Eye Enhancement",
+      "name": "Brow Lamination & Tint",
+      "description": "Combine lamination with tinting for the ultimate brow enhancement.",
+      "duration_minutes": 40,
+      "price_cents": 9000,
+      "is_active": true
+    },
+    {
+      "id": "natural-glam",
+      "category": "Makeup",
+      "name": "Natural Glam",
+      "description": "Enhance your natural beauty with a subtle, polished makeup look.",
+      "duration_minutes": 60,
+      "price_cents": 10000,
+      "is_active": true
+    },
+    {
+      "id": "soft-glam",
+      "category": "Makeup",
+      "name": "Soft Glam",
+      "description": "A beautiful balance of natural and glamorous for any occasion.",
+      "duration_minutes": 60,
+      "price_cents": 11500,
+      "is_active": true
+    },
+    {
+      "id": "full-glam",
+      "category": "Makeup",
+      "name": "Full Glam",
+      "description": "Complete transformation with full glamour makeup for special events.",
+      "duration_minutes": 60,
+      "price_cents": 13000,
+      "is_active": true
+    }
+  ]
+}
