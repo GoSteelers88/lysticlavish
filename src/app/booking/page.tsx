@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -30,7 +30,7 @@ const initialCustomerInfo: CustomerInfo = {
   notes: '',
 };
 
-export default function BookingPage() {
+function BookingPageContent() {
   const searchParams = useSearchParams();
   const preSelectedService = searchParams.get('service');
 
@@ -282,5 +282,22 @@ export default function BookingPage() {
         </div>
       </footer>
     </div>
+  );
+}
+
+export default function BookingPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-champagne-50 flex items-center justify-center">
+          <div className="text-center">
+            <Loader2 className="w-10 h-10 text-gold-500 animate-spin mx-auto" />
+            <p className="mt-4 text-espresso-600">Loading booking...</p>
+          </div>
+        </div>
+      }
+    >
+      <BookingPageContent />
+    </Suspense>
   );
 }

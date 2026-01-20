@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import servicesData from '@/data/services.json';
 
+export const dynamic = 'force-dynamic';
+
 // Types
 interface Service {
   id: string;

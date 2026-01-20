@@ -30,7 +30,7 @@ interface BookingConfirmationProps {
     priceCents: number;
   };
   payment: {
-    id: string;
+    paymentId: string;
     receiptUrl?: string;
   };
 }
