@@ -12,6 +12,7 @@ interface Service {
   durationMinutes: number;
   priceCents: number;
   isActive: boolean;
+  image?: string;
 }
 
 // Transform raw service data
@@ -24,6 +25,7 @@ function transformService(raw: typeof servicesData.services[0]): Service {
     durationMinutes: raw.duration_minutes,
     priceCents: raw.price_cents,
     isActive: raw.is_active,
+    image: raw.image,
   };
 }
 

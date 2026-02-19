@@ -20,6 +20,7 @@ const serviceCategories = [
         description: 'A quick refresh for your skin. Perfect for busy schedules or first-time facial experiences.',
         durationMinutes: 30,
         priceCents: 6500,
+        image: '/services/mini_facial.png',
       },
       {
         id: 'basic-facial-women',
@@ -28,6 +29,7 @@ const serviceCategories = [
         durationMinutes: 60,
         priceCents: 9500,
         featured: true,
+        image: '/services/back_facial.png',
       },
       {
         id: 'basic-facial-men',
@@ -35,6 +37,7 @@ const serviceCategories = [
         description: 'Tailored facial treatment for men. Addressing specific skincare needs with professional care.',
         durationMinutes: 60,
         priceCents: 10500,
+        image: '/services/back_facial.png',
       },
       {
         id: 'acne-facial',
@@ -42,6 +45,7 @@ const serviceCategories = [
         description: 'Targeted treatment for acne-prone skin. Helps clear breakouts and prevent future blemishes.',
         durationMinutes: 75,
         priceCents: 15500,
+        image: '/services/acne_facial.png',
       },
       {
         id: 'lavish-glow',
@@ -50,6 +54,7 @@ const serviceCategories = [
         durationMinutes: 90,
         priceCents: 19500,
         featured: true,
+        image: '/services/lavish_glow_facial.png',
       },
       {
         id: 'dapper-facial',
@@ -57,6 +62,7 @@ const serviceCategories = [
         description: 'Specialized facial for bearded gentlemen. Skin and beard care combined for the perfect look.',
         durationMinutes: 75,
         priceCents: 15500,
+        image: '/services/mens_beard_facial.png',
       },
       {
         id: 'microdermabrasion',
@@ -64,6 +70,7 @@ const serviceCategories = [
         description: 'Advanced exfoliation treatment for smoother, brighter skin. Reduces fine lines and improves texture.',
         durationMinutes: 60,
         priceCents: 15000,
+        image: '/services/lavish_glow_facial.png',
       },
       {
         id: 'microneedling',
@@ -71,6 +78,7 @@ const serviceCategories = [
         description: 'Collagen-boosting treatment for skin rejuvenation. Minimizes scars, wrinkles, and large pores.',
         durationMinutes: 60,
         priceCents: 17500,
+        image: '/services/microneedling.png',
       },
     ],
   },
@@ -85,6 +93,7 @@ const serviceCategories = [
         description: 'Quick and efficient underarm hair removal for smooth, confident arms.',
         durationMinutes: 30,
         priceCents: 2000,
+        image: '/services/waxing.png',
       },
       {
         id: 'chin-wax',
@@ -92,6 +101,7 @@ const serviceCategories = [
         description: 'Precise hair removal for a smooth, defined chin area.',
         durationMinutes: 30,
         priceCents: 1500,
+        image: '/services/waxing.png',
       },
       {
         id: 'brow-wax',
@@ -99,6 +109,7 @@ const serviceCategories = [
         description: 'Expert shaping for perfectly defined eyebrows.',
         durationMinutes: 20,
         priceCents: 1200,
+        image: '/services/waxing.png',
       },
       {
         id: 'brow-lam-wax',
@@ -107,6 +118,7 @@ const serviceCategories = [
         durationMinutes: 50,
         priceCents: 7700,
         featured: true,
+        image: '/services/lash_and_brow_tint.png',
       },
       {
         id: 'full-arm-wax',
@@ -114,6 +126,7 @@ const serviceCategories = [
         description: 'Complete arm hair removal from shoulder to wrist.',
         durationMinutes: 100,
         priceCents: 2500,
+        image: '/services/waxing.png',
       },
       {
         id: 'leg-wax',
@@ -121,6 +134,7 @@ const serviceCategories = [
         description: 'Smooth, silky legs with long-lasting results.',
         durationMinutes: 50,
         priceCents: 7500,
+        image: '/services/waxing.png',
       },
       {
         id: 'brow-wax-tint',
@@ -128,6 +142,7 @@ const serviceCategories = [
         description: 'Shape and enhance your brows with expert waxing and professional tinting.',
         durationMinutes: 25,
         priceCents: 3700,
+        image: '/services/lash_and_brow_tint.png',
       },
       {
         id: 'brow-full-combo',
@@ -136,6 +151,7 @@ const serviceCategories = [
         durationMinutes: 60,
         priceCents: 10200,
         featured: true,
+        image: '/services/lash_and_brow_tint.png',
       },
     ],
   },
@@ -151,6 +167,7 @@ const serviceCategories = [
         durationMinutes: 30,
         priceCents: 6500,
         featured: true,
+        image: '/services/lash_and_brow_tint.png',
       },
       {
         id: 'brow-tint',
@@ -158,6 +175,7 @@ const serviceCategories = [
         description: 'Enhance your brows with professional tinting for added definition and depth.',
         durationMinutes: 20,
         priceCents: 2500,
+        image: '/services/lash_and_brow_tint.png',
       },
       {
         id: 'brow-lam-tint',
@@ -165,6 +183,7 @@ const serviceCategories = [
         description: 'Combine lamination with tinting for the ultimate brow enhancement.',
         durationMinutes: 40,
         priceCents: 9000,
+        image: '/services/lash_and_brow_tint.png',
       },
     ],
   },
@@ -172,6 +191,7 @@ const serviceCategories = [
     id: 'makeup',
     name: 'Makeup',
     description: 'Flawless looks for every occasion',
+    comingSoon: true,
     services: [
       {
         id: 'natural-glam',
@@ -179,6 +199,7 @@ const serviceCategories = [
         description: 'Enhance your natural beauty with a subtle, polished makeup look.',
         durationMinutes: 60,
         priceCents: 10000,
+        image: '/services/makeup_application.png',
       },
       {
         id: 'soft-glam',
@@ -187,6 +208,7 @@ const serviceCategories = [
         durationMinutes: 60,
         priceCents: 11500,
         featured: true,
+        image: '/services/makeup_application.png',
       },
       {
         id: 'full-glam',
@@ -194,6 +216,7 @@ const serviceCategories = [
         description: 'Complete transformation with full glamour makeup for special events.',
         durationMinutes: 60,
         priceCents: 13000,
+        image: '/services/makeup_application.png',
       },
     ],
   },
@@ -235,13 +258,18 @@ export function ServicesSection() {
               onClick={() => setActiveCategory(category.id)}
               className={cn(
                 'px-5 py-2.5 rounded-full text-sm font-medium',
-                'transition-all duration-300',
+                'transition-all duration-300 inline-flex items-center gap-2',
                 activeCategory === category.id
                   ? 'bg-espresso-800 text-champagne-100 shadow-soft'
                   : 'bg-nude-100 text-espresso-700 hover:bg-nude-200'
               )}
             >
               {category.name}
+              {category.comingSoon && (
+                <span className="text-2xs px-1.5 py-0.5 rounded-full bg-gold-200 text-gold-800 font-medium leading-none">
+                  Soon
+                </span>
+              )}
             </button>
           ))}
         </div>
@@ -254,25 +282,38 @@ export function ServicesSection() {
         )}
 
         {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {currentCategory?.services.map((service, index) => (
-            <div
-              key={service.id}
-              className="animate-fade-in-up"
-              style={{ animationDelay: `${index * 50}ms` }}
-            >
-              <ServiceCard
-                id={service.id}
-                name={service.name}
-                description={service.description}
-                durationMinutes={service.durationMinutes}
-                priceCents={service.priceCents}
-                featured={service.featured}
-                onSelect={handleServiceSelect}
-              />
+        {currentCategory?.comingSoon ? (
+          <div className="flex flex-col items-center justify-center py-16 animate-fade-in">
+            <div className="w-16 h-16 rounded-full bg-gold-100 flex items-center justify-center mb-5">
+              <Sparkles className="w-8 h-8 text-gold-500" />
             </div>
-          ))}
-        </div>
+            <h3 className="font-serif text-2xl text-espresso-900 mb-2">Coming Soon</h3>
+            <p className="text-espresso-500 text-center max-w-sm">
+              Our makeup services are launching soon. Stay tuned for Natural Glam, Soft Glam, and Full Glam appointments.
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {currentCategory?.services.map((service, index) => (
+              <div
+                key={service.id}
+                className="animate-fade-in-up"
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
+                <ServiceCard
+                  id={service.id}
+                  name={service.name}
+                  description={service.description}
+                  durationMinutes={service.durationMinutes}
+                  priceCents={service.priceCents}
+                  featured={service.featured}
+                  image={service.image}
+                  onSelect={handleServiceSelect}
+                />
+              </div>
+            ))}
+          </div>
+        )}
 
         {/* View All CTA */}
         <div className="text-center mt-12">
