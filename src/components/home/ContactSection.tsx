@@ -28,20 +28,20 @@ const contactInfo = [
   {
     icon: Phone,
     label: 'Phone',
-    value: '(123) 456-7890',
-    href: 'tel:+1234567890',
+    value: '855-553-2242',
+    href: 'tel:+18555532242',
   },
   {
     icon: Mail,
     label: 'Email',
-    value: 'hello@lysticlavish.com',
-    href: 'mailto:hello@lysticlavish.com',
+    value: 'llbrandowner@lystic-lavish.com',
+    href: 'mailto:llbrandowner@lystic-lavish.com',
   },
   {
     icon: MapPin,
     label: 'Address',
-    value: '123 Beauty Lane, City, ST 12345',
-    href: 'https://maps.google.com',
+    value: '4111-E Rose Lake Dr PMB 8395, Charlotte, NC 28217',
+    href: 'https://maps.google.com/maps/search/4111-e+Rose+Lake+Dr+PMB+8395+Charlotte+NC+28217',
   },
 ];
 

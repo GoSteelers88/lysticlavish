@@ -275,8 +275,8 @@ function BookingPageContent() {
         <div className="container-luxury text-center text-sm text-espresso-500">
           <p>
             Need help? Call{' '}
-            <a href="tel:+1234567890" className="text-gold-600 hover:underline">
-              (123) 456-7890
+            <a href="tel:+18555532242" className="text-gold-600 hover:underline">
+              855-553-2242
             </a>
           </p>
         </div>

@@ -14,6 +14,8 @@ build
 # Misc
 .DS_Store
 *.pem
+google-sa-key.json
+allow-sa-keys.yaml
 
 # Debug
 npm-debug.log*

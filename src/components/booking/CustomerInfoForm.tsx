@@ -124,7 +124,7 @@ export function CustomerInfoForm({
           <Input
             name="phone"
             type="tel"
-            placeholder="(123) 456-7890"
+            placeholder="(555) 000-0000"
             value={formData.phone}
             onChange={handleChange}
             error={errors.phone}

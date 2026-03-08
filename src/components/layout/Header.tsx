@@ -57,11 +57,11 @@ export function Header() {
           <div className="flex items-center justify-between text-sm">
             <div className="flex items-center space-x-6">
               <a
-                href="tel:+1234567890"
+                href="tel:+18555532242"
                 className="flex items-center hover:text-gold-400 transition-colors"
               >
                 <Phone className="w-4 h-4 mr-2" />
-                (123) 456-7890
+                855-553-2242
               </a>
               <span className="flex items-center">
                 <Clock className="w-4 h-4 mr-2" />
@@ -69,13 +69,13 @@ export function Header() {
               </span>
             </div>
             <a
-              href="https://maps.google.com"
+              href="https://maps.google.com/maps/search/4111-e+Rose+Lake+Dr+PMB+8395+Charlotte+NC+28217"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center hover:text-gold-400 transition-colors"
             >
               <MapPin className="w-4 h-4 mr-2" />
-              123 Beauty Lane, City, ST 12345
+              4111-E Rose Lake Dr PMB 8395, Charlotte, NC 28217
             </a>
           </div>
         </div>
@@ -180,7 +180,7 @@ export function Header() {
               </Link>
 
               <div className="flex items-center justify-center space-x-6 text-sm text-espresso-600">
-                <a href="tel:+1234567890" className="flex items-center">
+                <a href="tel:+18555532242" className="flex items-center">
                   <Phone className="w-4 h-4 mr-2" />
                   Call Us
                 </a>

@@ -114,7 +114,7 @@ export function BookingConfirmation({
                 Lystic Lavish Beauty Bar
               </p>
               <p className="text-sm text-espresso-600">
-                123 Beauty Lane, City, ST 12345
+                4111-E Rose Lake Dr PMB 8395, Charlotte, NC 28217
               </p>
             </div>
           </div>
@@ -176,15 +176,15 @@ export function BookingConfirmation({
       {/* Contact Info */}
       <p className="text-sm text-espresso-500 animate-fade-in animation-delay-500">
         Questions? Call us at{' '}
-        <a href="tel:+1234567890" className="text-gold-600 hover:text-gold-700">
-          (123) 456-7890
+        <a href="tel:+18555532242" className="text-gold-600 hover:text-gold-700">
+          855-553-2242
         </a>{' '}
         or email{' '}
         <a
-          href="mailto:hello@lysticlavish.com"
+          href="mailto:llbrandowner@lystic-lavish.com"
           className="text-gold-600 hover:text-gold-700"
         >
-          hello@lysticlavish.com
+          llbrandowner@lystic-lavish.com
         </a>
       </p>
     </div>

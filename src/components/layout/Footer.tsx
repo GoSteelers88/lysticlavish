@@ -124,33 +124,33 @@ export function Footer() {
             <ul className="space-y-4">
               <li>
                 <a
-                  href="tel:+1234567890"
+                  href="tel:+18555532242"
                   className="flex items-start text-champagne-300 hover:text-gold-400 transition-colors text-sm"
                 >
                   <Phone className="w-4 h-4 mr-3 mt-0.5 flex-shrink-0" />
-                  (123) 456-7890
+                  855-553-2242
                 </a>
               </li>
               <li>
                 <a
-                  href="mailto:hello@lysticlavish.com"
+                  href="mailto:llbrandowner@lystic-lavish.com"
                   className="flex items-start text-champagne-300 hover:text-gold-400 transition-colors text-sm"
                 >
                   <Mail className="w-4 h-4 mr-3 mt-0.5 flex-shrink-0" />
-                  hello@lysticlavish.com
+                  llbrandowner@lystic-lavish.com
                 </a>
               </li>
               <li>
                 <a
-                  href="https://maps.google.com"
+                  href="https://maps.google.com/maps/search/4111-e+Rose+Lake+Dr+PMB+8395+Charlotte+NC+28217"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-start text-champagne-300 hover:text-gold-400 transition-colors text-sm"
                 >
                   <MapPin className="w-4 h-4 mr-3 mt-0.5 flex-shrink-0" />
-                  123 Beauty Lane
+                  4111-E Rose Lake Dr PMB 8395
                   <br />
-                  City, State 12345
+                  Charlotte, NC 28217
                 </a>
               </li>
               <li className="flex items-start text-champagne-300 text-sm">
