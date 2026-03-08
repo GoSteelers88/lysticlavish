@@ -58,14 +58,7 @@ export async function POST(request: NextRequest) {
 
     // Handle different event types
     switch (eventType) {
-      case 'payment.completed':
-        await handlePaymentCompleted(eventData?.payment);
-        break;
-
-      case 'payment.failed':
-        await handlePaymentFailed(eventData?.payment);
-        break;
-
+      case 'payment.created':
       case 'payment.updated':
         await handlePaymentUpdated(eventData?.payment);
         break;
@@ -94,84 +87,19 @@ export async function POST(request: NextRequest) {
 }
 
 /**
- * Handle payment.completed event.
- */
-async function handlePaymentCompleted(payment: {
-  id?: string;
-  status?: string;
-  reference_id?: string;
-}) {
-  if (!payment?.id) {
-    console.warn('[Webhook] Payment completed event missing payment ID');
-    return;
-  }
-
-  console.log(`[Webhook] Payment completed: ${payment.id}`);
-
-  // Update payment record
-  const existingPayment = await getPaymentBySquareId(payment.id);
-
-  if (existingPayment) {
-    await updatePaymentBySquareId(payment.id, {
-      status: 'completed',
-    });
-
-    // Update booking if needed
-    if (existingPayment.bookingId) {
-      const booking = await getBookingById(existingPayment.bookingId);
-      if (booking && booking.status === 'pending') {
-        await updateBooking(existingPayment.bookingId, {
-          status: 'confirmed',
-        });
-        console.log(`[Webhook] Booking confirmed: ${existingPayment.bookingId}`);
-      }
-    }
-  } else {
-    console.log(`[Webhook] No payment record found for: ${payment.id}`);
-  }
-}
-
-/**
- * Handle payment.failed event.
- */
-async function handlePaymentFailed(payment: {
-  id?: string;
-  status?: string;
-  reference_id?: string;
-}) {
-  if (!payment?.id) {
-    console.warn('[Webhook] Payment failed event missing payment ID');
-    return;
-  }
-
-  console.log(`[Webhook] Payment failed: ${payment.id}`);
-
-  // Update payment record
-  const existingPayment = await getPaymentBySquareId(payment.id);
-
-  if (existingPayment) {
-    await updatePaymentBySquareId(payment.id, {
-      status: 'failed',
-    });
-
-    // Keep booking as pending so customer can retry
-    console.log(`[Webhook] Payment marked as failed: ${payment.id}`);
-  }
-}
-
-/**
- * Handle payment.updated event.
+ * Handle payment.created and payment.updated events.
  */
 async function handlePaymentUpdated(payment: {
   id?: string;
   status?: string;
+  reference_id?: string;
 }) {
   if (!payment?.id) {
-    console.warn('[Webhook] Payment updated event missing payment ID');
+    console.warn('[Webhook] Payment event missing payment ID');
     return;
   }
 
-  console.log(`[Webhook] Payment updated: ${payment.id}, status: ${payment.status}`);
+  console.log(`[Webhook] Payment event: ${payment.id}, status: ${payment.status}`);
 
   // Map Square status to our status
   const statusMap: Record<string, 'pending' | 'completed' | 'failed'> = {
@@ -183,9 +111,20 @@ async function handlePaymentUpdated(payment: {
   };
 
   const newStatus = payment.status ? statusMap[payment.status] : undefined;
+  if (!newStatus) return;
 
-  if (newStatus) {
-    await updatePaymentBySquareId(payment.id, { status: newStatus });
+  const existingPayment = await getPaymentBySquareId(payment.id);
+  if (!existingPayment) return;
+
+  await updatePaymentBySquareId(payment.id, { status: newStatus });
+
+  // If completed, confirm the booking
+  if (newStatus === 'completed' && existingPayment.bookingId) {
+    const booking = await getBookingById(existingPayment.bookingId);
+    if (booking && booking.status === 'pending') {
+      await updateBooking(existingPayment.bookingId, { status: 'confirmed' });
+      console.log(`[Webhook] Booking confirmed: ${existingPayment.bookingId}`);
+    }
   }
 }
 
