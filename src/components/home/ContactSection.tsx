@@ -15,11 +15,11 @@ import {
 } from 'lucide-react';
 
 const businessHours = [
-  { day: 'Monday', hours: 'Closed' },
-  { day: 'Tuesday', hours: '9:00 AM - 6:00 PM' },
-  { day: 'Wednesday', hours: '9:00 AM - 6:00 PM' },
-  { day: 'Thursday', hours: '9:00 AM - 7:00 PM' },
-  { day: 'Friday', hours: '9:00 AM - 7:00 PM' },
+  { day: 'Monday', hours: 'Call for Appointment' },
+  { day: 'Tuesday', hours: 'Call for Appointment' },
+  { day: 'Wednesday', hours: 'Call for Appointment' },
+  { day: 'Thursday', hours: 'Call for Appointment' },
+  { day: 'Friday', hours: 'Call for Appointment' },
   { day: 'Saturday', hours: '10:00 AM - 5:00 PM' },
   { day: 'Sunday', hours: 'Closed' },
 ];
@@ -168,6 +168,8 @@ export function ContactSection() {
                       className={cn(
                         item.hours === 'Closed'
                           ? 'text-espresso-400'
+                          : item.hours === 'Call for Appointment'
+                          ? 'text-gold-600 text-sm'
                           : 'text-espresso-600'
                       )}
                     >

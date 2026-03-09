@@ -65,7 +65,7 @@ export function Header() {
               </a>
               <span className="flex items-center">
                 <Clock className="w-4 h-4 mr-2" />
-                Tue-Sat: 9AM - 6PM
+                Sat: 10AM - 5PM &nbsp;|&nbsp; Mon–Fri: Call for Appt
               </span>
             </div>
             <a
