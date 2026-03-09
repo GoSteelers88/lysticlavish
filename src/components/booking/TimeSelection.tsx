@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { format, addDays, isSameDay, parseISO, startOfDay } from 'date-fns';
+import { format, addDays, isSameDay, parseISO, startOfDay, nextSaturday, isSaturday } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -29,21 +29,28 @@ export function TimeSelection({
   onNext,
   onBack,
 }: TimeSelectionProps) {
+  const getFirstSaturday = () => {
+    const today = startOfDay(new Date());
+    return isSaturday(today) ? today : nextSaturday(today);
+  };
+
   const [selectedDate, setSelectedDate] = useState<Date>(
-    selectedDateTime ? parseISO(selectedDateTime) : new Date()
+    selectedDateTime ? parseISO(selectedDateTime) : getFirstSaturday()
   );
   const [slots, setSlots] = useState<TimeSlot[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [visibleDates, setVisibleDates] = useState<Date[]>([]);
 
-  // Generate visible dates (14 days from today)
+  // Generate visible Saturdays (next 8 weeks)
   useEffect(() => {
     const dates: Date[] = [];
     const today = startOfDay(new Date());
+    let sat = isSaturday(today) ? today : nextSaturday(today);
 
-    for (let i = 0; i < 14; i++) {
-      dates.push(addDays(today, i));
+    for (let i = 0; i < 8; i++) {
+      dates.push(sat);
+      sat = addDays(sat, 7);
     }
 
     setVisibleDates(dates);
@@ -105,10 +112,14 @@ export function TimeSelection({
     <div className="space-y-6">
       {/* Date Selection */}
       <div>
-        <h3 className="font-serif text-lg text-espresso-900 mb-4 flex items-center">
+        <h3 className="font-serif text-lg text-espresso-900 mb-2 flex items-center">
           <Calendar className="w-5 h-5 mr-2 text-gold-600" />
           Select a Date
         </h3>
+        <p className="text-sm text-espresso-500 mb-4">
+          Online booking is available <span className="font-medium text-espresso-700">Saturdays only</span>. For other days, call{' '}
+          <a href="tel:+18555532242" className="text-gold-600 hover:text-gold-700">855-553-2242</a>.
+        </p>
 
         {/* Date Carousel */}
         <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
@@ -195,7 +206,8 @@ export function TimeSelection({
         ) : availableSlots.length === 0 ? (
           <Card variant="default" padding="md" className="text-center">
             <p className="text-espresso-600">
-              No available times on this date. Please select another day.
+              No available times on this Saturday. Please select another date or call{' '}
+              <a href="tel:+18555532242" className="text-gold-600 hover:text-gold-700 font-medium">855-553-2242</a>.
             </p>
           </Card>
         ) : (
