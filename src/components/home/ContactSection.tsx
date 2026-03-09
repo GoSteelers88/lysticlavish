@@ -39,9 +39,9 @@ const contactInfo = [
   },
   {
     icon: MapPin,
-    label: 'Address',
-    value: '4111-E Rose Lake Dr PMB 8395, Charlotte, NC 28217',
-    href: 'https://maps.google.com/maps/search/4111-e+Rose+Lake+Dr+PMB+8395+Charlotte+NC+28217',
+    label: 'Location',
+    value: 'Proudly serving Charlotte, NC & surrounding areas',
+    href: 'https://maps.google.com/maps/search/Charlotte+NC',
   },
 ];
 
@@ -183,24 +183,14 @@ export function ContactSection() {
 
           {/* Map & CTA */}
           <div className="space-y-6">
-            {/* Map Placeholder */}
-            <div className="relative aspect-[4/3] lg:aspect-square rounded-3xl overflow-hidden bg-nude-100">
-              {/* Replace with actual Google Maps embed */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <MapPin className="w-12 h-12 text-gold-400 mx-auto mb-3" />
-                  <p className="text-espresso-600">
-                    Interactive map would go here
-                  </p>
-                  <a
-                    href="https://maps.google.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gold-600 hover:text-gold-700 text-sm underline mt-2 inline-block"
-                  >
-                    Open in Google Maps
-                  </a>
-                </div>
+            {/* Service Area Card */}
+            <div className="relative aspect-[4/3] lg:aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-champagne-100 to-nude-100 flex items-center justify-center">
+              <div className="text-center px-8">
+                <MapPin className="w-14 h-14 text-gold-400 mx-auto mb-4" />
+                <h3 className="font-serif text-2xl text-espresso-900 mb-2">Charlotte, NC</h3>
+                <p className="text-espresso-600 leading-relaxed">
+                  We're a private studio proudly serving Charlotte and the surrounding areas. Appointment details are shared upon booking confirmation.
+                </p>
               </div>
             </div>
 

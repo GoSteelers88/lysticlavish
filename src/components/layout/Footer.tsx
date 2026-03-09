@@ -140,25 +140,16 @@ export function Footer() {
                   llbrandowner@lystic-lavish.com
                 </a>
               </li>
-              <li>
-                <a
-                  href="https://maps.google.com/maps/search/4111-e+Rose+Lake+Dr+PMB+8395+Charlotte+NC+28217"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-start text-champagne-300 hover:text-gold-400 transition-colors text-sm"
-                >
-                  <MapPin className="w-4 h-4 mr-3 mt-0.5 flex-shrink-0" />
-                  4111-E Rose Lake Dr PMB 8395
-                  <br />
-                  Charlotte, NC 28217
-                </a>
+              <li className="flex items-start text-champagne-300 text-sm">
+                <MapPin className="w-4 h-4 mr-3 mt-0.5 flex-shrink-0" />
+                Proudly serving Charlotte, NC &amp; surrounding areas
               </li>
               <li className="flex items-start text-champagne-300 text-sm">
                 <Clock className="w-4 h-4 mr-3 mt-0.5 flex-shrink-0" />
                 <div>
-                  <p>Tue - Fri: 9AM - 6PM</p>
                   <p>Saturday: 10AM - 5PM</p>
-                  <p>Sun & Mon: Closed</p>
+                  <p>Mon – Fri: Call for Appointment</p>
+                  <p>Sunday: Closed</p>
                 </div>
               </li>
             </ul>

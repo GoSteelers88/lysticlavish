@@ -68,15 +68,10 @@ export function Header() {
                 Sat: 10AM - 5PM &nbsp;|&nbsp; Mon–Fri: Call for Appt
               </span>
             </div>
-            <a
-              href="https://maps.google.com/maps/search/4111-e+Rose+Lake+Dr+PMB+8395+Charlotte+NC+28217"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center hover:text-gold-400 transition-colors"
-            >
+            <span className="flex items-center">
               <MapPin className="w-4 h-4 mr-2" />
-              4111-E Rose Lake Dr PMB 8395, Charlotte, NC 28217
-            </a>
+              Charlotte, NC &amp; Surrounding Areas
+            </span>
           </div>
         </div>
       </div>
