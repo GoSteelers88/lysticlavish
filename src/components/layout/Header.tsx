@@ -70,7 +70,7 @@ export function Header() {
             </div>
             <span className="flex items-center">
               <MapPin className="w-4 h-4 mr-2" />
-              Charlotte, NC &amp; Surrounding Areas
+              Charlotte, Kannapolis &amp; Surrounding Areas
             </span>
           </div>
         </div>

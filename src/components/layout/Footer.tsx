@@ -142,7 +142,7 @@ export function Footer() {
               </li>
               <li className="flex items-start text-champagne-300 text-sm">
                 <MapPin className="w-4 h-4 mr-3 mt-0.5 flex-shrink-0" />
-                Proudly serving Charlotte, NC &amp; surrounding areas
+                Proudly serving Charlotte, Kannapolis &amp; surrounding areas
               </li>
               <li className="flex items-start text-champagne-300 text-sm">
                 <Clock className="w-4 h-4 mr-3 mt-0.5 flex-shrink-0" />
