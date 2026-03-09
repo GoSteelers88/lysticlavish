@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import { cn, formatPrice, formatDuration } from '@/lib/utils';
 import { Card } from '@/components/ui/Card';
@@ -29,6 +30,8 @@ export function ServiceCard({
   featured = false,
   image,
 }: ServiceCardProps) {
+  const [expanded, setExpanded] = useState(false);
+
   return (
     <Card
       variant={featured ? 'luxury' : 'hover'}
@@ -74,9 +77,16 @@ export function ServiceCard({
           <h3 className="font-serif text-lg text-espresso-900 mb-2 group-hover:text-gold-700 transition-colors">
             {name}
           </h3>
-          <p className="text-sm text-espresso-600 line-clamp-3 mb-4">
+          <p className={cn('text-sm text-espresso-600 mb-1', !expanded && 'line-clamp-3')}>
             {description}
           </p>
+          <button
+            type="button"
+            onClick={() => setExpanded(!expanded)}
+            className="text-xs text-gold-600 hover:text-gold-800 font-medium mb-3 transition-colors"
+          >
+            {expanded ? 'Show less' : 'Read more'}
+          </button>
         </div>
 
         {/* Meta & Action */}

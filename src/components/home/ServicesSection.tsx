@@ -17,7 +17,7 @@ const serviceCategories = [
       {
         id: 'mini-facial',
         name: 'Mini Facial',
-        description: 'A quick refresh for your skin. Perfect for busy schedules or first-time facial experiences.',
+        description: 'On the go?! The "Lunch Break" facial — includes Pre-Cleanse, skin analysis, Cleanse & Tone, Exfoliation, Mask, and SPF protection. *Does not include extractions or massage.*',
         durationMinutes: 30,
         priceCents: 6500,
         image: '/services/mini_facial.png',
@@ -25,7 +25,7 @@ const serviceCategories = [
       {
         id: 'basic-facial-women',
         name: 'Basic & Back Facials (Women)',
-        description: 'Complete facial treatment including back care. Deep cleansing, exfoliation, and hydration.',
+        description: 'Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Exfoliation to remove dead skin cells & pollution build-up with extractions (if needed), Massage for serum absorption, relaxation & microcirculation, Mask with specialized ingredients, and serums & moisturizer with SPF.',
         durationMinutes: 60,
         priceCents: 9500,
         featured: true,
@@ -34,7 +34,7 @@ const serviceCategories = [
       {
         id: 'basic-facial-men',
         name: 'Basic Back Facials (Men)',
-        description: 'Tailored facial treatment for men. Addressing specific skincare needs with professional care.',
+        description: 'Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Exfoliation to remove dead skin cells & pollution build-up with extractions (if needed), Massage for serum absorption, relaxation & microcirculation, Mask with specialized ingredients, and serums & moisturizer with SPF.',
         durationMinutes: 60,
         priceCents: 10500,
         image: '/services/back_facial.png',
@@ -42,7 +42,7 @@ const serviceCategories = [
       {
         id: 'acne-facial',
         name: 'Acne Facial (Grade 1 & 2)',
-        description: 'Targeted treatment for acne-prone skin. Helps clear breakouts and prevent future blemishes.',
+        description: 'Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Enzyme Exfoliation, antibacterial treatment with comedone extraction, High Frequency device to heal pustules & papules, kill bacteria & reduce inflammation, LED Light Therapy to treat acne, fade scars & hyperpigmentation, acne-specific Mask to draw out dirt, oil & sebum, and serums & moisturizer with SPF.',
         durationMinutes: 75,
         priceCents: 15500,
         image: '/services/acne_facial.png',
@@ -50,7 +50,7 @@ const serviceCategories = [
       {
         id: 'lavish-glow',
         name: 'Full Lavish Hydrating Glow Facial',
-        description: 'Our signature treatment for women and non-bearded men. Ultimate hydration and luminous glow.',
+        description: 'Great for anti-aging, skin-brightening & hyperpigmentation! Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Dermaplaning to remove dead skin & peach fuzz for brighter smoother skin, Microdermabrasion to improve tone & texture, Mask with specialized ingredients, and C-Power serum, hydrating serum & moisturizer with SPF.',
         durationMinutes: 90,
         priceCents: 19500,
         featured: true,
@@ -59,7 +59,7 @@ const serviceCategories = [
       {
         id: 'dapper-facial',
         name: 'Men\'s Custom Bearded "Dapper than Ever" Facial',
-        description: 'Specialized facial for bearded gentlemen. Skin and beard care combined for the perfect look.',
+        description: 'Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Dermaplaning to remove dead skin & vellus hair for brighter smoother skin, Microdermabrasion to improve tone & texture, Mask with specialized ingredients, and serums & moisturizer with SPF.',
         durationMinutes: 75,
         priceCents: 15500,
         image: '/services/mens_beard_facial.png',
@@ -67,7 +67,7 @@ const serviceCategories = [
       {
         id: 'microdermabrasion',
         name: 'Microdermabrasion Facial',
-        description: 'Advanced exfoliation treatment for smoother, brighter skin. Reduces fine lines and improves texture.',
+        description: 'Includes Pre-Cleanse & skin analysis, Cleanse & Tone, extractions (if needed), Microdermabrasion using a handheld vacuum device to remove dead skin cells and improve tone & texture, Mask with specialized ingredients, and serums & moisturizer with SPF.',
         durationMinutes: 60,
         priceCents: 15000,
         image: '/services/lavish_glow_facial.png',
@@ -75,7 +75,7 @@ const serviceCategories = [
       {
         id: 'microneedling',
         name: 'Microneedling',
-        description: 'Collagen-boosting treatment for skin rejuvenation. Minimizes scars, wrinkles, and large pores.',
+        description: 'Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Microneedling with tiny needles to stimulate collagen production for more youthful skin — minimizes fine lines & wrinkles, reduces hyperpigmentation, improves texture & shrinks enlarged pores. *Minimal downtime.* Calming or hydrating Mask with natural ingredients, and serums & moisturizer with SPF.',
         durationMinutes: 60,
         priceCents: 17500,
         image: '/services/microneedling.png',
@@ -100,7 +100,7 @@ const serviceCategories = [
         name: 'Chin Waxing',
         description: 'Precise hair removal for a smooth, defined chin area.',
         durationMinutes: 30,
-        priceCents: 1500,
+        priceCents: 1000,
         image: '/services/waxing.png',
       },
       {
@@ -136,23 +136,6 @@ const serviceCategories = [
         priceCents: 7500,
         image: '/services/waxing.png',
       },
-      {
-        id: 'brow-wax-tint',
-        name: 'Brow Wax w/Tint',
-        description: 'Shape and enhance your brows with expert waxing and professional tinting.',
-        durationMinutes: 25,
-        priceCents: 3700,
-        image: '/services/lash_and_brow_tint.png',
-      },
-      {
-        id: 'brow-full-combo',
-        name: 'Brow Lamination / Tint / Wax',
-        description: 'The complete brow transformation. Lamination, tinting, and precise waxing.',
-        durationMinutes: 60,
-        priceCents: 10200,
-        featured: true,
-        image: '/services/lash_and_brow_tint.png',
-      },
     ],
   },
   {
@@ -167,22 +150,6 @@ const serviceCategories = [
         durationMinutes: 30,
         priceCents: 6500,
         featured: true,
-        image: '/services/lash_and_brow_tint.png',
-      },
-      {
-        id: 'brow-tint',
-        name: 'Brow Tint ONLY',
-        description: 'Enhance your brows with professional tinting for added definition and depth.',
-        durationMinutes: 20,
-        priceCents: 2500,
-        image: '/services/lash_and_brow_tint.png',
-      },
-      {
-        id: 'brow-lam-tint',
-        name: 'Brow Lamination & Tint',
-        description: 'Combine lamination with tinting for the ultimate brow enhancement.',
-        durationMinutes: 40,
-        priceCents: 9000,
         image: '/services/lash_and_brow_tint.png',
       },
     ],

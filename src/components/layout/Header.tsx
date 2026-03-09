@@ -91,18 +91,8 @@ export function Header() {
         )}
       >
         <div className="container-luxury">
-          <nav className="flex items-center justify-between h-24 lg:h-32">
-            {/* Logo */}
-            <Link href="/" className="flex-shrink-0">
-              <Image
-                src="/lystic logo.webp"
-                alt="Lystic Lavish Beauty Bar"
-                width={280}
-                height={100}
-                className="h-20 lg:h-24 w-auto"
-                priority
-              />
-            </Link>
+          <nav className="flex items-center justify-between h-16 lg:h-20">
+            <Link href="/" className="flex-shrink-0" />
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">

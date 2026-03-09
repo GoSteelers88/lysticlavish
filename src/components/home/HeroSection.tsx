@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
 import { Sparkles, Star } from 'lucide-react';
 
@@ -25,6 +26,18 @@ export function HeroSection() {
       {/* Content */}
       <div className="container-luxury relative z-10">
         <div className="max-w-3xl mx-auto text-center">
+          {/* Logo */}
+          <div className="flex justify-center mb-8 animate-fade-in">
+            <Image
+              src="/lystic logo.webp"
+              alt="Lystic Lavish Beauty Bar"
+              width={600}
+              height={240}
+              className="h-48 md:h-64 w-auto drop-shadow-[0_12px_60px_rgba(139,90,43,0.9)] contrast-150 brightness-115 saturate-200"
+              priority
+            />
+          </div>
+
           {/* Badge */}
           <div className="inline-flex items-center px-4 py-2 bg-white/60 backdrop-blur rounded-full mb-8 animate-fade-in">
             <Sparkles className="w-4 h-4 text-gold-500 mr-2" />
