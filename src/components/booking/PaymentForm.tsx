@@ -56,9 +56,17 @@ export function PaymentForm({
   const [error, setError] = useState<string | null>(null);
   const cardRef = useRef<unknown>(null);
   const cardContainerRef = useRef<HTMLDivElement>(null);
+  const initializedRef = useRef(false);
+
+  // Deposit: 50% of service price (rounded up to nearest cent)
+  const depositCents = Math.ceil(service.priceCents * 0.5);
+  const remainingCents = service.priceCents - depositCents;
 
   // Load Square SDK
   useEffect(() => {
+    if (initializedRef.current) return;
+    initializedRef.current = true;
+
     const loadSquareSDK = async () => {
       try {
         // Fetch Square config
@@ -149,14 +157,14 @@ export function PaymentForm({
         throw new Error(errorMessage);
       }
 
-      // Process payment
+      // Process deposit payment
       const paymentResponse = await fetch('/api/payments/square', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           bookingId,
           sourceId: result.token,
-          amountCents: service.priceCents,
+          amountCents: depositCents,
         }),
       });
 
@@ -212,11 +220,19 @@ export function PaymentForm({
             <span className="text-espresso-800">{customerInfo.name}</span>
           </div>
           <div className="divider-gold !my-4" />
-          <div className="flex justify-between text-base">
-            <span className="font-medium text-espresso-900">Total</span>
-            <span className="font-serif text-xl text-espresso-900">
-              {formatPrice(service.priceCents)}
+          <div className="flex justify-between text-sm">
+            <span className="text-espresso-600">Service Total</span>
+            <span className="text-espresso-800">{formatPrice(service.priceCents)}</span>
+          </div>
+          <div className="flex justify-between text-base mt-2">
+            <span className="font-medium text-espresso-900">Deposit Due Today (50%)</span>
+            <span className="font-serif text-xl text-gold-700">
+              {formatPrice(depositCents)}
             </span>
+          </div>
+          <div className="flex justify-between text-sm mt-1">
+            <span className="text-espresso-500">Remaining balance due at appointment</span>
+            <span className="text-espresso-600">{formatPrice(remainingCents)}</span>
           </div>
         </div>
       </Card>
@@ -284,7 +300,7 @@ export function PaymentForm({
             disabled={sdkLoading || loading}
             className="flex-1"
           >
-            {loading ? 'Processing...' : `Pay ${formatPrice(service.priceCents)}`}
+            {loading ? 'Processing...' : `Pay Deposit ${formatPrice(depositCents)}`}
           </Button>
         </div>
       </form>
