@@ -7,6 +7,97 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Clock, Check, ChevronRight } from 'lucide-react';
 
+function ServiceRow({
+  service,
+  isSelected,
+  isComingSoon,
+  onSelect,
+}: {
+  service: Service;
+  isSelected: boolean;
+  isComingSoon: boolean;
+  onSelect: (service: Service) => void;
+}) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <div
+      role="button"
+      tabIndex={isComingSoon ? -1 : 0}
+      onClick={() => !isComingSoon && onSelect(service)}
+      onKeyDown={(e) => e.key === 'Enter' && !isComingSoon && onSelect(service)}
+      className={cn(
+        'w-full text-left rounded-2xl border-2 overflow-hidden',
+        'transition-all duration-200',
+        isComingSoon
+          ? 'border-nude-200 opacity-60 cursor-not-allowed'
+          : isSelected
+          ? 'border-gold-500 shadow-soft cursor-pointer'
+          : 'border-nude-200 hover:border-gold-300 hover:shadow-soft cursor-pointer'
+      )}
+    >
+      <div className="flex">
+        {service.image && (
+          <div className="relative w-24 h-24 sm:w-32 sm:h-32 flex-shrink-0">
+            <Image
+              src={service.image}
+              alt={service.name}
+              fill
+              className={cn('object-cover', isComingSoon && 'grayscale')}
+              sizes="(max-width: 640px) 96px, 128px"
+            />
+            {isSelected && !isComingSoon && (
+              <div className="absolute inset-0 bg-gold-500/20" />
+            )}
+          </div>
+        )}
+        <div className={cn(
+          'flex-1 p-4 flex flex-col justify-center',
+          isSelected && !isComingSoon ? 'bg-gold-50' : 'bg-white'
+        )}>
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2">
+                <h3 className="font-medium text-espresso-900 truncate">{service.name}</h3>
+                {isComingSoon ? (
+                  <span className="px-2 py-0.5 rounded-full bg-nude-200 text-espresso-500 text-xs font-medium flex-shrink-0">
+                    Coming Soon
+                  </span>
+                ) : isSelected && (
+                  <span className="w-5 h-5 rounded-full bg-gold-500 flex items-center justify-center flex-shrink-0">
+                    <Check className="w-3 h-3 text-white" />
+                  </span>
+                )}
+              </div>
+              <p className={cn('text-sm text-espresso-600 mt-1', !expanded && 'line-clamp-2')}>
+                {service.description}
+              </p>
+              <button
+                type="button"
+                onClick={(e) => { e.stopPropagation(); setExpanded(!expanded); }}
+                className="text-xs text-gold-600 hover:text-gold-800 font-medium mt-1 transition-colors"
+              >
+                {expanded ? 'Show less' : 'Read more'}
+              </button>
+              <div className="flex items-center gap-4 mt-2 text-sm">
+                <span className="flex items-center text-espresso-500">
+                  <Clock className="w-4 h-4 mr-1" />
+                  {formatDuration(service.durationMinutes)}
+                </span>
+              </div>
+            </div>
+            <div className="text-right flex-shrink-0">
+              <span className="font-serif text-xl text-espresso-900">
+                {formatPrice(service.priceCents)}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export interface Service {
   id: string;
   name: string;
@@ -68,82 +159,15 @@ export function ServiceSelection({
 
       {/* Services List */}
       <div className="space-y-3">
-        {services[activeCategory]?.map((service) => {
-          const isSelected = selectedServiceId === service.id;
-          const isComingSoon = service.category === 'Makeup';
-
-          return (
-            <button
-              key={service.id}
-              type="button"
-              onClick={() => !isComingSoon && onSelect(service)}
-              disabled={isComingSoon}
-              className={cn(
-                'w-full text-left rounded-2xl border-2 overflow-hidden',
-                'transition-all duration-200',
-                isComingSoon
-                  ? 'border-nude-200 opacity-60 cursor-not-allowed'
-                  : isSelected
-                  ? 'border-gold-500 shadow-soft'
-                  : 'border-nude-200 hover:border-gold-300 hover:shadow-soft'
-              )}
-            >
-              <div className="flex">
-                {/* Image Section */}
-                {service.image && (
-                  <div className="relative w-24 h-24 sm:w-32 sm:h-32 flex-shrink-0">
-                    <Image
-                      src={service.image}
-                      alt={service.name}
-                      fill
-                      className={cn('object-cover', isComingSoon && 'grayscale')}
-                      sizes="(max-width: 640px) 96px, 128px"
-                    />
-                    {isSelected && !isComingSoon && (
-                      <div className="absolute inset-0 bg-gold-500/20" />
-                    )}
-                  </div>
-                )}
-                {/* Content Section */}
-                <div className={cn(
-                  'flex-1 p-4 flex flex-col justify-center',
-                  isSelected && !isComingSoon ? 'bg-gold-50' : 'bg-white'
-                )}>
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <h3 className="font-medium text-espresso-900 truncate">{service.name}</h3>
-                        {isComingSoon ? (
-                          <span className="px-2 py-0.5 rounded-full bg-nude-200 text-espresso-500 text-xs font-medium flex-shrink-0">
-                            Coming Soon
-                          </span>
-                        ) : isSelected && (
-                          <span className="w-5 h-5 rounded-full bg-gold-500 flex items-center justify-center flex-shrink-0">
-                            <Check className="w-3 h-3 text-white" />
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-sm text-espresso-600 mt-1 line-clamp-2">
-                        {service.description}
-                      </p>
-                      <div className="flex items-center gap-4 mt-2 text-sm">
-                        <span className="flex items-center text-espresso-500">
-                          <Clock className="w-4 h-4 mr-1" />
-                          {formatDuration(service.durationMinutes)}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="text-right flex-shrink-0">
-                      <span className="font-serif text-xl text-espresso-900">
-                        {formatPrice(service.priceCents)}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </button>
-          );
-        })}
+        {services[activeCategory]?.map((service) => (
+          <ServiceRow
+            key={service.id}
+            service={service}
+            isSelected={selectedServiceId === service.id}
+            isComingSoon={service.category === 'Makeup'}
+            onSelect={onSelect}
+          />
+        ))}
       </div>
 
       {/* Selected Service Summary & Next Button */}
