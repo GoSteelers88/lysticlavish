@@ -29,11 +29,11 @@ export function HeroSection() {
           {/* Logo */}
           <div className="flex justify-center mb-8 animate-fade-in">
             <Image
-              src="/lystic logo.webp"
+              src="/lystic-logo-new.png"
               alt="Lystic Lavish Beauty Bar"
               width={600}
               height={240}
-              className="h-48 md:h-64 w-auto drop-shadow-[0_12px_60px_rgba(139,90,43,0.9)] contrast-150 brightness-115 saturate-200"
+              className="h-48 md:h-64 w-auto"
               priority
             />
           </div>

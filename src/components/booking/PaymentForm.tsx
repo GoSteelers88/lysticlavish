@@ -237,6 +237,15 @@ export function PaymentForm({
         </div>
       </Card>
 
+      {/* Deposit Policy Notice */}
+      <div className="flex items-start gap-3 px-4 py-3 bg-gold-50 border border-gold-200 rounded-xl text-sm text-espresso-700">
+        <Shield className="w-4 h-4 text-gold-600 flex-shrink-0 mt-0.5" />
+        <p>
+          <span className="font-semibold text-espresso-900">Deposit Policy:</span>{' '}
+          Your deposit is fully refundable if you cancel at least 24 hours before your appointment, or it can be applied toward a future booking.
+        </p>
+      </div>
+
       {/* Payment Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>

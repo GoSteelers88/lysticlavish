@@ -15,6 +15,7 @@ export interface CalendarEvent {
 export interface CreateEventParams {
   summary: string;
   description?: string;
+  location?: string;
   startTime: Date;
   endTime: Date;
   attendeeEmail?: string;
@@ -135,6 +136,7 @@ export async function createCalendarEvent(
   const eventData: calendar_v3.Schema$Event = {
     summary: params.summary,
     description: params.description,
+    location: params.location,
     start: {
       dateTime: params.startTime.toISOString(),
       timeZone: timezone,

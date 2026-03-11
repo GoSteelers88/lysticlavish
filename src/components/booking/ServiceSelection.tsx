@@ -157,6 +157,16 @@ export function ServiceSelection({
         ))}
       </div>
 
+      {/* Facial First-Time Client Notice */}
+      {activeCategory === 'Facials' && (
+        <div className="mb-4 px-4 py-3 rounded-xl border border-gold-300 bg-gold-50">
+          <p className="text-sm text-espresso-700 leading-relaxed">
+            <span className="font-semibold text-espresso-900">First-Time Facial Clients:</span>{' '}
+            A skin assessment is required for all first-time facial clients. Please book under the <span className="font-medium">Mini Facial</span> or <span className="font-medium">Basic Facial</span> for your first 2 visits. Each client&apos;s skin will be analyzed and assessed to create a custom facial based on skin tone.
+          </p>
+        </div>
+      )}
+
       {/* Services List */}
       <div className="space-y-3">
         {services[activeCategory]?.map((service) => (

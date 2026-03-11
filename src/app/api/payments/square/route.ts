@@ -159,6 +159,7 @@ export async function POST(request: NextRequest) {
         ]
           .filter(Boolean)
           .join('\n'),
+        location: '213 Damsenberry Way, China Grove, NC 28023',
         startTime: appointmentStart,
         endTime: appointmentEnd,
         attendeeEmail: booking.customerEmail,

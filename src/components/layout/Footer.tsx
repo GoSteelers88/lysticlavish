@@ -148,8 +148,7 @@ export function Footer() {
                 <Clock className="w-4 h-4 mr-3 mt-0.5 flex-shrink-0" />
                 <div>
                   <p>Saturday: 10AM - 5PM</p>
-                  <p>Mon – Fri: Call for Appointment</p>
-                  <p>Sunday: Closed</p>
+                  <p>Sunday – Friday: Closed</p>
                 </div>
               </li>
             </ul>

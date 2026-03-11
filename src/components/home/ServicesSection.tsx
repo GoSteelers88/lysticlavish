@@ -248,6 +248,16 @@ export function ServicesSection() {
           </p>
         )}
 
+        {/* Facial First-Time Client Notice */}
+        {activeCategory === 'facials' && (
+          <div className="max-w-3xl mx-auto mb-8 px-4 py-4 rounded-xl border border-gold-300 bg-gold-50 animate-fade-in">
+            <p className="text-sm text-espresso-700 leading-relaxed">
+              <span className="font-semibold text-espresso-900">First-Time Facial Clients:</span>{' '}
+              A skin assessment is required for all first-time facial clients. Please book under the <span className="font-medium">Mini Facial</span> or <span className="font-medium">Basic Facial</span> for your first 2 visits. Each client&apos;s skin will be analyzed and assessed to create a custom facial based on skin tone.
+            </p>
+          </div>
+        )}
+
         {/* Services Grid */}
         {currentCategory?.comingSoon ? (
           <div className="flex flex-col items-center justify-center py-16 animate-fade-in">
