@@ -91,10 +91,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Verify amount matches service price
-    if (data.amountCents !== service.priceCents) {
+    // Verify amount matches 50% deposit (same formula as PaymentForm)
+    const expectedDepositCents = Math.ceil(service.priceCents * 0.5);
+    if (data.amountCents !== expectedDepositCents) {
       console.warn(
-        `[API] Amount mismatch: expected ${service.priceCents}, got ${data.amountCents}`
+        `[API] Amount mismatch: expected deposit ${expectedDepositCents}, got ${data.amountCents}`
       );
       return NextResponse.json(
         { success: false, error: 'Payment amount does not match service price' },
