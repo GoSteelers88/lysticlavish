@@ -10,7 +10,6 @@ import {
   Mail,
   Clock,
   Instagram,
-  Facebook,
   MessageCircle,
 } from 'lucide-react';
 
@@ -49,14 +48,8 @@ const socials = [
   {
     name: 'Instagram',
     icon: Instagram,
-    href: 'https://instagram.com',
-    handle: '@lysticlavish',
-  },
-  {
-    name: 'Facebook',
-    icon: Facebook,
-    href: 'https://facebook.com',
-    handle: '/lysticlavish',
+    href: 'https://www.instagram.com/llbrandowner',
+    handle: '@llbrandowner',
   },
 ];
 
