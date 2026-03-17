@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { format, addDays, isSameDay, parseISO, startOfDay, nextSaturday, isSaturday } from 'date-fns';
+import { format, addDays, isSameDay, parseISO, startOfDay } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
@@ -29,28 +29,34 @@ export function TimeSelection({
   onNext,
   onBack,
 }: TimeSelectionProps) {
-  const getFirstSaturday = () => {
-    const today = startOfDay(new Date());
-    return isSaturday(today) ? today : nextSaturday(today);
+  const getFirstAvailableDate = () => {
+    const availableDays = [2, 4, 5, 6]; // Tue, Thu, Fri, Sat
+    let date = startOfDay(new Date());
+    while (!availableDays.includes(date.getDay())) {
+      date = addDays(date, 1);
+    }
+    return date;
   };
 
   const [selectedDate, setSelectedDate] = useState<Date>(
-    selectedDateTime ? parseISO(selectedDateTime) : getFirstSaturday()
+    selectedDateTime ? parseISO(selectedDateTime) : getFirstAvailableDate()
   );
   const [slots, setSlots] = useState<TimeSlot[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [visibleDates, setVisibleDates] = useState<Date[]>([]);
 
-  // Generate visible Saturdays (next 8 weeks)
+  // Generate visible available dates (Tue/Thu/Fri/Sat, next 60 days)
   useEffect(() => {
+    const availableDays = [2, 4, 5, 6]; // Tue, Thu, Fri, Sat
     const dates: Date[] = [];
-    const today = startOfDay(new Date());
-    let sat = isSaturday(today) ? today : nextSaturday(today);
+    let date = startOfDay(new Date());
 
-    for (let i = 0; i < 8; i++) {
-      dates.push(sat);
-      sat = addDays(sat, 7);
+    for (let i = 0; i < 60; i++) {
+      if (availableDays.includes(date.getDay())) {
+        dates.push(date);
+      }
+      date = addDays(date, 1);
     }
 
     setVisibleDates(dates);
@@ -117,7 +123,7 @@ export function TimeSelection({
           Select a Date
         </h3>
         <p className="text-sm text-espresso-500 mb-4">
-          Online booking is available <span className="font-medium text-espresso-700">Saturdays only</span>. For other days, call{' '}
+          Available <span className="font-medium text-espresso-700">Tue, Thu &amp; Fri 7–9 PM</span> and <span className="font-medium text-espresso-700">Saturdays 10 AM–5 PM</span>. Questions?{' '}
           <a href="tel:+18555532242" className="text-gold-600 hover:text-gold-700">855-553-2242</a>.
         </p>
 
@@ -206,7 +212,7 @@ export function TimeSelection({
         ) : availableSlots.length === 0 ? (
           <Card variant="default" padding="md" className="text-center">
             <p className="text-espresso-600">
-              No available times on this Saturday. Please select another date or call{' '}
+              No available times on this date. Please select another date or call{' '}
               <a href="tel:+18555532242" className="text-gold-600 hover:text-gold-700 font-medium">855-553-2242</a>.
             </p>
           </Card>
