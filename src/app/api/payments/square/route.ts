@@ -5,7 +5,6 @@ import {
   getBookingById,
   updateBooking,
   createPayment,
-  getServiceById,
 } from '@/lib/google/sheets';
 import { createCalendarEvent } from '@/lib/google/calendar';
 import {
@@ -13,6 +12,7 @@ import {
   validateData,
   ValidationError,
 } from '@/lib/validation/schemas';
+import servicesData from '@/data/services.json';
 
 /**
  * GET /api/payments/square
@@ -82,14 +82,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get service
-    const service = await getServiceById(booking.serviceId);
-    if (!service) {
+    // Get service from local data (prices are in cents, same source as frontend)
+    const serviceRaw = servicesData.services.find(
+      (s) => s.id === booking.serviceId && s.is_active
+    );
+    if (!serviceRaw) {
       return NextResponse.json(
         { success: false, error: 'Service not found' },
         { status: 404 }
       );
     }
+    const service = {
+      name: serviceRaw.name,
+      priceCents: serviceRaw.price_cents,
+      durationMinutes: serviceRaw.duration_minutes,
+    };
 
     // Verify amount matches 50% deposit (same formula as PaymentForm)
     const expectedDepositCents = Math.ceil(service.priceCents * 0.5);
