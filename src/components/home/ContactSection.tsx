@@ -16,12 +16,12 @@ import {
 
 const businessHours = [
   { day: 'Monday', hours: 'Closed' },
-  { day: 'Tuesday', hours: 'Closed' },
+  { day: 'Tuesday', hours: '7:00 PM - 9:00 PM' },
   { day: 'Wednesday', hours: 'Closed' },
-  { day: 'Thursday', hours: 'Closed' },
-  { day: 'Friday', hours: 'Closed' },
+  { day: 'Thursday', hours: '7:00 PM - 9:00 PM' },
+  { day: 'Friday', hours: '7:00 PM - 9:00 PM' },
   { day: 'Saturday', hours: '10:00 AM - 5:00 PM' },
-  { day: 'Sunday', hours: 'Closed' },
+  { day: 'Sunday', hours: 'By Appt. (Email Request)' },
 ];
 
 const contactInfo = [
@@ -176,6 +176,9 @@ export function ContactSection() {
                   </div>
                 ))}
               </div>
+              <p className="mt-3 text-xs text-espresso-400 italic">
+                *Availability is subject to change weekly
+              </p>
             </Card>
           </div>
 

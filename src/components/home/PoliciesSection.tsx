@@ -14,7 +14,7 @@ const policies = [
     title: 'Booking & Appointments',
     content: `
       <ul class="space-y-2">
-        <li>• Appointments can be booked online 24/7 or by phone during business hours.</li>
+        <li>• Appointments can be booked online only.</li>
         <li>• A valid payment method is required to secure your booking.</li>
         <li>• Please arrive 5-10 minutes before your scheduled appointment.</li>
         <li>• First-time clients may need to complete a brief consultation form.</li>
@@ -28,8 +28,7 @@ const policies = [
     content: `
       <ul class="space-y-2">
         <li>• <strong>24-hour notice</strong> is required for cancellations or rescheduling.</li>
-        <li>• Cancellations made within 24 hours may be subject to a 50% cancellation fee.</li>
-        <li>• No-shows will be charged the full service amount.</li>
+        <li>• More than one no show within a 6 month period for appointments will result in being blocked from booking services.</li>
         <li>• We understand emergencies happen - please contact us as soon as possible.</li>
         <li>• Rescheduling is free when done with 24+ hours notice.</li>
       </ul>
@@ -55,7 +54,7 @@ const policies = [
         <li>• We accept all major credit cards, debit cards, and digital payments.</li>
         <li>• Full payment is due at the time of booking or at the end of your appointment.</li>
         <li>• Some services may require a deposit to secure your booking.</li>
-        <li>• Deposits are non-refundable but may be applied to rescheduled appointments.</li>
+        <li>• Deposits are not refundable if the appointment is canceled within 24 hrs. Deposits may be applied to rescheduled appointments if the appointment is canceled with 24+ hours notice.</li>
         <li>• Gift cards are available for purchase and make perfect gifts!</li>
       </ul>
     `,
