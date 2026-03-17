@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import {
   Instagram,
-  Facebook,
   Phone,
   Mail,
   MapPin,
@@ -29,8 +28,7 @@ const services = [
 ];
 
 const socials = [
-  { name: 'Instagram', icon: Instagram, href: 'https://instagram.com' },
-  { name: 'Facebook', icon: Facebook, href: 'https://facebook.com' },
+  { name: 'Instagram', icon: Instagram, href: 'https://www.instagram.com/llbrandowner' },
 ];
 
 export function Footer() {

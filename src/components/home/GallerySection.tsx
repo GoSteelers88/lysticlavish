@@ -113,7 +113,7 @@ export function GallerySection() {
             Follow us on Instagram for more transformations
           </p>
           <a
-            href="https://instagram.com"
+            href="https://www.instagram.com/llbrandowner"
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
@@ -124,7 +124,7 @@ export function GallerySection() {
               'transition-all duration-300'
             )}
           >
-            @lysticlavish
+            @llbrandowner
           </a>
         </div>
       </div>
