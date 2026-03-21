@@ -16,7 +16,7 @@ import { ArrowLeft, Loader2 } from 'lucide-react';
 
 interface BookingState {
   step: number;
-  selectedService: Service | null;
+  selectedServices: Service[];
   customerInfo: CustomerInfo;
   selectedDateTime: string | null;
   bookingId: string | null;
@@ -36,7 +36,7 @@ function BookingPageContent() {
 
   const [state, setState] = useState<BookingState>({
     step: 0,
-    selectedService: null,
+    selectedServices: [],
     customerInfo: initialCustomerInfo,
     selectedDateTime: null,
     bookingId: null,
@@ -62,7 +62,7 @@ function BookingPageContent() {
             const allServices = Object.values(data.data).flat() as Service[];
             const service = allServices.find((s) => s.id === preSelectedService);
             if (service) {
-              setState((prev) => ({ ...prev, selectedService: service }));
+              setState((prev) => ({ ...prev, selectedServices: [service] }));
             }
           }
         } else {
@@ -85,8 +85,8 @@ function BookingPageContent() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleServiceSelect = (service: Service) => {
-    setState((prev) => ({ ...prev, selectedService: service }));
+  const handleServicesToggle = (services: Service[]) => {
+    setState((prev) => ({ ...prev, selectedServices: services }));
   };
 
   const handleCustomerInfoSubmit = (info: CustomerInfo) => {
@@ -107,7 +107,7 @@ function BookingPageContent() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          serviceId: state.selectedService!.id,
+          serviceIds: state.selectedServices.map((s) => s.id),
           customerName: state.customerInfo.name,
           customerEmail: state.customerInfo.email,
           customerPhone: state.customerInfo.phone,
@@ -199,8 +199,8 @@ function BookingPageContent() {
             {state.step === 0 && (
               <ServiceSelection
                 services={services}
-                selectedServiceId={state.selectedService?.id || null}
-                onSelect={handleServiceSelect}
+                selectedServices={state.selectedServices}
+                onToggle={handleServicesToggle}
                 onNext={() => goToStep(1)}
               />
             )}
@@ -215,9 +215,10 @@ function BookingPageContent() {
             )}
 
             {/* Step 2: Time Selection */}
-            {state.step === 2 && state.selectedService && (
+            {state.step === 2 && state.selectedServices.length > 0 && (
               <TimeSelection
-                serviceId={state.selectedService.id}
+                serviceId={state.selectedServices[0].id}
+                durationMinutes={state.selectedServices.reduce((sum, s) => sum + s.durationMinutes, 0)}
                 selectedDateTime={state.selectedDateTime}
                 onSelect={handleTimeSelect}
                 onNext={handleTimeConfirm}
@@ -226,15 +227,15 @@ function BookingPageContent() {
             )}
 
             {/* Step 3: Payment */}
-            {state.step === 3 && state.selectedService && state.bookingId && (
+            {state.step === 3 && state.selectedServices.length > 0 && state.bookingId && (
               <PaymentForm
                 bookingId={state.bookingId}
-                service={{
-                  id: state.selectedService.id,
-                  name: state.selectedService.name,
-                  durationMinutes: state.selectedService.durationMinutes,
-                  priceCents: state.selectedService.priceCents,
-                }}
+                services={state.selectedServices.map((s) => ({
+                  id: s.id,
+                  name: s.name,
+                  durationMinutes: s.durationMinutes,
+                  priceCents: s.priceCents,
+                }))}
                 customerInfo={{
                   name: state.customerInfo.name,
                   email: state.customerInfo.email,
@@ -247,7 +248,7 @@ function BookingPageContent() {
 
             {/* Step 4: Confirmation */}
             {state.step === 4 &&
-              state.selectedService &&
+              state.selectedServices.length > 0 &&
               state.bookingId &&
               state.paymentResult && (
                 <BookingConfirmation
@@ -258,11 +259,11 @@ function BookingPageContent() {
                     customerPhone: state.customerInfo.phone,
                     appointmentDatetime: state.selectedDateTime!,
                   }}
-                  service={{
-                    name: state.selectedService.name,
-                    durationMinutes: state.selectedService.durationMinutes,
-                    priceCents: state.selectedService.priceCents,
-                  }}
+                  services={state.selectedServices.map((s) => ({
+                    name: s.name,
+                    durationMinutes: s.durationMinutes,
+                    priceCents: s.priceCents,
+                  }))}
                   payment={state.paymentResult}
                 />
               )}

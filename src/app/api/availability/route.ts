@@ -24,12 +24,14 @@ export async function GET(request: NextRequest) {
     const dateStr = searchParams.get('date');
 
     // Validate query parameters
+    const durationParam = searchParams.get('durationMinutes');
     const query = validateData(availabilityQuerySchema, {
       serviceId,
       date: dateStr,
+      durationMinutes: durationParam ? Number(durationParam) : undefined,
     });
 
-    // Fetch service to get duration
+    // Fetch service to get duration (use override if provided)
     const service = await getServiceById(query.serviceId);
 
     if (!service) {
@@ -38,6 +40,8 @@ export async function GET(request: NextRequest) {
         { status: 404 }
       );
     }
+
+    const effectiveDuration = query.durationMinutes ?? service.durationMinutes;
 
     // Parse and validate date
     const timezone = getBusinessTimezone();
@@ -69,7 +73,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get available slots
-    const slots = await getAvailableSlots(date, service.durationMinutes);
+    const slots = await getAvailableSlots(date, effectiveDuration);
 
     return NextResponse.json({
       success: true,

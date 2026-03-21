@@ -52,7 +52,7 @@ export type ServiceInput = z.infer<typeof serviceSchema>;
 // ============================================
 
 export const createBookingSchema = z.object({
-  serviceId: serviceIdSchema,
+  serviceIds: z.array(serviceIdSchema).min(1, 'At least one service is required'),
   customerName: z
     .string()
     .min(2, 'Name must be at least 2 characters')
@@ -93,6 +93,7 @@ export type UpdateBookingInput = z.infer<typeof updateBookingSchema>;
 export const availabilityQuerySchema = z.object({
   serviceId: serviceIdSchema,
   date: dateSchema,
+  durationMinutes: z.coerce.number().positive().optional(),
 });
 
 export type AvailabilityQuery = z.infer<typeof availabilityQuerySchema>;
@@ -114,6 +115,7 @@ export const processPaymentSchema = z.object({
   bookingId: uuidSchema,
   sourceId: z.string().min(1, 'Payment source is required'),
   amountCents: z.number().positive('Amount must be positive'),
+  serviceIds: z.array(serviceIdSchema).min(1).optional(),
 });
 
 export type ProcessPaymentInput = z.infer<typeof processPaymentSchema>;

@@ -87,21 +87,22 @@ export async function POST(request: NextRequest) {
     // Validate input
     const data = validateData(createBookingSchema, body);
 
-    // Verify service exists
-    const service = await getServiceById(data.serviceId);
-    if (!service) {
+    // Look up all selected services
+    const services = await Promise.all(data.serviceIds.map((id) => getServiceById(id)));
+    const missingService = services.findIndex((s) => !s);
+    if (missingService !== -1) {
       return NextResponse.json(
-        { success: false, error: 'Service not found' },
+        { success: false, error: `Service not found: ${data.serviceIds[missingService]}` },
         { status: 404 }
       );
     }
+    const validServices = services as NonNullable<(typeof services)[0]>[];
+    const primaryService = validServices[0];
+    const totalDurationMinutes = validServices.reduce((sum, s) => sum + s.durationMinutes, 0);
 
-    // Validate slot availability
+    // Validate slot availability using total duration
     const appointmentTime = new Date(data.appointmentDatetime);
-    const isAvailable = await validateSlotAvailability(
-      appointmentTime,
-      service.durationMinutes
-    );
+    const isAvailable = await validateSlotAvailability(appointmentTime, totalDurationMinutes);
 
     if (!isAvailable) {
       return NextResponse.json(
@@ -109,18 +110,23 @@ export async function POST(request: NextRequest) {
           success: false,
           error: 'The selected time slot is no longer available. Please choose another time.',
         },
-        { status: 409 } // Conflict
+        { status: 409 }
       );
     }
 
-    // Create pending booking
+    // Encode all service IDs into notes if multiple selected
+    const servicePrefix =
+      data.serviceIds.length > 1 ? `[sids:${data.serviceIds.join(',')}]\n` : '';
+    const notes = servicePrefix + (data.notes || '');
+
+    // Create pending booking (primary service stored in serviceId column)
     const booking = await createBooking({
-      serviceId: data.serviceId,
+      serviceId: primaryService.id,
       customerName: data.customerName,
       customerEmail: data.customerEmail,
       customerPhone: data.customerPhone,
       appointmentDatetime: data.appointmentDatetime,
-      notes: data.notes,
+      notes: notes || undefined,
     });
 
     console.log(`[API] Created pending booking: ${booking.id}`);
@@ -130,10 +136,10 @@ export async function POST(request: NextRequest) {
       data: {
         booking,
         service: {
-          id: service.id,
-          name: service.name,
-          duration: service.durationMinutes,
-          price: service.priceCents,
+          id: primaryService.id,
+          name: primaryService.name,
+          duration: totalDurationMinutes,
+          price: validServices.reduce((sum, s) => sum + s.priceCents, 0),
         },
       },
     });

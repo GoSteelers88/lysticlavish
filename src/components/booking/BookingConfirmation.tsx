@@ -24,11 +24,11 @@ interface BookingConfirmationProps {
     customerPhone: string;
     appointmentDatetime: string;
   };
-  service: {
+  services: {
     name: string;
     durationMinutes: number;
     priceCents: number;
-  };
+  }[];
   payment: {
     paymentId: string;
     receiptUrl?: string;
@@ -37,9 +37,11 @@ interface BookingConfirmationProps {
 
 export function BookingConfirmation({
   booking,
-  service,
+  services,
   payment,
 }: BookingConfirmationProps) {
+  const totalDurationMinutes = services.reduce((sum, s) => sum + s.durationMinutes, 0);
+  const totalPriceCents = services.reduce((sum, s) => sum + s.priceCents, 0);
   return (
     <div className="space-y-8 text-center">
       {/* Success Icon */}
@@ -72,17 +74,19 @@ export function BookingConfirmation({
         </h3>
 
         <div className="space-y-4">
-          {/* Service */}
+          {/* Service(s) */}
           <div className="flex items-start gap-4">
             <div className="w-10 h-10 rounded-full bg-gold-100 flex items-center justify-center flex-shrink-0">
               <span className="text-gold-700 text-lg">✨</span>
             </div>
             <div className="flex-1">
-              <p className="text-sm text-espresso-500">Service</p>
-              <p className="font-medium text-espresso-800">{service.name}</p>
+              <p className="text-sm text-espresso-500">{services.length === 1 ? 'Service' : 'Services'}</p>
+              {services.map((s) => (
+                <p key={s.name} className="font-medium text-espresso-800">{s.name}</p>
+              ))}
               <p className="text-sm text-espresso-600">
-                {formatDuration(service.durationMinutes)} •{' '}
-                {formatPrice(service.priceCents)}
+                {formatDuration(totalDurationMinutes)} •{' '}
+                {formatPrice(totalPriceCents)}
               </p>
             </div>
           </div>

@@ -12,6 +12,11 @@ function formatDateTime(iso: string) {
   return format(zoned, 'EEEE, MMMM d, yyyy \'at\' h:mm a');
 }
 
+function formatDateShort(iso: string) {
+  const zoned = toZonedTime(new Date(iso), TIMEZONE);
+  return format(zoned, 'MMM d');
+}
+
 function formatPrice(cents: number) {
   return `$${(cents / 100).toFixed(2)}`;
 }
@@ -19,7 +24,7 @@ function formatPrice(cents: number) {
 export async function sendCustomerConfirmation(params: {
   customerName: string;
   customerEmail: string;
-  serviceName: string;
+  serviceNames: string[];
   appointmentDatetime: string;
   durationMinutes: number;
   totalPriceCents: number;
@@ -29,7 +34,7 @@ export async function sendCustomerConfirmation(params: {
   const {
     customerName,
     customerEmail,
-    serviceName,
+    serviceNames,
     appointmentDatetime,
     durationMinutes,
     totalPriceCents,
@@ -38,6 +43,10 @@ export async function sendCustomerConfirmation(params: {
   } = params;
 
   const balanceDueCents = totalPriceCents - depositPaidCents;
+  const serviceLabel = serviceNames.length === 1 ? serviceNames[0] : serviceNames.join(', ');
+  const serviceListHtml = serviceNames.length === 1
+    ? `<td style="padding: 6px 0; color: #1a0a00; font-weight: bold;">${serviceNames[0]}</td>`
+    : `<td style="padding: 6px 0; color: #1a0a00; font-weight: bold;">${serviceNames.map(n => `• ${n}`).join('<br>')}</td>`;
 
   const html = `
     <!DOCTYPE html>
@@ -58,8 +67,8 @@ export async function sendCustomerConfirmation(params: {
           <div style="background: #faf8f5; border-left: 3px solid #c9a96e; border-radius: 4px; padding: 24px; margin-bottom: 32px;">
             <table style="width: 100%; border-collapse: collapse;">
               <tr>
-                <td style="padding: 6px 0; color: #9b8676; font-size: 13px; width: 140px;">Service</td>
-                <td style="padding: 6px 0; color: #1a0a00; font-weight: bold;">${serviceName}</td>
+                <td style="padding: 6px 0; color: #9b8676; font-size: 13px; width: 140px; vertical-align: top;">${serviceNames.length > 1 ? 'Services' : 'Service'}</td>
+                ${serviceListHtml}
               </tr>
               <tr>
                 <td style="padding: 6px 0; color: #9b8676; font-size: 13px;">Date & Time</td>
@@ -116,7 +125,7 @@ export async function sendCustomerConfirmation(params: {
   return resend.emails.send({
     from: FROM,
     to: customerEmail,
-    subject: `Booking Confirmed — ${serviceName} on ${format(toZonedTime(new Date(appointmentDatetime), TIMEZONE), 'MMM d')}`,
+    subject: `Booking Confirmed — ${serviceLabel} on ${formatDateShort(appointmentDatetime)}`,
     html,
   });
 }
@@ -125,7 +134,7 @@ export async function sendBusinessNotification(params: {
   customerName: string;
   customerEmail: string;
   customerPhone: string;
-  serviceName: string;
+  serviceNames: string[];
   appointmentDatetime: string;
   durationMinutes: number;
   depositPaidCents: number;
@@ -136,7 +145,7 @@ export async function sendBusinessNotification(params: {
     customerName,
     customerEmail,
     customerPhone,
-    serviceName,
+    serviceNames,
     appointmentDatetime,
     durationMinutes,
     depositPaidCents,
@@ -144,29 +153,93 @@ export async function sendBusinessNotification(params: {
     bookingId,
   } = params;
 
+  const serviceLabel = serviceNames.length === 1 ? serviceNames[0] : serviceNames.join(' + ');
+  const serviceDisplay = serviceNames.length === 1
+    ? serviceNames[0]
+    : serviceNames.map(n => `<span style="display:block">• ${n}</span>`).join('');
+
   const html = `
     <!DOCTYPE html>
     <html>
     <head><meta charset="utf-8"></head>
-    <body style="font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 0;">
-      <div style="max-width: 600px; margin: 40px auto; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+    <body style="font-family: Arial, sans-serif; background: #f0ece6; margin: 0; padding: 0;">
+      <div style="max-width: 600px; margin: 40px auto;">
 
-        <div style="background: #c9a96e; padding: 24px 32px;">
-          <h1 style="color: #fff; font-size: 18px; margin: 0;">New Booking — ${serviceName}</h1>
-          <p style="color: #fff; margin: 4px 0 0; font-size: 14px; opacity: 0.9;">${formatDateTime(appointmentDatetime)}</p>
+        <!-- Header -->
+        <div style="background: linear-gradient(135deg, #1a0a00 0%, #3d1a00 100%); border-radius: 12px 12px 0 0; padding: 28px 32px; display: flex; align-items: center; justify-content: space-between;">
+          <div>
+            <p style="color: #c9a96e; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 4px;">New Booking</p>
+            <h1 style="color: #fff; font-size: 20px; margin: 0; font-family: Georgia, serif;">${serviceLabel}</h1>
+            <p style="color: #d4c5b0; font-size: 14px; margin: 6px 0 0;">${formatDateTime(appointmentDatetime)}</p>
+          </div>
+          <div style="background: #c9a96e; border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <span style="color: #1a0a00; font-size: 22px;">✨</span>
+          </div>
         </div>
 
-        <div style="padding: 32px;">
-          <table style="width: 100%; border-collapse: collapse;">
-            <tr><td style="padding: 8px 0; color: #666; width: 140px; font-size: 14px;">Client</td><td style="padding: 8px 0; font-weight: bold;">${customerName}</td></tr>
-            <tr><td style="padding: 8px 0; color: #666; font-size: 14px;">Email</td><td style="padding: 8px 0;"><a href="mailto:${customerEmail}" style="color: #c9a96e;">${customerEmail}</a></td></tr>
-            <tr><td style="padding: 8px 0; color: #666; font-size: 14px;">Phone</td><td style="padding: 8px 0;"><a href="tel:${customerPhone}" style="color: #c9a96e;">${customerPhone}</a></td></tr>
-            <tr><td style="padding: 8px 0; color: #666; font-size: 14px;">Service</td><td style="padding: 8px 0;">${serviceName}</td></tr>
-            <tr><td style="padding: 8px 0; color: #666; font-size: 14px;">Duration</td><td style="padding: 8px 0;">${durationMinutes} min</td></tr>
-            <tr><td style="padding: 8px 0; color: #666; font-size: 14px;">Deposit Paid</td><td style="padding: 8px 0; color: #2d7a3a; font-weight: bold;">${formatPrice(depositPaidCents)}</td></tr>
-            ${notes ? `<tr><td style="padding: 8px 0; color: #666; font-size: 14px;">Notes</td><td style="padding: 8px 0;">${notes}</td></tr>` : ''}
-          </table>
-          <p style="color: #999; font-size: 12px; margin-top: 24px;">Booking ID: ${bookingId}</p>
+        <!-- Body -->
+        <div style="background: #fff; padding: 32px; border-left: 1px solid #e8e0d8; border-right: 1px solid #e8e0d8;">
+
+          <!-- Client Info -->
+          <div style="margin-bottom: 24px;">
+            <p style="color: #9b8676; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px;">Client Information</p>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr>
+                <td style="padding: 8px 12px; background: #faf8f5; border-radius: 6px 6px 0 0; color: #6b5c4e; font-size: 13px; width: 100px; border-bottom: 1px solid #f0ece6;">Name</td>
+                <td style="padding: 8px 12px; background: #faf8f5; border-radius: 6px 6px 0 0; font-weight: 600; color: #1a0a00; border-bottom: 1px solid #f0ece6;">${customerName}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 12px; background: #faf8f5; color: #6b5c4e; font-size: 13px; border-bottom: 1px solid #f0ece6;">Email</td>
+                <td style="padding: 8px 12px; background: #faf8f5; border-bottom: 1px solid #f0ece6;"><a href="mailto:${customerEmail}" style="color: #c9a96e; text-decoration: none; font-weight: 500;">${customerEmail}</a></td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 12px; background: #faf8f5; border-radius: 0 0 6px 6px; color: #6b5c4e; font-size: 13px;">Phone</td>
+                <td style="padding: 8px 12px; background: #faf8f5; border-radius: 0 0 6px 6px;"><a href="tel:${customerPhone}" style="color: #c9a96e; text-decoration: none; font-weight: 500;">${customerPhone}</a></td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Appointment Info -->
+          <div style="margin-bottom: 24px;">
+            <p style="color: #9b8676; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px;">Appointment Details</p>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr>
+                <td style="padding: 8px 12px; background: #faf8f5; border-radius: 6px 6px 0 0; color: #6b5c4e; font-size: 13px; width: 100px; border-bottom: 1px solid #f0ece6; vertical-align: top;">${serviceNames.length > 1 ? 'Services' : 'Service'}</td>
+                <td style="padding: 8px 12px; background: #faf8f5; border-radius: 6px 6px 0 0; font-weight: 500; color: #1a0a00; border-bottom: 1px solid #f0ece6;">${serviceDisplay}</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 12px; background: #faf8f5; color: #6b5c4e; font-size: 13px; border-bottom: 1px solid #f0ece6;">Duration</td>
+                <td style="padding: 8px 12px; background: #faf8f5; color: #1a0a00; border-bottom: 1px solid #f0ece6;">${durationMinutes} min</td>
+              </tr>
+              <tr>
+                <td style="padding: 8px 12px; background: #faf8f5; border-radius: 0 0 6px 6px; color: #6b5c4e; font-size: 13px;">Date & Time</td>
+                <td style="padding: 8px 12px; background: #faf8f5; border-radius: 0 0 6px 6px; color: #1a0a00;">${formatDateTime(appointmentDatetime)}</td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Deposit Badge -->
+          <div style="background: linear-gradient(135deg, #f0faf2 0%, #e8f5eb 100%); border: 1px solid #a8d5b0; border-radius: 8px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; margin-bottom: ${notes ? '24px' : '0'};">
+            <div>
+              <p style="color: #2d6b3a; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 2px;">Deposit Collected</p>
+              <p style="color: #1a4523; font-size: 22px; font-weight: 700; margin: 0; font-family: Georgia, serif;">${formatPrice(depositPaidCents)}</p>
+            </div>
+            <span style="font-size: 28px;">💳</span>
+          </div>
+
+          ${notes ? `
+          <!-- Notes -->
+          <div style="background: #fffbf0; border: 1px solid #e8d9a0; border-radius: 8px; padding: 16px 20px;">
+            <p style="color: #9b8676; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 8px;">Client Notes</p>
+            <p style="color: #1a0a00; font-size: 14px; margin: 0; line-height: 1.6;">${notes}</p>
+          </div>
+          ` : ''}
+        </div>
+
+        <!-- Footer -->
+        <div style="background: #1a0a00; border-radius: 0 0 12px 12px; padding: 16px 32px; display: flex; align-items: center; justify-content: space-between;">
+          <p style="color: #9b8676; font-size: 11px; margin: 0;">Booking ID: <span style="color: #c9a96e; font-family: monospace;">${bookingId.slice(0, 8).toUpperCase()}</span></p>
+          <p style="color: #9b8676; font-size: 11px; margin: 0;">Lystic Lavish Beauty Bar</p>
         </div>
 
       </div>
@@ -177,7 +250,7 @@ export async function sendBusinessNotification(params: {
   return resend.emails.send({
     from: FROM,
     to: BUSINESS_EMAIL,
-    subject: `New Booking: ${customerName} — ${serviceName} on ${format(toZonedTime(new Date(appointmentDatetime), TIMEZONE), 'MMM d')}`,
+    subject: `New Booking: ${customerName} — ${serviceLabel} on ${formatDateShort(appointmentDatetime)}`,
     html,
   });
 }

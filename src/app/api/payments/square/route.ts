@@ -83,24 +83,31 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get service from local data (prices are in cents, same source as frontend)
-    const serviceRaw = servicesData.services.find(
-      (s) => s.id === booking.serviceId && s.is_active
+    // Resolve all service IDs — from request body if provided, else decode from booking notes
+    let serviceIds: string[] = data.serviceIds ?? [];
+    if (serviceIds.length === 0) {
+      const notesMatch = booking.notes?.match(/^\[sids:([^\]]+)\]/);
+      serviceIds = notesMatch ? notesMatch[1].split(',') : [booking.serviceId];
+    }
+
+    const serviceRaws = serviceIds.map((id) =>
+      servicesData.services.find((s) => s.id === id && s.is_active)
     );
-    if (!serviceRaw) {
+    if (serviceRaws.some((s) => !s)) {
       return NextResponse.json(
-        { success: false, error: 'Service not found' },
+        { success: false, error: 'One or more services not found' },
         { status: 404 }
       );
     }
-    const service = {
-      name: serviceRaw.name,
-      priceCents: serviceRaw.price_cents,
-      durationMinutes: serviceRaw.duration_minutes,
-    };
+    const resolvedServices = serviceRaws as NonNullable<(typeof serviceRaws)[0]>[];
+
+    const totalPriceCents = resolvedServices.reduce((sum, s) => sum + s.price_cents, 0);
+    const totalDurationMinutes = resolvedServices.reduce((sum, s) => sum + s.duration_minutes, 0);
+    const serviceNames = resolvedServices.map((s) => s.name);
+    const primaryService = resolvedServices[0];
 
     // Verify amount matches 50% deposit (same formula as PaymentForm)
-    const expectedDepositCents = Math.ceil(service.priceCents * 0.5);
+    const expectedDepositCents = Math.ceil(totalPriceCents * 0.5);
     if (data.amountCents !== expectedDepositCents) {
       console.warn(
         `[API] Amount mismatch: expected deposit ${expectedDepositCents}, got ${data.amountCents}`
@@ -110,6 +117,12 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    const service = {
+      name: primaryService.name,
+      priceCents: totalPriceCents,
+      durationMinutes: totalDurationMinutes,
+    };
 
     // Process payment with Square
     const paymentResult = await processPayment({
@@ -157,9 +170,9 @@ export async function POST(request: NextRequest) {
     let calendarEventId: string | null = null;
     try {
       calendarEventId = await createCalendarEvent({
-        summary: `${service.name} - ${booking.customerName}`,
+        summary: `${serviceNames.join(' + ')} - ${booking.customerName}`,
         description: [
-          `Service: ${service.name}`,
+          `Service: ${serviceNames.join(', ')}`,
           `Client: ${booking.customerName}`,
           `Email: ${booking.customerEmail}`,
           `Phone: ${booking.customerPhone}`,
@@ -191,11 +204,14 @@ export async function POST(request: NextRequest) {
 
     // Send confirmation emails
     try {
+      // Strip internal service prefix from notes before emailing
+      const userNotes = booking.notes?.replace(/^\[sids:[^\]]+\]\n?/, '') || undefined;
+
       await Promise.all([
         sendCustomerConfirmation({
           customerName: booking.customerName,
           customerEmail: booking.customerEmail,
-          serviceName: service.name,
+          serviceNames,
           appointmentDatetime: booking.appointmentDatetime,
           durationMinutes: service.durationMinutes,
           totalPriceCents: service.priceCents,
@@ -206,11 +222,11 @@ export async function POST(request: NextRequest) {
           customerName: booking.customerName,
           customerEmail: booking.customerEmail,
           customerPhone: booking.customerPhone,
-          serviceName: service.name,
+          serviceNames,
           appointmentDatetime: booking.appointmentDatetime,
           durationMinutes: service.durationMinutes,
           depositPaidCents: data.amountCents,
-          notes: booking.notes ?? undefined,
+          notes: userNotes,
           bookingId: booking.id,
         }),
       ]);

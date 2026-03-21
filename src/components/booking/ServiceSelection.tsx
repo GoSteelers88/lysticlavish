@@ -5,18 +5,18 @@ import Image from 'next/image';
 import { cn, formatPrice, formatDuration } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
-import { Clock, Check, ChevronRight } from 'lucide-react';
+import { Clock, Check, ChevronRight, X } from 'lucide-react';
 
 function ServiceRow({
   service,
   isSelected,
   isComingSoon,
-  onSelect,
+  onToggle,
 }: {
   service: Service;
   isSelected: boolean;
   isComingSoon: boolean;
-  onSelect: (service: Service) => void;
+  onToggle: (service: Service) => void;
 }) {
   const [expanded, setExpanded] = useState(false);
 
@@ -24,8 +24,8 @@ function ServiceRow({
     <div
       role="button"
       tabIndex={isComingSoon ? -1 : 0}
-      onClick={() => !isComingSoon && onSelect(service)}
-      onKeyDown={(e) => e.key === 'Enter' && !isComingSoon && onSelect(service)}
+      onClick={() => !isComingSoon && onToggle(service)}
+      onKeyDown={(e) => e.key === 'Enter' && !isComingSoon && onToggle(service)}
       className={cn(
         'w-full text-left rounded-2xl border-2 overflow-hidden',
         'transition-all duration-200',
@@ -47,7 +47,11 @@ function ServiceRow({
               sizes="(max-width: 640px) 96px, 128px"
             />
             {isSelected && !isComingSoon && (
-              <div className="absolute inset-0 bg-gold-500/20" />
+              <div className="absolute inset-0 bg-gold-500/20 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-full bg-gold-500 flex items-center justify-center shadow-md">
+                  <Check className="w-5 h-5 text-white" />
+                </div>
+              </div>
             )}
           </div>
         )}
@@ -64,8 +68,8 @@ function ServiceRow({
                     Coming Soon
                   </span>
                 ) : isSelected && (
-                  <span className="w-5 h-5 rounded-full bg-gold-500 flex items-center justify-center flex-shrink-0">
-                    <Check className="w-3 h-3 text-white" />
+                  <span className="px-2 py-0.5 rounded-full bg-gold-100 text-gold-700 text-xs font-medium flex-shrink-0">
+                    Added
                   </span>
                 )}
               </div>
@@ -110,15 +114,15 @@ export interface Service {
 
 interface ServiceSelectionProps {
   services: Record<string, Service[]>;
-  selectedServiceId: string | null;
-  onSelect: (service: Service) => void;
+  selectedServices: Service[];
+  onToggle: (services: Service[]) => void;
   onNext: () => void;
 }
 
 export function ServiceSelection({
   services,
-  selectedServiceId,
-  onSelect,
+  selectedServices,
+  onToggle,
   onNext,
 }: ServiceSelectionProps) {
   const [activeCategory, setActiveCategory] = useState('');
@@ -130,11 +134,18 @@ export function ServiceSelection({
     }
   }, [categories, activeCategory]);
 
-  const selectedService = selectedServiceId
-    ? Object.values(services)
-        .flat()
-        .find((s) => s.id === selectedServiceId)
-    : null;
+  const selectedIds = new Set(selectedServices.map((s) => s.id));
+
+  const handleToggle = (service: Service) => {
+    if (selectedIds.has(service.id)) {
+      onToggle(selectedServices.filter((s) => s.id !== service.id));
+    } else {
+      onToggle([...selectedServices, service]);
+    }
+  };
+
+  const totalPriceCents = selectedServices.reduce((sum, s) => sum + s.priceCents, 0);
+  const totalDurationMinutes = selectedServices.reduce((sum, s) => sum + s.durationMinutes, 0);
 
   return (
     <div className="space-y-6">
@@ -173,26 +184,47 @@ export function ServiceSelection({
           <ServiceRow
             key={service.id}
             service={service}
-            isSelected={selectedServiceId === service.id}
+            isSelected={selectedIds.has(service.id)}
             isComingSoon={service.category === 'Makeup'}
-            onSelect={onSelect}
+            onToggle={handleToggle}
           />
         ))}
       </div>
 
-      {/* Selected Service Summary & Next Button */}
-      {selectedService && (
+      {/* Selected Services Summary & Next Button */}
+      {selectedServices.length > 0 && (
         <Card variant="luxury" padding="md" className="mt-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-espresso-500">Selected Service</p>
-              <p className="font-medium text-espresso-900">{selectedService.name}</p>
-              <p className="text-sm text-espresso-600">
-                {formatDuration(selectedService.durationMinutes)} •{' '}
-                {formatPrice(selectedService.priceCents)}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-medium text-espresso-700">
+                {selectedServices.length === 1 ? '1 service selected' : `${selectedServices.length} services selected`}
               </p>
+              <div className="text-right">
+                <p className="text-xs text-espresso-500">{formatDuration(totalDurationMinutes)} total</p>
+                <p className="font-serif text-lg text-espresso-900">{formatPrice(totalPriceCents)}</p>
+              </div>
             </div>
-            <Button variant="primary" onClick={onNext}>
+
+            {/* Selected service chips */}
+            <div className="flex flex-wrap gap-2">
+              {selectedServices.map((s) => (
+                <span
+                  key={s.id}
+                  className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-gold-100 text-gold-800 text-sm"
+                >
+                  {s.name}
+                  <button
+                    type="button"
+                    onClick={() => handleToggle(s)}
+                    className="ml-1 text-gold-600 hover:text-gold-900"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              ))}
+            </div>
+
+            <Button variant="primary" onClick={onNext} fullWidth>
               Continue
               <ChevronRight className="w-4 h-4 ml-1" />
             </Button>

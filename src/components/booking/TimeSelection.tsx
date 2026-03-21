@@ -16,6 +16,7 @@ interface TimeSlot {
 
 interface TimeSelectionProps {
   serviceId: string;
+  durationMinutes: number;
   selectedDateTime: string | null;
   onSelect: (dateTime: string) => void;
   onNext: () => void;
@@ -24,6 +25,7 @@ interface TimeSelectionProps {
 
 export function TimeSelection({
   serviceId,
+  durationMinutes,
   selectedDateTime,
   onSelect,
   onNext,
@@ -71,7 +73,7 @@ export function TimeSelection({
       try {
         const dateStr = format(selectedDate, 'yyyy-MM-dd');
         const response = await fetch(
-          `/api/availability?serviceId=${serviceId}&date=${dateStr}`
+          `/api/availability?serviceId=${serviceId}&date=${dateStr}&durationMinutes=${durationMinutes}`
         );
 
         if (!response.ok) {
@@ -96,7 +98,7 @@ export function TimeSelection({
     if (serviceId) {
       fetchSlots();
     }
-  }, [selectedDate, serviceId]);
+  }, [selectedDate, serviceId, durationMinutes]);
 
   const handleDateSelect = (date: Date) => {
     setSelectedDate(date);

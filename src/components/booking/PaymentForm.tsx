@@ -15,12 +15,12 @@ import {
 
 interface PaymentFormProps {
   bookingId: string;
-  service: {
+  services: {
     id: string;
     name: string;
     durationMinutes: number;
     priceCents: number;
-  };
+  }[];
   customerInfo: {
     name: string;
     email: string;
@@ -45,7 +45,7 @@ declare global {
 
 export function PaymentForm({
   bookingId,
-  service,
+  services,
   customerInfo,
   appointmentDateTime,
   onSuccess,
@@ -58,9 +58,10 @@ export function PaymentForm({
   const cardContainerRef = useRef<HTMLDivElement>(null);
   const initializedRef = useRef(false);
 
-  // Deposit: 50% of service price (rounded up to nearest cent)
-  const depositCents = Math.ceil(service.priceCents * 0.5);
-  const remainingCents = service.priceCents - depositCents;
+  const totalPriceCents = services.reduce((sum, s) => sum + s.priceCents, 0);
+  const totalDurationMinutes = services.reduce((sum, s) => sum + s.durationMinutes, 0);
+  const depositCents = Math.ceil(totalPriceCents * 0.5);
+  const remainingCents = totalPriceCents - depositCents;
 
   // Load Square SDK
   useEffect(() => {
@@ -165,6 +166,7 @@ export function PaymentForm({
           bookingId,
           sourceId: result.token,
           amountCents: depositCents,
+          serviceIds: services.map((s) => s.id),
         }),
       });
 
@@ -198,14 +200,28 @@ export function PaymentForm({
           Booking Summary
         </h3>
         <div className="space-y-3 text-sm">
-          <div className="flex justify-between">
-            <span className="text-espresso-600">Service</span>
-            <span className="font-medium text-espresso-800">{service.name}</span>
-          </div>
+          {services.length === 1 ? (
+            <div className="flex justify-between">
+              <span className="text-espresso-600">Service</span>
+              <span className="font-medium text-espresso-800">{services[0].name}</span>
+            </div>
+          ) : (
+            <div>
+              <span className="text-espresso-600">Services</span>
+              <div className="mt-1 space-y-1">
+                {services.map((s) => (
+                  <div key={s.id} className="flex justify-between">
+                    <span className="text-espresso-800 font-medium">• {s.name}</span>
+                    <span className="text-espresso-600">{formatPrice(s.priceCents)}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
           <div className="flex justify-between">
             <span className="text-espresso-600">Duration</span>
             <span className="text-espresso-800">
-              {formatDuration(service.durationMinutes)}
+              {formatDuration(totalDurationMinutes)}
             </span>
           </div>
           <div className="flex justify-between">
@@ -222,7 +238,7 @@ export function PaymentForm({
           <div className="divider-gold !my-4" />
           <div className="flex justify-between text-sm">
             <span className="text-espresso-600">Service Total</span>
-            <span className="text-espresso-800">{formatPrice(service.priceCents)}</span>
+            <span className="text-espresso-800">{formatPrice(totalPriceCents)}</span>
           </div>
           <div className="flex justify-between text-base mt-2">
             <span className="font-medium text-espresso-900">Deposit Due Today (50%)</span>
