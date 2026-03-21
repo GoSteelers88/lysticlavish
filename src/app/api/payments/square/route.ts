@@ -12,6 +12,7 @@ import {
   validateData,
   ValidationError,
 } from '@/lib/validation/schemas';
+import { sendCustomerConfirmation, sendBusinessNotification } from '@/lib/email';
 import servicesData from '@/data/services.json';
 
 /**
@@ -186,6 +187,35 @@ export async function POST(request: NextRequest) {
     });
 
     console.log(`[API] Booking confirmed: ${booking.id}`);
+
+    // Send confirmation emails
+    try {
+      await Promise.all([
+        sendCustomerConfirmation({
+          customerName: booking.customerName,
+          customerEmail: booking.customerEmail,
+          serviceName: service.name,
+          appointmentDatetime: booking.appointmentDatetime,
+          durationMinutes: service.durationMinutes,
+          totalPriceCents: service.priceCents,
+          depositPaidCents: data.amountCents,
+          bookingId: booking.id,
+        }),
+        sendBusinessNotification({
+          customerName: booking.customerName,
+          customerEmail: booking.customerEmail,
+          customerPhone: booking.customerPhone,
+          serviceName: service.name,
+          appointmentDatetime: booking.appointmentDatetime,
+          durationMinutes: service.durationMinutes,
+          depositPaidCents: data.amountCents,
+          notes: booking.notes ?? undefined,
+          bookingId: booking.id,
+        }),
+      ]);
+    } catch (emailError) {
+      console.error('[API] Failed to send confirmation emails:', emailError);
+    }
 
     return NextResponse.json({
       success: true,
