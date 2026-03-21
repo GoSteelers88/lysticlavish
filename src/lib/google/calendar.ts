@@ -20,6 +20,7 @@ export interface CreateEventParams {
   endTime: Date;
   attendeeEmail?: string;
   attendeeName?: string;
+  ownerEmail?: string;
 }
 
 /**
@@ -154,16 +155,20 @@ export async function createCalendarEvent(
     },
   };
 
-  // Add attendee if email provided
+  // Add attendees
+  const attendees: calendar_v3.Schema$EventAttendee[] = [];
+  if (params.ownerEmail) {
+    attendees.push({ email: params.ownerEmail, responseStatus: 'accepted' });
+  }
   if (params.attendeeEmail) {
-    eventData.attendees = [
-      {
-        email: params.attendeeEmail,
-        displayName: params.attendeeName,
-        responseStatus: 'accepted',
-      },
-    ];
-    // Send notifications to attendees
+    attendees.push({
+      email: params.attendeeEmail,
+      displayName: params.attendeeName,
+      responseStatus: 'accepted',
+    });
+  }
+  if (attendees.length > 0) {
+    eventData.attendees = attendees;
     eventData.guestsCanModify = false;
     eventData.guestsCanInviteOthers = false;
   }
