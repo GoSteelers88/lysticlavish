@@ -18,9 +18,6 @@ export interface CreateEventParams {
   location?: string;
   startTime: Date;
   endTime: Date;
-  attendeeEmail?: string;
-  attendeeName?: string;
-  ownerEmail?: string;
 }
 
 /**
@@ -155,29 +152,15 @@ export async function createCalendarEvent(
     },
   };
 
-  // Add attendees
-  const attendees: calendar_v3.Schema$EventAttendee[] = [];
-  if (params.ownerEmail) {
-    attendees.push({ email: params.ownerEmail, responseStatus: 'accepted' });
-  }
-  if (params.attendeeEmail) {
-    attendees.push({
-      email: params.attendeeEmail,
-      displayName: params.attendeeName,
-      responseStatus: 'accepted',
-    });
-  }
-  if (attendees.length > 0) {
-    eventData.attendees = attendees;
-    eventData.guestsCanModify = false;
-    eventData.guestsCanInviteOthers = false;
-  }
+  // Note: service accounts cannot invite external attendees without Domain-Wide Delegation.
+  // The owner sees events because the calendar is shared with her account.
+  // Customer confirmation is handled via Resend email instead.
 
   try {
     const response = await calendar.events.insert({
       calendarId,
       requestBody: eventData,
-      sendUpdates: params.attendeeEmail ? 'all' : 'none',
+      sendUpdates: 'none',
     });
 
     const eventId = response.data.id;

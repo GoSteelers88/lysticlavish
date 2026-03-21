@@ -184,9 +184,6 @@ export async function POST(request: NextRequest) {
         location: '213 Damsenberry Way, China Grove, NC 28023',
         startTime: appointmentStart,
         endTime: appointmentEnd,
-        ownerEmail: process.env.BUSINESS_EMAIL,
-        attendeeEmail: booking.customerEmail,
-        attendeeName: booking.customerName,
       });
     } catch (calendarError) {
       // Log but don't fail the payment
