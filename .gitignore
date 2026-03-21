@@ -49,3 +49,6 @@ Thumbs.db
 .vs/
 
 .vercel
+
+.vercel
+.env*.local
