@@ -62,7 +62,7 @@ function ServiceRow({
           <div className="flex items-start justify-between gap-2">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2">
-                <h3 className="font-medium text-espresso-900 truncate">{service.name}</h3>
+                <h3 className="font-medium text-espresso-900 leading-snug">{service.name}</h3>
                 {isComingSoon ? (
                   <span className="px-2 py-0.5 rounded-full bg-nude-200 text-espresso-500 text-xs font-medium flex-shrink-0">
                     Coming Soon
