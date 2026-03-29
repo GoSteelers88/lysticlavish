@@ -90,7 +90,7 @@ export function HeroSection() {
             </div>
             <div className="w-px h-12 bg-nude-300" />
             <div className="text-center">
-              <p className="font-serif text-3xl text-gold-600">4+</p>
+              <p className="font-serif text-3xl text-gold-600">2+</p>
               <p className="text-sm text-espresso-500 mt-1">Years Experience</p>
             </div>
           </div>

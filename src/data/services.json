@@ -36,7 +36,7 @@
       "name": "Acne Facial (Grade 1 & 2)",
       "description": "Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Enzyme Exfoliation, antibacterial treatment with comedone extraction, High Frequency device to heal pustules & papules, kill bacteria & reduce inflammation, LED Light Therapy to treat acne, fade scars & hyperpigmentation, acne-specific Mask to draw out dirt, oil & sebum, and serums & moisturizer with SPF.",
       "duration_minutes": 75,
-      "price_cents": 15500,
+      "price_cents": 14500,
       "is_active": true,
       "image": "/services/acne_facial.png"
     },
@@ -44,9 +44,9 @@
       "id": "lavish-glow",
       "category": "Facials",
       "name": "Full Lavish Hydrating Glow Facial (Women / Non-Bearded Men)",
-      "description": "Great for anti-aging, skin-brightening & hyperpigmentation! Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Dermaplaning to remove dead skin & peach fuzz for brighter smoother skin, Microdermabrasion to improve tone & texture, Mask with specialized ingredients, and C-Power serum, hydrating serum & moisturizer with SPF.",
+      "description": "Great for anti-aging, skin-brightening & hyperpigmentation! Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Dermaplaning to remove dead skin & peach fuzz for brighter smoother skin, Microdermabrasion to improve tone & texture, LED light therapy, Mask with specialized ingredients, and C-Power serum, hydrating serum & moisturizer with SPF.",
       "duration_minutes": 90,
-      "price_cents": 19500,
+      "price_cents": 15500,
       "is_active": true,
       "image": "/services/lavish_glow_facial.png"
     },
@@ -54,9 +54,9 @@
       "id": "dapper-facial",
       "category": "Facials",
       "name": "Men's Custom Bearded \"Dapper than Ever\" Facial",
-      "description": "Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Dermaplaning to remove dead skin & vellus hair for brighter smoother skin, Microdermabrasion to improve tone & texture, Mask with specialized ingredients, and serums & moisturizer with SPF.",
-      "duration_minutes": 75,
-      "price_cents": 15500,
+      "description": "Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Dermaplaning to remove dead skin & vellus hair for brighter smoother skin, Microdermabrasion to improve tone & texture, LED light therapy, Mask with specialized ingredients, and serums & moisturizer with SPF. *This facial also includes a specialized beard treatment that includes beard grooming along with a warm towel wrap.*",
+      "duration_minutes": 90,
+      "price_cents": 15000,
       "is_active": true,
       "image": "/services/mens_beard_facial.png"
     },
@@ -67,7 +67,7 @@
       "description": "Includes Pre-Cleanse & skin analysis, Cleanse & Tone, extractions (if needed), Microdermabrasion using a handheld vacuum device to remove dead skin cells and improve tone & texture, Mask with specialized ingredients, and serums & moisturizer with SPF.",
       "duration_minutes": 60,
       "price_cents": 15000,
-      "is_active": true,
+      "is_active": false,
       "image": "/services/lavish_glow_facial.png"
     },
     {
@@ -76,9 +76,19 @@
       "name": "Microneedling",
       "description": "Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Microneedling with tiny needles to stimulate collagen production for more youthful skin — minimizes fine lines & wrinkles, reduces hyperpigmentation, improves texture & shrinks enlarged pores. *Minimal downtime.* Calming or hydrating Mask with natural ingredients, and serums & moisturizer with SPF.",
       "duration_minutes": 60,
-      "price_cents": 17500,
+      "price_cents": 16500,
       "is_active": true,
       "image": "/services/microneedling.png"
+    },
+    {
+      "id": "chemical-peel",
+      "category": "Facials",
+      "name": "Chemical Peel (6 Session Treatment)",
+      "description": "Improves texture, barrier function & moisture retention; increased cell turnover, hydration & intercellular lipids, reduces fine lines, wrinkles & surface pigmentation. Provides smoother and softer skin, stimulates elastin & collagen production and improves acne, clogged pores & dry skin. *$125 per session or purchase the full 6-month package for $750.*",
+      "duration_minutes": 60,
+      "price_cents": 12500,
+      "is_active": true,
+      "image": "/services/acne_facial.png"
     },
     {
       "id": "underarm-wax",
@@ -136,7 +146,27 @@
       "name": "Leg Waxing",
       "description": "Smooth, silky legs with long-lasting results.",
       "duration_minutes": 50,
+      "price_cents": 5000,
+      "is_active": true,
+      "image": "/services/waxing.png"
+    },
+    {
+      "id": "brazilian-wax",
+      "category": "Waxing",
+      "name": "Brazilian Wax",
+      "description": "Complete hair removal for a smooth, clean finish.",
+      "duration_minutes": 45,
       "price_cents": 7500,
+      "is_active": true,
+      "image": "/services/waxing.png"
+    },
+    {
+      "id": "bikini-line-wax",
+      "category": "Waxing",
+      "name": "Bikini Line Wax",
+      "description": "Clean up and define the bikini line for a polished, smooth look.",
+      "duration_minutes": 30,
+      "price_cents": 4500,
       "is_active": true,
       "image": "/services/waxing.png"
     },
@@ -219,6 +249,56 @@
       "price_cents": 13000,
       "is_active": true,
       "image": "/services/makeup_application.png"
+    },
+    {
+      "id": "addon-jade-roller",
+      "category": "Add-ons",
+      "name": "Jade Roller",
+      "description": "Soothing jade roller treatment to reduce puffiness, improve circulation, and enhance product absorption.",
+      "duration_minutes": 10,
+      "price_cents": 1000,
+      "is_active": true,
+      "image": "/services/lavish_glow_facial.png"
+    },
+    {
+      "id": "addon-high-frequency",
+      "category": "Add-ons",
+      "name": "High Frequency Device",
+      "description": "High frequency treatment to kill bacteria, reduce inflammation, and accelerate skin healing.",
+      "duration_minutes": 15,
+      "price_cents": 2000,
+      "is_active": true,
+      "image": "/services/acne_facial.png"
+    },
+    {
+      "id": "addon-microdermabrasion",
+      "category": "Add-ons",
+      "name": "Microdermabrasion",
+      "description": "Add-on microdermabrasion to improve tone & texture and remove dead skin cells.",
+      "duration_minutes": 20,
+      "price_cents": 4000,
+      "is_active": true,
+      "image": "/services/lavish_glow_facial.png"
+    },
+    {
+      "id": "addon-dermaplane",
+      "category": "Add-ons",
+      "name": "Derma-Plane",
+      "description": "Add-on dermaplaning to remove dead skin cells and vellus hair for brighter, smoother skin.",
+      "duration_minutes": 20,
+      "price_cents": 2000,
+      "is_active": true,
+      "image": "/services/lavish_glow_facial.png"
+    },
+    {
+      "id": "addon-led",
+      "category": "Add-ons",
+      "name": "LED Light Therapy",
+      "description": "Add-on LED light therapy to treat acne, reduce inflammation, boost collagen production, and improve overall skin tone.",
+      "duration_minutes": 15,
+      "price_cents": 1500,
+      "is_active": true,
+      "image": "/services/lavish_glow_facial.png"
     }
   ]
 }
