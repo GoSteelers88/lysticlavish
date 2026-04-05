@@ -98,7 +98,7 @@
       "duration_minutes": 30,
       "price_cents": 2000,
       "is_active": true,
-      "image": "/services/waxing.png"
+      "image": "/services/underarm_wax.png"
     },
     {
       "id": "chin-wax",
@@ -108,7 +108,7 @@
       "duration_minutes": 30,
       "price_cents": 1000,
       "is_active": true,
-      "image": "/services/waxing.png"
+      "image": "/services/chin_wax.png"
     },
     {
       "id": "brow-wax",
@@ -138,7 +138,7 @@
       "duration_minutes": 100,
       "price_cents": 2500,
       "is_active": true,
-      "image": "/services/waxing.png"
+      "image": "/services/full_arm_wax.png"
     },
     {
       "id": "leg-wax",
@@ -148,7 +148,7 @@
       "duration_minutes": 50,
       "price_cents": 5000,
       "is_active": true,
-      "image": "/services/waxing.png"
+      "image": "/services/leg_wax.png"
     },
     {
       "id": "brazilian-wax",

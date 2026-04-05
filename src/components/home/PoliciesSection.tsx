@@ -19,6 +19,7 @@ const policies = [
         <li>• Please arrive 5-10 minutes before your scheduled appointment.</li>
         <li>• First-time clients may need to complete a brief consultation form.</li>
         <li>• We recommend booking in advance, especially for weekends and holidays.</li>
+        <li>• The spa is located in close proximity to the China Grove exit (Exit 68). Exact location details will be provided in your booking confirmation email.</li>
       </ul>
     `,
   },
