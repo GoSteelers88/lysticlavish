@@ -258,7 +258,7 @@
       "duration_minutes": 15,
       "price_cents": 2500,
       "is_active": true,
-      "image": "/services/acne_facial.png"
+      "image": "/services/high_frequency.jpg"
     },
     {
       "id": "addon-microdermabrasion",
