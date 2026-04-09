@@ -14,7 +14,7 @@ const policies = [
     title: 'Booking & Appointments',
     content: `
       <ul class="space-y-2">
-        <li>• Appointments can be booked online only.</li>
+        <li>• Appointments can be booked online or by email request.</li>
         <li>• A valid payment method is required to secure your booking.</li>
         <li>• Please arrive 5-10 minutes before your scheduled appointment.</li>
         <li>• First-time clients may need to complete a brief consultation form.</li>
