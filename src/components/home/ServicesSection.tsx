@@ -165,7 +165,7 @@ const serviceCategories = [
         description: 'High frequency treatment to kill bacteria, reduce inflammation, and accelerate skin healing.',
         durationMinutes: 15,
         priceCents: 2500,
-        image: '/services/acne_facial.png',
+        image: '/services/high_frequency.jpg',
       },
       {
         id: 'addon-microdermabrasion',
