@@ -38,6 +38,16 @@ export function HeroSection() {
             />
           </div>
 
+          {/* Promo Banner */}
+          <div className="mb-6 animate-fade-in">
+            <div className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-gold-300 bg-gradient-to-r from-gold-100 via-white to-champagne-100 shadow-luxury">
+              <Sparkles className="w-4 h-4 text-gold-600" />
+              <span className="text-sm md:text-base font-semibold text-espresso-800">
+                20% off on first-time appointments for Waxing and Facials
+              </span>
+            </div>
+          </div>
+
           {/* Badge */}
           <div className="inline-flex items-center px-4 py-2 bg-white/60 backdrop-blur rounded-full mb-8 animate-fade-in">
             <Sparkles className="w-4 h-4 text-gold-500 mr-2" />
