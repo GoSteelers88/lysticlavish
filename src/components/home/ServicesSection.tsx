@@ -37,7 +37,7 @@ const serviceCategories = [
         description: 'Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Exfoliation to remove dead skin cells & pollution build-up with extractions (if needed), Massage for serum absorption, relaxation & microcirculation, Mask with specialized ingredients, and serums & moisturizer with SPF.',
         durationMinutes: 60,
         priceCents: 10500,
-        image: '/services/back_facial.png',
+        image: '/services/mens_back_facial.png',
       },
       {
         id: 'acne-facial',
