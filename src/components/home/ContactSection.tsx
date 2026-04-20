@@ -19,8 +19,8 @@ const businessHours = [
   { day: 'Wednesday', hours: 'Closed' },
   { day: 'Thursday', hours: '7:00 PM - 9:00 PM' },
   { day: 'Friday', hours: '7:00 PM - 9:00 PM' },
-  { day: 'Saturday', hours: '10:00 AM - 5:00 PM' },
-  { day: 'Sunday', hours: 'By Appt. (Email Request)' },
+  { day: 'Saturday', hours: '9:30 AM - 1:30 PM' },
+  { day: 'Sunday', hours: '10:30 AM - 3:00 PM' },
 ];
 
 const contactInfo = [
