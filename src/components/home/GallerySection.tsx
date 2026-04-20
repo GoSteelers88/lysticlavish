@@ -1,45 +1,45 @@
 'use client';
 
-import Image from 'next/image';
-import { Camera } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Camera } from 'lucide-react';
 
+// Placeholder gallery items - replace with real images
 const galleryItems = [
   {
     id: 1,
-    title: 'Men\'s Facial and Back Facial',
+    title: 'Luxury Facial Treatment',
     category: 'Facials',
-    image: '/services/mens_back_facial.png',
+    gradient: 'from-champagne-200 to-nude-200',
   },
   {
     id: 2,
-    title: 'Lavish Glow Facial',
-    category: 'Facials',
-    image: '/services/lavish_glow_facial.png',
+    title: 'Perfect Brow Styling',
+    category: 'Eye Enhancement',
+    gradient: 'from-gold-100 to-champagne-100',
   },
   {
     id: 3,
-    title: 'Makeup Application',
+    title: 'Bridal Makeup',
     category: 'Makeup',
-    image: '/services/makeup_application.png',
+    gradient: 'from-nude-200 to-champagne-300',
   },
   {
     id: 4,
-    title: 'Acne Facial',
+    title: 'Skin Rejuvenation',
     category: 'Facials',
-    image: '/services/acne_facial.png',
+    gradient: 'from-champagne-100 to-nude-100',
   },
   {
     id: 5,
-    title: 'Leg Waxing',
-    category: 'Waxing',
-    image: '/services/leg_wax.png',
+    title: 'Full Glam Look',
+    category: 'Makeup',
+    gradient: 'from-gold-200 to-champagne-200',
   },
   {
     id: 6,
-    title: 'Brow Lamination',
+    title: 'Brow Lamination Results',
     category: 'Eye Enhancement',
-    image: '/services/lash_and_brow_tint.png',
+    gradient: 'from-nude-100 to-champagne-200',
   },
 ];
 
@@ -75,14 +75,20 @@ export function GallerySection() {
               )}
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <Image
-                src={item.image}
-                alt={item.title}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+              {/* Placeholder gradient background */}
+              <div
+                className={cn(
+                  'absolute inset-0 bg-gradient-to-br',
+                  item.gradient
+                )}
               />
 
-              <div className="absolute inset-0 bg-black/10" />
+              {/* Placeholder icon */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-16 h-16 rounded-full bg-white/30 flex items-center justify-center">
+                  <Camera className="w-8 h-8 text-espresso-400" />
+                </div>
+              </div>
 
               {/* Hover overlay */}
               <div
@@ -125,4 +131,3 @@ export function GallerySection() {
     </section>
   );
 }
-
