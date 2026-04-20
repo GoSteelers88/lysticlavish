@@ -15,9 +15,9 @@ import {
 
 const businessHours = [
   { day: 'Monday', hours: 'Closed' },
-  { day: 'Tuesday', hours: '7:00 PM - 9:00 PM' },
+  { day: 'Tuesday', hours: 'Closed' },
   { day: 'Wednesday', hours: 'Closed' },
-  { day: 'Thursday', hours: '7:00 PM - 9:00 PM' },
+  { day: 'Thursday', hours: 'Closed' },
   { day: 'Friday', hours: '7:00 PM - 9:00 PM' },
   { day: 'Saturday', hours: '9:30 AM - 1:30 PM' },
   { day: 'Sunday', hours: '10:30 AM - 3:00 PM' },
