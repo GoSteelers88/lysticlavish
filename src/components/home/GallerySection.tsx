@@ -1,45 +1,45 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import Image from 'next/image';
 import { Camera } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
-// Placeholder gallery items - replace with real images
 const galleryItems = [
   {
     id: 1,
-    title: 'Luxury Facial Treatment',
+    title: 'Men\'s Facial and Back Facial',
     category: 'Facials',
-    gradient: 'from-champagne-200 to-nude-200',
+    image: '/services/mens_back_facial.png',
   },
   {
     id: 2,
-    title: 'Perfect Brow Styling',
-    category: 'Eye Enhancement',
-    gradient: 'from-gold-100 to-champagne-100',
+    title: 'Lavish Glow Facial',
+    category: 'Facials',
+    image: '/services/lavish_glow_facial.png',
   },
   {
     id: 3,
-    title: 'Bridal Makeup',
+    title: 'Makeup Application',
     category: 'Makeup',
-    gradient: 'from-nude-200 to-champagne-300',
+    image: '/services/makeup_application.png',
   },
   {
     id: 4,
-    title: 'Skin Rejuvenation',
+    title: 'Acne Facial',
     category: 'Facials',
-    gradient: 'from-champagne-100 to-nude-100',
+    image: '/services/acne_facial.png',
   },
   {
     id: 5,
-    title: 'Full Glam Look',
-    category: 'Makeup',
-    gradient: 'from-gold-200 to-champagne-200',
+    title: 'Leg Waxing',
+    category: 'Waxing',
+    image: '/services/leg_wax.png',
   },
   {
     id: 6,
-    title: 'Brow Lamination Results',
+    title: 'Brow Lamination',
     category: 'Eye Enhancement',
-    gradient: 'from-nude-100 to-champagne-200',
+    image: '/services/lash_and_brow_tint.png',
   },
 ];
 
@@ -75,20 +75,14 @@ export function GallerySection() {
               )}
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              {/* Placeholder gradient background */}
-              <div
-                className={cn(
-                  'absolute inset-0 bg-gradient-to-br',
-                  item.gradient
-                )}
+              <Image
+                src={item.image}
+                alt={item.title}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
 
-              {/* Placeholder icon */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 rounded-full bg-white/30 flex items-center justify-center">
-                  <Camera className="w-8 h-8 text-espresso-400" />
-                </div>
-              </div>
+              <div className="absolute inset-0 bg-black/10" />
 
               {/* Hover overlay */}
               <div
