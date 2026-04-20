@@ -28,7 +28,7 @@
       "duration_minutes": 60,
       "price_cents": 10500,
       "is_active": true,
-      "image": "/services/back_facial.png"
+      "image": "/services/mens_back_facial.png"
     },
     {
       "id": "acne-facial",
