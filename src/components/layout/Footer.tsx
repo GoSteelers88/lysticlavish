@@ -28,7 +28,7 @@ const services = [
 ];
 
 const socials = [
-  { name: 'Instagram', icon: Instagram, href: 'https://www.instagram.com/llbrandowner' },
+  { name: 'Instagram', icon: Instagram, href: 'https://www.instagram.com/Lysticlavish' },
 ];
 
 export function Footer() {
@@ -171,3 +171,4 @@ export function Footer() {
     </footer>
   );
 }
+

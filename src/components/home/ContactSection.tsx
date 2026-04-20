@@ -48,8 +48,8 @@ const socials = [
   {
     name: 'Instagram',
     icon: Instagram,
-    href: 'https://www.instagram.com/llbrandowner',
-    handle: '@llbrandowner',
+    href: 'https://www.instagram.com/Lysticlavish',
+    handle: '@Lysticlavish',
   },
 ];
 
@@ -209,3 +209,4 @@ export function ContactSection() {
     </section>
   );
 }
+
