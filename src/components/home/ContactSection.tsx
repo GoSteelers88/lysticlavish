@@ -19,8 +19,8 @@ const businessHours = [
   { day: 'Wednesday', hours: 'Closed' },
   { day: 'Thursday', hours: 'Closed' },
   { day: 'Friday', hours: '7:00 PM - 9:00 PM' },
-  { day: 'Saturday', hours: '9:30 AM - 1:30 PM' },
-  { day: 'Sunday', hours: '10:30 AM - 3:00 PM' },
+  { day: 'Saturday', hours: '10:00 AM - 5:00 PM' },
+  { day: 'Sunday', hours: '1:00 PM - 4:00 PM' },
 ];
 
 const contactInfo = [
@@ -48,8 +48,8 @@ const socials = [
   {
     name: 'Instagram',
     icon: Instagram,
-    href: 'https://www.instagram.com/Lysticlavish',
-    handle: '@Lysticlavish',
+    href: 'https://www.instagram.com/lysticlavishbeautybar?igsh=MWRpYTN3OGU2MjVvcg%3D%3D&utm_source=qr',
+    handle: '@lysticlavishbeautybar',
   },
 ];
 

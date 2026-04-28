@@ -28,7 +28,7 @@ const services = [
 ];
 
 const socials = [
-  { name: 'Instagram', icon: Instagram, href: 'https://www.instagram.com/Lysticlavish' },
+  { name: 'Instagram', icon: Instagram, href: 'https://www.instagram.com/lysticlavishbeautybar?igsh=MWRpYTN3OGU2MjVvcg%3D%3D&utm_source=qr' },
 ];
 
 export function Footer() {
@@ -145,8 +145,10 @@ export function Footer() {
               <li className="flex items-start text-champagne-300 text-sm">
                 <Clock className="w-4 h-4 mr-3 mt-0.5 flex-shrink-0" />
                 <div>
+                  <p>Friday: 7PM - 9PM</p>
                   <p>Saturday: 10AM - 5PM</p>
-                  <p>Sunday – Friday: Closed</p>
+                  <p>Sunday: 1PM - 4PM</p>
+                  <p>Monday – Thursday: Closed</p>
                 </div>
               </li>
             </ul>
