@@ -50,7 +50,7 @@ const serviceCategories = [
       {
         id: 'lavish-glow',
         name: 'Full Lavish Hydrating Glow Facial',
-        description: 'Great for anti-aging, skin-brightening & hyperpigmentation! Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Dermaplaning to remove dead skin & peach fuzz for brighter smoother skin, Microdermabrasion to improve tone & texture, extractions (if needed), LED light therapy, Mask with specialized ingredients, and C-Power serum, hydrating serum & moisturizer with SPF.',
+        description: 'Great for anti-aging, skin-brightening & hyperpigmentation! Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Dermaplaning to remove dead skin & peach fuzz for brighter smoother skin, Microdermabrasion to improve tone & texture, extractions (if needed), LED light therapy, Hydrojelly Mask with specialized ingredients, and C-Power serum, hydrating serum & moisturizer with SPF.',
         durationMinutes: 90,
         priceCents: 17500,
         featured: true,
