@@ -181,7 +181,7 @@ const serviceCategories = [
         description: 'Add-on dermaplaning to remove dead skin cells and vellus hair for brighter, smoother skin.',
         durationMinutes: 20,
         priceCents: 2000,
-        image: '/services/lavish_glow_facial.png',
+        image: '/services/dermaplane_new.png',
       },
       {
         id: 'addon-led',
