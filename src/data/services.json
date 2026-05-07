@@ -281,6 +281,16 @@
       "image": "/services/dermaplane_new.png"
     },
     {
+      "id": "addon-hydrojelly-mask",
+      "category": "Add-ons",
+      "name": "Hydrojelly Mask",
+      "description": "Add-on Hydrojelly Mask with specialized ingredients to hydrate, soothe, and enhance your facial treatment.",
+      "duration_minutes": 15,
+      "price_cents": 2000,
+      "is_active": true,
+      "image": "/services/hydrojelly_mask.png"
+    },
+    {
       "id": "addon-led",
       "category": "Add-ons",
       "name": "LED Light Therapy",

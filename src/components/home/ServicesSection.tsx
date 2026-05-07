@@ -184,6 +184,14 @@ const serviceCategories = [
         image: '/services/dermaplane_new.png',
       },
       {
+        id: 'addon-hydrojelly-mask',
+        name: 'Hydrojelly Mask',
+        description: 'Add-on Hydrojelly Mask with specialized ingredients to hydrate, soothe, and enhance your facial treatment.',
+        durationMinutes: 15,
+        priceCents: 2000,
+        image: '/services/hydrojelly_mask.png',
+      },
+      {
         id: 'addon-led',
         name: 'LED Light Therapy',
         description: 'Add-on LED light therapy to treat acne, reduce inflammation, boost collagen production, and improve overall skin tone.',
