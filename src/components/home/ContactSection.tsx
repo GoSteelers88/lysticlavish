@@ -19,7 +19,7 @@ const businessHours = [
   { day: 'Wednesday', hours: 'Closed' },
   { day: 'Thursday', hours: 'Closed' },
   { day: 'Friday', hours: '7:00 PM - 9:00 PM' },
-  { day: 'Saturday', hours: '10:00 AM - 5:00 PM' },
+  { day: 'Saturday', hours: '10:00 AM - 4:00 PM' },
   { day: 'Sunday', hours: '1:00 PM - 4:00 PM' },
 ];
 

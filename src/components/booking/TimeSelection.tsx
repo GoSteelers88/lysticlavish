@@ -125,7 +125,7 @@ export function TimeSelection({
           Select a Date
         </h3>
         <p className="text-sm text-espresso-500 mb-4">
-          Available <span className="font-medium text-espresso-700">Tue, Thu &amp; Fri 7–9 PM</span> and <span className="font-medium text-espresso-700">Saturdays 10 AM–5 PM</span>. Questions?{' '}
+          Available <span className="font-medium text-espresso-700">Tue, Thu &amp; Fri 7–9 PM</span> and <span className="font-medium text-espresso-700">Saturdays 10 AM–4 PM</span>. Questions?{' '}
           <a href="tel:+18555532242" className="text-gold-600 hover:text-gold-700">855-553-2242</a>.
         </p>
 
