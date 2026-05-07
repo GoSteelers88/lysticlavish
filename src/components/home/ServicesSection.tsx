@@ -59,7 +59,7 @@ const serviceCategories = [
       {
         id: 'dapper-facial',
         name: 'Men\'s Custom Bearded "Dapper than Ever" Facial',
-        description: 'Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Dermaplaning to remove dead skin & vellus hair for brighter smoother skin, Microdermabrasion to improve tone & texture, extractions (if needed), Mask with specialized ingredients, and serums & moisturizer with SPF.',
+        description: 'Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Dermaplaning to remove dead skin & vellus hair for brighter smoother skin, Microdermabrasion to improve tone & texture, extractions (if needed), LED light therapy, Hydrojelly Mask with specialized ingredients, and serums & moisturizer with SPF. *This facial also includes a specialized beard treatment that includes beard grooming along with a warm towel wrap.',
         durationMinutes: 75,
         priceCents: 16000,
         image: '/services/mens_beard_facial.png',
