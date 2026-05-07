@@ -189,7 +189,7 @@ const serviceCategories = [
         description: 'Add-on LED light therapy to treat acne, reduce inflammation, boost collagen production, and improve overall skin tone.',
         durationMinutes: 15,
         priceCents: 2000,
-        image: '/services/lavish_glow_facial.png',
+        image: '/services/led_light_therapy_new.png',
       },
     ],
   },
