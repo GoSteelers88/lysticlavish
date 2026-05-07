@@ -20,7 +20,7 @@ const serviceCategories = [
         description: 'On the go?! The "Lunch Break" facial — includes Pre-Cleanse, skin analysis, Cleanse & Tone, Exfoliation, Mask, and SPF protection. *Does not include extractions or massage.*',
         durationMinutes: 30,
         priceCents: 6500,
-        image: '/services/mini_facial.png',
+        image: '/services/mini_facial_new.png',
       },
       {
         id: 'basic-facial-women',
