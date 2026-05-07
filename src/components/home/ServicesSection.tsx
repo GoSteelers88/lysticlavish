@@ -29,7 +29,7 @@ const serviceCategories = [
         durationMinutes: 60,
         priceCents: 9500,
         featured: true,
-        image: '/services/back_facial.png',
+        image: '/services/womens_back_facial.png',
       },
       {
         id: 'basic-facial-men',
