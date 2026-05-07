@@ -45,7 +45,7 @@ const serviceCategories = [
         description: 'Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Enzyme Exfoliation, antibacterial treatment with comedone extraction, High Frequency device to heal pustules & papules, kill bacteria & reduce inflammation, LED Light Therapy to treat acne, fade scars & hyperpigmentation, acne-specific Mask to draw out dirt, oil & sebum, soothing jade roller treatment to reduce puffiness, improve circulation, and enhance product absorption, and serums & moisturizer with SPF.',
         durationMinutes: 75,
         priceCents: 15500,
-        image: '/services/acne_facial.png',
+        image: '/services/acne_facial_new.png',
       },
       {
         id: 'lavish-glow',
