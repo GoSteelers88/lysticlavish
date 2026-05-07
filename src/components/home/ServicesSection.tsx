@@ -173,7 +173,7 @@ const serviceCategories = [
         description: 'Add-on microdermabrasion to improve tone & texture and remove dead skin cells.',
         durationMinutes: 20,
         priceCents: 4000,
-        image: '/services/lavish_glow_facial.png',
+        image: '/services/microdermabrasion_new.png',
       },
       {
         id: 'addon-dermaplane',
