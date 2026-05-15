@@ -46,12 +46,6 @@ export function HeroSection() {
                 20% off on first-time appointments for Brazilian style waxing and Facials
               </span>
             </div>
-            <div className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-gold-300 bg-white/80 shadow-soft">
-              <Star className="w-4 h-4 text-gold-600 flex-shrink-0" />
-              <span className="text-sm md:text-base font-semibold text-espresso-800">
-                Mother's Day Special: Moms receive an extra 15% off any single service
-              </span>
-            </div>
           </div>
 
           {/* Badge */}
