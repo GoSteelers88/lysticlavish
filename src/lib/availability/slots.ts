@@ -32,13 +32,13 @@ function getBusinessHours(): DaySchedule {
   if (!hoursJson) {
     // Default business hours
     return {
-      monday: null,
-      tuesday: { open: '19:00', close: '21:00' },
-      wednesday: null,
-      thursday: { open: '19:00', close: '21:00' },
-      friday: { open: '19:00', close: '21:00' },
-      saturday: { open: '10:00', close: '16:00' },
-      sunday: null,
+      monday: { open: '10:00', close: '15:00' },
+      tuesday: { open: '10:00', close: '15:00' },
+      wednesday: { open: '10:00', close: '15:00' },
+      thursday: { open: '10:00', close: '15:00' },
+      friday: { open: '10:00', close: '15:00' },
+      saturday: { open: '10:00', close: '15:00' },
+      sunday: { open: '10:00', close: '15:00' },
     };
   }
 
