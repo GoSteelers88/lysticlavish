@@ -54,7 +54,7 @@ export function HeroSection() {
           {/* Logo */}
           <div className="flex justify-center mb-8 animate-fade-in">
             <Image
-              src="/lystic-logo-new.png"
+              src="/lystic-logo-transparent.png"
               alt="Lystic Lavish Beauty Bar"
               width={600}
               height={240}
