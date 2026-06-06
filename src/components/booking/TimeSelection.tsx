@@ -48,13 +48,13 @@ export function TimeSelection({
   const [error, setError] = useState<string | null>(null);
   const [visibleDates, setVisibleDates] = useState<Date[]>([]);
 
-  // Generate visible available dates (Sundays only, next 60 days)
+  // Generate visible available dates (Saturdays + Sundays, next 60 days)
   useEffect(() => {
     const dates: Date[] = [];
     let date = startOfDay(new Date());
 
     for (let i = 0; i < 60; i++) {
-      if (date.getDay() === 0) {
+      if (date.getDay() === 6 || date.getDay() === 0) {
         dates.push(date);
       }
       date = addDays(date, 1);
@@ -124,7 +124,7 @@ export function TimeSelection({
           Select a Date
         </h3>
         <p className="text-sm text-espresso-500 mb-4">
-          Available <span className="font-medium text-espresso-700">Sundays, 10 AM–3 PM</span>. Questions?{' '}
+          Available <span className="font-medium text-espresso-700">Saturdays 10 AM–4 PM &amp; Sundays 10 AM–3 PM</span>. Questions?{' '}
           <a href="tel:+18555532242" className="text-gold-600 hover:text-gold-700">855-553-2242</a>.
         </p>
 

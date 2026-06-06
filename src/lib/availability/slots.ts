@@ -37,7 +37,7 @@ function getBusinessHours(): DaySchedule {
       wednesday: null,
       thursday: null,
       friday: null,
-      saturday: null,
+      saturday: { open: '10:00', close: '16:00' },
       sunday: { open: '10:00', close: '15:00' },
     };
   }
