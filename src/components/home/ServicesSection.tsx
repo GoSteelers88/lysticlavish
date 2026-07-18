@@ -72,6 +72,14 @@ const serviceCategories = [
         priceCents: 16500,
         image: '/services/microneedling.png',
       },
+      {
+        id: 'chemical-peel',
+        name: 'Chemical Peel (6 Session Treatment)',
+        description: 'Improves texture, barrier function & moisture retention; increased cell turnover, hydration & intercellular lipids, reduces fine lines, wrinkles & surface pigmentation. Provides smoother and softer skin, stimulates elastin & collagen production and improves acne, clogged pores & dry skin. *$125 per session or purchase the full 6-month package for $750.*',
+        durationMinutes: 60,
+        priceCents: 12500,
+        image: '/services/chemical_peel_new.png',
+      },
     ],
   },
   {

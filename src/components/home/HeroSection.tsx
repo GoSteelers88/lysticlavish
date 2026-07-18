@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/Button';
-import { Sparkles, Star } from 'lucide-react';
+import { BadgePercent, Sparkles, Star } from 'lucide-react';
 
 export function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -61,6 +61,16 @@ export function HeroSection() {
               className="h-48 md:h-64 w-auto drop-shadow-2xl"
               priority
             />
+          </div>
+
+          {/* Promo Banner */}
+          <div className="mb-6 flex justify-center animate-fade-in">
+            <div className="inline-flex max-w-full items-center gap-3 rounded-full border border-gold-300/70 bg-white/90 px-5 py-3 shadow-luxury backdrop-blur">
+              <BadgePercent className="w-5 h-5 text-gold-600 flex-shrink-0" />
+              <span className="text-sm md:text-base font-semibold text-espresso-900 text-center">
+                Back Facial Special: Book now for just $65
+              </span>
+            </div>
           </div>
 
           {/* Badge */}
