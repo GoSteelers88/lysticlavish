@@ -15,12 +15,12 @@ import {
 
 const businessHours = [
   { day: 'Monday', hours: 'Closed' },
-  { day: 'Tuesday', hours: 'Closed' },
+  { day: 'Tuesday', hours: '7:00 PM - 9:00 PM' },
   { day: 'Wednesday', hours: 'Closed' },
-  { day: 'Thursday', hours: 'Closed' },
-  { day: 'Friday', hours: 'Closed' },
-  { day: 'Saturday', hours: '10:00 AM - 4:00 PM' },
-  { day: 'Sunday', hours: '10:00 AM - 3:00 PM' },
+  { day: 'Thursday', hours: '7:00 PM - 9:00 PM' },
+  { day: 'Friday', hours: '7:00 PM - 9:00 PM' },
+  { day: 'Saturday', hours: 'Closed' },
+  { day: 'Sunday', hours: 'Closed' },
 ];
 
 const contactInfo = [
