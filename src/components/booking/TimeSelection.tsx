@@ -32,7 +32,7 @@ export function TimeSelection({
   onBack,
 }: TimeSelectionProps) {
   const getFirstAvailableDate = () => {
-    const availableDays = [2, 4, 5]; // Tue, Thu, Fri
+    const availableDays = [3, 4, 5, 6, 0]; // Wed, Thu, Fri, Sat, Sun
     let date = startOfDay(new Date());
     while (!availableDays.includes(date.getDay())) {
       date = addDays(date, 1);
@@ -48,13 +48,13 @@ export function TimeSelection({
   const [error, setError] = useState<string | null>(null);
   const [visibleDates, setVisibleDates] = useState<Date[]>([]);
 
-  // Generate visible available dates (Tuesday, Thursday, Friday, next 60 days)
+  // Generate visible available dates (Wednesday-Sunday, next 60 days)
   useEffect(() => {
     const dates: Date[] = [];
     let date = startOfDay(new Date());
 
     for (let i = 0; i < 60; i++) {
-      if ([2, 4, 5].includes(date.getDay())) {
+      if ([3, 4, 5, 6, 0].includes(date.getDay())) {
         dates.push(date);
       }
       date = addDays(date, 1);
@@ -124,7 +124,7 @@ export function TimeSelection({
           Select a Date
         </h3>
         <p className="text-sm text-espresso-500 mb-4">
-          Available <span className="font-medium text-espresso-700">Tuesdays, Thursdays, and Fridays 7 PM - 9 PM</span>. Questions?{' '}
+          Available <span className="font-medium text-espresso-700">Wednesday-Friday 7 PM - 9 PM, Saturday 10 AM - 5 PM, and Sunday 10 AM - 3 PM</span>. Questions?{' '}
           <a href="tel:+18555532242" className="text-gold-600 hover:text-gold-700">855-553-2242</a>.
         </p>
 
