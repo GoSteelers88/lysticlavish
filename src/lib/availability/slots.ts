@@ -2,6 +2,7 @@ import { addMinutes, format, parse, isBefore, isAfter, startOfDay, addDays } fro
 import { toZonedTime, fromZonedTime } from 'date-fns-tz';
 import { getCalendarEvents, getBusinessTimezone, CalendarEvent } from '../google/calendar';
 import { getBookingsForDate } from '../google/sheets';
+import { BUSINESS_HOURS, dayKeyForIndex, type DaySchedule } from '@/config/businessHours';
 
 // ============================================
 // Types
@@ -14,40 +15,15 @@ export interface TimeSlot {
   available: boolean;
 }
 
-export interface BusinessHours {
-  open: string; // "HH:MM" format
-  close: string; // "HH:MM" format
-}
-
-export interface DaySchedule {
-  [key: string]: BusinessHours | null; // null = closed
-}
+export type { BusinessHours, DaySchedule } from '@/config/businessHours';
 
 // ============================================
 // Configuration
 // ============================================
 
+// Hours live in src/config/businessHours.ts (single source of truth).
 function getBusinessHours(): DaySchedule {
-  const hoursJson = process.env.BUSINESS_HOURS_JSON;
-  if (!hoursJson) {
-    // Default business hours
-    return {
-      monday: null,
-      tuesday: null,
-      wednesday: { open: '19:00', close: '21:00' },
-      thursday: { open: '19:00', close: '21:00' },
-      friday: { open: '19:00', close: '21:00' },
-      saturday: { open: '10:00', close: '17:00' },
-      sunday: { open: '10:00', close: '15:00' },
-    };
-  }
-
-  try {
-    return JSON.parse(hoursJson);
-  } catch {
-    console.error('[Availability] Failed to parse BUSINESS_HOURS_JSON');
-    throw new Error('Invalid business hours configuration');
-  }
+  return BUSINESS_HOURS;
 }
 
 function getBufferMinutes(): number {
@@ -69,9 +45,8 @@ function getBookingWindowDays(): number {
 /**
  * Get the day of week key for business hours lookup.
  */
-function getDayKey(date: Date): string {
-  const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-  return days[date.getDay()];
+function getDayKey(date: Date) {
+  return dayKeyForIndex(date.getDay());
 }
 
 /**

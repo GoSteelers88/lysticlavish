@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { ChevronLeft, ChevronRight, Calendar, Clock, Loader2 } from 'lucide-react';
+import { isOpenOnDay, getHoursSentence } from '@/config/businessHours';
 
 interface TimeSlot {
   startTime: string;
@@ -32,9 +33,8 @@ export function TimeSelection({
   onBack,
 }: TimeSelectionProps) {
   const getFirstAvailableDate = () => {
-    const availableDays = [3, 4, 5, 6, 0]; // Wed, Thu, Fri, Sat, Sun
     let date = startOfDay(new Date());
-    while (!availableDays.includes(date.getDay())) {
+    while (!isOpenOnDay(date.getDay())) {
       date = addDays(date, 1);
     }
     return date;
@@ -48,13 +48,13 @@ export function TimeSelection({
   const [error, setError] = useState<string | null>(null);
   const [visibleDates, setVisibleDates] = useState<Date[]>([]);
 
-  // Generate visible available dates (Wednesday-Sunday, next 60 days)
+  // Generate visible available dates (open days from businessHours, next 60 days)
   useEffect(() => {
     const dates: Date[] = [];
     let date = startOfDay(new Date());
 
     for (let i = 0; i < 60; i++) {
-      if ([3, 4, 5, 6, 0].includes(date.getDay())) {
+      if (isOpenOnDay(date.getDay())) {
         dates.push(date);
       }
       date = addDays(date, 1);
@@ -124,7 +124,7 @@ export function TimeSelection({
           Select a Date
         </h3>
         <p className="text-sm text-espresso-500 mb-4">
-          Available <span className="font-medium text-espresso-700">Wednesday-Friday 7 PM - 9 PM, Saturday 10 AM - 5 PM, and Sunday 10 AM - 3 PM</span>. Questions?{' '}
+          Available <span className="font-medium text-espresso-700">{getHoursSentence()}</span>. Questions?{' '}
           <a href="tel:+18555532242" className="text-gold-600 hover:text-gold-700">855-553-2242</a>.
         </p>
 

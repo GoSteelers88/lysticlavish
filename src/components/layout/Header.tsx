@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
 import { Menu, X, Phone, Clock, MapPin } from 'lucide-react';
+import { getCompactHoursSummary } from '@/config/businessHours';
 
 const navigation = [
   { name: 'Services', href: '/#services' },
@@ -65,7 +66,7 @@ export function Header() {
               </a>
               <span className="flex items-center">
                 <Clock className="w-4 h-4 mr-2" />
-                Wed–Fri 7PM–9PM · Sat 10AM–5PM · Sun 10AM–3PM
+                {getCompactHoursSummary()}
               </span>
             </div>
             <span className="flex items-center">
