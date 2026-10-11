@@ -30,6 +30,7 @@ export async function sendCustomerConfirmation(params: {
   totalPriceCents: number;
   depositPaidCents: number;
   bookingId: string;
+  paymentMethod?: 'card_deposit' | 'affirm';
 }) {
   const {
     customerName,
@@ -40,9 +41,11 @@ export async function sendCustomerConfirmation(params: {
     totalPriceCents,
     depositPaidCents,
     bookingId,
+    paymentMethod = 'card_deposit',
   } = params;
 
   const balanceDueCents = totalPriceCents - depositPaidCents;
+  const paidLabel = paymentMethod === 'affirm' ? 'Paid with Affirm' : 'Deposit Paid';
   const serviceLabel = serviceNames.length === 1 ? serviceNames[0] : serviceNames.join(', ');
   const serviceListHtml = serviceNames.length === 1
     ? `<td style="padding: 6px 0; color: #1a0a00; font-weight: bold;">${serviceNames[0]}</td>`
@@ -93,7 +96,7 @@ export async function sendCustomerConfirmation(params: {
                 <td style="padding: 4px 0; color: #1a0a00; text-align: right;">${formatPrice(totalPriceCents)}</td>
               </tr>
               <tr>
-                <td style="padding: 4px 0; color: #6b5c4e;">Deposit Paid</td>
+                <td style="padding: 4px 0; color: #6b5c4e;">${paidLabel}</td>
                 <td style="padding: 4px 0; color: #2d7a3a; text-align: right;">− ${formatPrice(depositPaidCents)}</td>
               </tr>
               <tr style="border-top: 1px solid #e8e0d8;">
@@ -140,6 +143,7 @@ export async function sendBusinessNotification(params: {
   depositPaidCents: number;
   notes?: string;
   bookingId: string;
+  paymentMethod?: 'card_deposit' | 'affirm';
 }) {
   const {
     customerName,
@@ -151,7 +155,15 @@ export async function sendBusinessNotification(params: {
     depositPaidCents,
     notes,
     bookingId,
+    paymentMethod = 'card_deposit',
   } = params;
+
+  const collectedLabel =
+    paymentMethod === 'affirm' ? 'Paid in Full with Affirm' : 'Deposit Collected';
+  const collectedNote =
+    paymentMethod === 'affirm'
+      ? '<p style="color: #2d6b3a; font-size: 12px; margin: 4px 0 0;">Nothing to collect at the appointment. Affirm pays out in 2–3 business days.</p>'
+      : '';
 
   const serviceLabel = serviceNames.length === 1 ? serviceNames[0] : serviceNames.join(' + ');
   const serviceDisplay = serviceNames.length === 1
@@ -221,8 +233,9 @@ export async function sendBusinessNotification(params: {
           <!-- Deposit Badge -->
           <div style="background: linear-gradient(135deg, #f0faf2 0%, #e8f5eb 100%); border: 1px solid #a8d5b0; border-radius: 8px; padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; margin-bottom: ${notes ? '24px' : '0'};">
             <div>
-              <p style="color: #2d6b3a; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 2px;">Deposit Collected</p>
+              <p style="color: #2d6b3a; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 2px;">${collectedLabel}</p>
               <p style="color: #1a4523; font-size: 22px; font-weight: 700; margin: 0; font-family: Georgia, serif;">${formatPrice(depositPaidCents)}</p>
+              ${collectedNote}
             </div>
             <span style="font-size: 28px;">💳</span>
           </div>

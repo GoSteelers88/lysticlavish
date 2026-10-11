@@ -1,19 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { addMinutes } from 'date-fns';
 import { processPayment, getClientConfig } from '@/lib/square/client';
 import {
   getBookingById,
-  updateBooking,
+  getPaymentsByBookingId,
   createPayment,
+  updatePayment,
 } from '@/lib/google/sheets';
-import { createCalendarEvent } from '@/lib/google/calendar';
+import {
+  resolveBookingServices,
+  confirmPaidBooking,
+  findOtherActivePayment,
+} from '@/lib/bookings/confirm';
 import {
   processPaymentSchema,
   validateData,
   ValidationError,
 } from '@/lib/validation/schemas';
-import { sendCustomerConfirmation, sendBusinessNotification } from '@/lib/email';
-import servicesData from '@/data/services.json';
 
 /**
  * GET /api/payments/square
@@ -83,28 +85,36 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Resolve all service IDs — from request body if provided, else decode from booking notes
-    let serviceIds: string[] = data.serviceIds ?? [];
-    if (serviceIds.length === 0) {
-      const notesMatch = booking.notes?.match(/^\[sids:([^\]]+)\]/);
-      serviceIds = notesMatch ? notesMatch[1].split(',') : [booking.serviceId];
+    // Quick check: an Affirm loan in progress (or any non-failed payment) means
+    // this booking must not be charged by card. The claim below is what
+    // actually guarantees one payment per booking; this just avoids a row.
+    const activePayments = (await getPaymentsByBookingId(booking.id)).filter(
+      (p) => p.status !== 'failed'
+    );
+    if (activePayments.length > 0) {
+      console.warn(
+        `[API] Card payment refused: booking ${booking.id} already has payment ${activePayments[0].squarePaymentId} (${activePayments[0].paymentMethod}, ${activePayments[0].status})`
+      );
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'This booking already has a payment in progress. Please contact us if you need help.',
+        },
+        { status: 409 }
+      );
     }
 
-    const serviceRaws = serviceIds.map((id) =>
-      servicesData.services.find((s) => s.id === id && s.is_active)
-    );
-    if (serviceRaws.some((s) => !s)) {
+    // Services come from the booking itself — never from the request body,
+    // which the browser controls
+    const bookingServices = resolveBookingServices(booking);
+    if (!bookingServices) {
       return NextResponse.json(
         { success: false, error: 'One or more services not found' },
         { status: 404 }
       );
     }
-    const resolvedServices = serviceRaws as NonNullable<(typeof serviceRaws)[0]>[];
-
-    const totalPriceCents = resolvedServices.reduce((sum, s) => sum + s.price_cents, 0);
-    const totalDurationMinutes = resolvedServices.reduce((sum, s) => sum + s.duration_minutes, 0);
-    const serviceNames = resolvedServices.map((s) => s.name);
-    const primaryService = resolvedServices[0];
+    const { totalPriceCents } = bookingServices;
+    const primaryService = bookingServices.services[0];
 
     // Verify amount matches 50% deposit (same formula as PaymentForm)
     const expectedDepositCents = Math.ceil(totalPriceCents * 0.5);
@@ -118,28 +128,44 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const service = {
-      name: primaryService.name,
-      priceCents: totalPriceCents,
-      durationMinutes: totalDurationMinutes,
-    };
+    // Claim the booking: record this payment before charging, then make sure
+    // no other payment (e.g. Affirm) started on it at the same moment
+    const reservation = await createPayment({
+      bookingId: booking.id,
+      squarePaymentId: 'card-pending',
+      amountCents: data.amountCents,
+      status: 'pending',
+      paymentMethod: 'card',
+    });
+    const otherPayment = await findOtherActivePayment(booking.id, reservation.id);
+    if (otherPayment) {
+      await updatePayment(reservation.id, { status: 'failed' });
+      console.warn(
+        `[API] Card payment refused: booking ${booking.id} claimed by ${otherPayment.paymentMethod} ${otherPayment.squarePaymentId}`
+      );
+      return NextResponse.json(
+        {
+          success: false,
+          error: 'This booking already has a payment in progress. Please contact us if you need help.',
+        },
+        { status: 409 }
+      );
+    }
 
     // Process payment with Square
     const paymentResult = await processPayment({
       sourceId: data.sourceId,
       amountCents: data.amountCents,
-      note: `Lystic Lavish - ${service.name} for ${booking.customerName}`,
+      note: `Lystic Lavish - ${primaryService.name} for ${booking.customerName}`,
       referenceId: booking.id,
     });
 
     if (!paymentResult.success || !paymentResult.paymentId) {
       console.error('[API] Payment failed:', paymentResult.error);
 
-      // Create failed payment record
-      await createPayment({
-        bookingId: booking.id,
+      // Record the failed payment
+      await updatePayment(reservation.id, {
         squarePaymentId: paymentResult.paymentId || 'failed',
-        amountCents: data.amountCents,
         status: 'failed',
         paymentMethod: paymentResult.cardBrand || 'unknown',
       });
@@ -154,82 +180,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create payment record
-    const payment = await createPayment({
-      bookingId: booking.id,
+    // Record the completed payment
+    const payment = await updatePayment(reservation.id, {
       squarePaymentId: paymentResult.paymentId,
-      amountCents: data.amountCents,
       status: 'completed',
       paymentMethod: paymentResult.cardBrand || 'card',
     });
-
-    // Create calendar event
-    const appointmentStart = new Date(booking.appointmentDatetime);
-    const appointmentEnd = addMinutes(appointmentStart, service.durationMinutes);
-
-    let calendarEventId: string | null = null;
-    try {
-      calendarEventId = await createCalendarEvent({
-        summary: `${serviceNames.join(' + ')} - ${booking.customerName}`,
-        description: [
-          `Service: ${serviceNames.join(', ')}`,
-          `Client: ${booking.customerName}`,
-          `Email: ${booking.customerEmail}`,
-          `Phone: ${booking.customerPhone}`,
-          booking.notes ? `Notes: ${booking.notes}` : '',
-          `Booking ID: ${booking.id}`,
-        ]
-          .filter(Boolean)
-          .join('\n'),
-        location: '213 Damsenberry Way, China Grove, NC 28023',
-        startTime: appointmentStart,
-        endTime: appointmentEnd,
-      });
-    } catch (calendarError) {
-      // Log but don't fail the payment
-      console.error('[API] Failed to create calendar event:', calendarError);
+    if (!payment) {
+      throw new Error(`Payment row ${reservation.id} not found after charging ${paymentResult.paymentId}`);
     }
 
-    // Update booking to confirmed
-    const confirmedBooking = await updateBooking(booking.id, {
-      status: 'confirmed',
-      paymentId: payment.id,
-      calendarEventId,
+    // Calendar event, confirm booking, emails
+    const { confirmedBooking, calendarEventId } = await confirmPaidBooking({
+      booking,
+      bookingServices,
+      payment,
+      amountPaidCents: data.amountCents,
+      paymentMethod: 'card_deposit',
     });
-
-    console.log(`[API] Booking confirmed: ${booking.id}`);
-
-    // Send confirmation emails
-    try {
-      // Strip internal service prefix from notes before emailing
-      const userNotes = booking.notes?.replace(/^\[sids:[^\]]+\]\n?/, '') || undefined;
-
-      await Promise.all([
-        sendCustomerConfirmation({
-          customerName: booking.customerName,
-          customerEmail: booking.customerEmail,
-          serviceNames,
-          appointmentDatetime: booking.appointmentDatetime,
-          durationMinutes: service.durationMinutes,
-          totalPriceCents: service.priceCents,
-          depositPaidCents: data.amountCents,
-          bookingId: booking.id,
-        }),
-        sendBusinessNotification({
-          customerName: booking.customerName,
-          customerEmail: booking.customerEmail,
-          customerPhone: booking.customerPhone,
-          serviceNames,
-          appointmentDatetime: booking.appointmentDatetime,
-          durationMinutes: service.durationMinutes,
-          depositPaidCents: data.amountCents,
-          notes: userNotes,
-          bookingId: booking.id,
-        }),
-      ]);
-    } catch (emailError) {
-      console.error('[API] Failed to send confirmation emails:', emailError);
-    }
 
     return NextResponse.json({
       success: true,

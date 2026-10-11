@@ -115,10 +115,24 @@ export const processPaymentSchema = z.object({
   bookingId: uuidSchema,
   sourceId: z.string().min(1, 'Payment source is required'),
   amountCents: z.number().positive('Amount must be positive'),
+  // Ignored: the server prices from the booking row, never from the browser.
+  // Still accepted so older pages that send it keep working.
   serviceIds: z.array(serviceIdSchema).min(1).optional(),
 });
 
 export type ProcessPaymentInput = z.infer<typeof processPaymentSchema>;
+
+export const processAffirmPaymentSchema = z.object({
+  bookingId: uuidSchema,
+  // checkout_id from the Affirm modal's onSuccess callback
+  checkoutToken: z
+    .string()
+    .min(1, 'Affirm checkout token is required')
+    .max(100)
+    .regex(/^[A-Za-z0-9_-]+$/, 'Invalid Affirm checkout token'),
+});
+
+export type ProcessAffirmPaymentInput = z.infer<typeof processAffirmPaymentSchema>;
 
 export const paymentStatusSchema = z.enum([
   'pending',

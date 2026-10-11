@@ -114,10 +114,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Encode all service IDs into notes if multiple selected
+    // Encode all service IDs into notes if multiple selected. Customer text can
+    // never contain the marker, so only the server can set the service list.
     const servicePrefix =
       data.serviceIds.length > 1 ? `[sids:${data.serviceIds.join(',')}]\n` : '';
-    const notes = servicePrefix + (data.notes || '');
+    const customerNotes = (data.notes || '').replace(/\[sids:[^\]]*\]/gi, '');
+    const notes = servicePrefix + customerNotes;
 
     // Create pending booking (primary service stored in serviceId column)
     const booking = await createBooking({

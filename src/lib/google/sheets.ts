@@ -34,6 +34,7 @@ export interface Booking {
 export interface Payment {
   id: string;
   bookingId: string;
+  /** Square payment ID, or the Affirm transaction ID when paymentMethod is 'AFFIRM'. */
   squarePaymentId: string;
   amountCents: number;
   status: 'pending' | 'completed' | 'failed' | 'refunded';
@@ -405,6 +406,17 @@ export async function getPaymentById(paymentId: string): Promise<Payment | null>
   }
 
   return rowToPayment(result.data);
+}
+
+export async function getPaymentsByBookingId(bookingId: string): Promise<Payment[]> {
+  const sheetId = getSheetId('payments');
+  const rows = await getSheetData(sheetId, 'Sheet1!A:H');
+
+  // Skip header row
+  return rows
+    .slice(1)
+    .filter(row => row.length >= 5 && row[1] === bookingId)
+    .map(rowToPayment);
 }
 
 export async function getPaymentBySquareId(squarePaymentId: string): Promise<Payment | null> {
