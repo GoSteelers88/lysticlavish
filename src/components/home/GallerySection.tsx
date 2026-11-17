@@ -1,45 +1,61 @@
 'use client';
 
+import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { Camera } from 'lucide-react';
 
-// Placeholder gallery items - replace with real images
+const INSTAGRAM_URL = 'https://www.instagram.com/lysticlavishbeautybar/';
+
+// Real client results from @lysticlavishbeautybar (images in public/gallery/,
+// saved from her own posts on 2026-11-16). Each tile opens its post.
 const galleryItems = [
   {
-    id: 1,
-    title: 'Luxury Facial Treatment',
+    id: 'mens-custom-facial',
+    title: "Men's Custom Facial",
     category: 'Facials',
-    gradient: 'from-champagne-200 to-nude-200',
+    image: '/gallery/mens-custom-facial.jpg',
+    alt: 'Esthetician performing a custom facial on a male client',
+    href: 'https://www.instagram.com/lysticlavishbeautybar/reel/DfyQY0ziNke/',
   },
   {
-    id: 2,
-    title: 'Perfect Brow Styling',
-    category: 'Eye Enhancement',
-    gradient: 'from-gold-100 to-champagne-100',
+    id: 'brow-wax',
+    title: 'Brow Waxing',
+    category: 'Waxing',
+    image: '/gallery/brow-wax.jpg',
+    alt: 'Client with freshly shaped brows after a brow wax',
+    href: 'https://www.instagram.com/lysticlavishbeautybar/p/DdPk_aeiF0d/',
   },
   {
-    id: 3,
-    title: 'Bridal Makeup',
-    category: 'Makeup',
-    gradient: 'from-nude-200 to-champagne-300',
+    id: 'underarm-wax',
+    title: 'Underarm Wax — Before & After',
+    category: 'Waxing',
+    image: '/gallery/underarm-wax-before-after.jpg',
+    alt: 'Before and after photos of an underarm wax',
+    href: 'https://www.instagram.com/lysticlavishbeautybar/p/DXSiPyNAvpz/',
   },
   {
-    id: 4,
-    title: 'Skin Rejuvenation',
+    id: 'desert-clay-mask',
+    title: 'Desert Clay Mask Facial',
     category: 'Facials',
-    gradient: 'from-champagne-100 to-nude-100',
+    image: '/gallery/desert-clay-mask-facial.jpg',
+    alt: 'Client relaxing with a desert clay mask and eye pads during a facial',
+    href: 'https://www.instagram.com/lysticlavishbeautybar/p/DYOH-XFFgAY/',
   },
   {
-    id: 5,
-    title: 'Full Glam Look',
-    category: 'Makeup',
-    gradient: 'from-gold-200 to-champagne-200',
+    id: 'mens-ingrown-care',
+    title: "Men's Facial — Ingrown Care",
+    category: 'Facials',
+    image: '/gallery/mens-facial-ingrown-care.jpg',
+    alt: "Close-up of a male client's beard line during a facial for ingrown hairs",
+    href: 'https://www.instagram.com/lysticlavishbeautybar/p/DXSlyuNAjYV/',
   },
   {
-    id: 6,
-    title: 'Brow Lamination Results',
-    category: 'Eye Enhancement',
-    gradient: 'from-nude-100 to-champagne-200',
+    id: 'post-facial-glow',
+    title: 'Post-Facial Glow',
+    category: 'Facials',
+    image: '/gallery/post-facial-glow.jpg',
+    alt: 'Client with glowing skin after her facial',
+    href: 'https://www.instagram.com/lysticlavishbeautybar/p/DYOH-XFFgAY/',
   },
 ];
 
@@ -62,33 +78,25 @@ export function GallerySection() {
           </p>
         </div>
 
-        {/* Gallery Grid */}
+        {/* Gallery Grid — even 3x2 (desktop) / 2x3 (phone) */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
           {galleryItems.map((item, index) => (
-            <div
+            <a
               key={item.id}
-              className={cn(
-                'group relative aspect-square rounded-2xl overflow-hidden',
-                'animate-fade-in-up cursor-pointer',
-                // Make first item span 2 rows on larger screens
-                index === 0 && 'md:row-span-2 md:aspect-auto'
-              )}
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${item.title} — view on Instagram`}
+              className="group relative block aspect-square rounded-2xl overflow-hidden bg-nude-100 animate-fade-in-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              {/* Placeholder gradient background */}
-              <div
-                className={cn(
-                  'absolute inset-0 bg-gradient-to-br',
-                  item.gradient
-                )}
+              <Image
+                src={item.image}
+                alt={item.alt}
+                fill
+                sizes="(max-width: 768px) 50vw, 33vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
-
-              {/* Placeholder icon */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 rounded-full bg-white/30 flex items-center justify-center">
-                  <Camera className="w-8 h-8 text-espresso-400" />
-                </div>
-              </div>
 
               {/* Hover overlay */}
               <div
@@ -103,7 +111,7 @@ export function GallerySection() {
                   <h3 className="font-serif text-lg text-white">{item.title}</h3>
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
 
@@ -113,7 +121,7 @@ export function GallerySection() {
             Follow us on Instagram for more transformations
           </p>
           <a
-            href="https://www.instagram.com/Lysticlavish"
+            href={INSTAGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
             className={cn(
@@ -124,7 +132,7 @@ export function GallerySection() {
               'transition-all duration-300'
             )}
           >
-            @Lysticlavish
+            @lysticlavishbeautybar
           </a>
         </div>
       </div>
