@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { ServiceCard } from './ServiceCard';
 import { Button } from '@/components/ui/Button';
 import { Sparkles } from 'lucide-react';
+import { promoDescription, promoPriceCents } from '@/config/promotions';
 
 // Service categories and items
 const serviceCategories = [
@@ -17,7 +18,7 @@ const serviceCategories = [
       {
         id: 'mini-facial',
         name: 'Mini Facial',
-        description: 'On the go?! The "Lunch Break" facial — includes Pre-Cleanse, skin analysis, Cleanse & Tone, Exfoliation, Mask, and SPF protection. *Does not include extractions or massage.*',
+        description: 'On the go?! The "Lunch Break" facial — includes Pre-Cleanse, skin analysis, Cleanse & Tone, Exfoliation, Mask, and SPF protection. *Does not include extractions or massage. Dermaplaning is available as an add-on.*',
         durationMinutes: 30,
         priceCents: 6500,
         image: '/services/mini_facial_new.png',
@@ -25,7 +26,7 @@ const serviceCategories = [
       {
         id: 'basic-facial-women',
         name: 'Basic Facials and Back Facials (Women)',
-        description: 'Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Exfoliation to remove dead skin cells & pollution build-up with extractions (if needed), Massage for serum absorption, relaxation & microcirculation, Mask with specialized ingredients, and serums & moisturizer with SPF.',
+        description: 'Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Dermaplaning (when right for your skin) to remove dead skin & peach fuzz for brighter, smoother skin, Exfoliation to remove dead skin cells & pollution build-up with extractions (if needed), Massage for serum absorption, relaxation & microcirculation, Mask with specialized ingredients, and serums & moisturizer with SPF.',
         durationMinutes: 60,
         priceCents: 9500,
         featured: true,
@@ -34,7 +35,7 @@ const serviceCategories = [
       {
         id: 'basic-facial-men',
         name: 'Basic Facials and Back Facials (Men)',
-        description: 'Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Exfoliation to remove dead skin cells & pollution build-up with extractions (if needed), Massage for serum absorption, relaxation & microcirculation, Mask with specialized ingredients, and serums & moisturizer with SPF.',
+        description: 'Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Dermaplaning (when right for your skin) to remove dead skin & vellus hair for brighter, smoother skin, Exfoliation to remove dead skin cells & pollution build-up with extractions (if needed), Massage for serum absorption, relaxation & microcirculation, Mask with specialized ingredients, and serums & moisturizer with SPF.',
         durationMinutes: 60,
         priceCents: 10500,
         image: '/services/mens_back_facial.png',
@@ -42,7 +43,7 @@ const serviceCategories = [
       {
         id: 'acne-facial',
         name: 'Acne Facial (Grade 1 & 2)',
-        description: 'Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Enzyme Exfoliation, antibacterial treatment with comedone extraction, High Frequency device to heal pustules & papules, kill bacteria & reduce inflammation, LED Light Therapy to treat acne, fade scars & hyperpigmentation, acne-specific Mask to draw out dirt, oil & sebum, soothing jade roller treatment to reduce puffiness, improve circulation, and enhance product absorption, and serums & moisturizer with SPF.',
+        description: 'Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Dermaplaning (when right for your skin) to remove dead skin & vellus hair for brighter, smoother skin, Enzyme Exfoliation, antibacterial treatment with comedone extraction, High Frequency device to heal pustules & papules, kill bacteria & reduce inflammation, LED Light Therapy to treat acne, fade scars & hyperpigmentation, acne-specific Mask to draw out dirt, oil & sebum, soothing jade roller treatment to reduce puffiness, improve circulation, and enhance product absorption, and serums & moisturizer with SPF.',
         durationMinutes: 75,
         priceCents: 15500,
         image: '/services/acne_facial_new.png',
@@ -50,7 +51,7 @@ const serviceCategories = [
       {
         id: 'lavish-glow',
         name: 'Full Lavish Hydrating Glow Facial',
-        description: 'Great for anti-aging, skin-brightening & hyperpigmentation! Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Dermaplaning to remove dead skin & peach fuzz for brighter smoother skin, Microdermabrasion to improve tone & texture, extractions (if needed), LED light therapy, Hydrojelly Mask with specialized ingredients, and C-Power serum, hydrating serum & moisturizer with SPF.',
+        description: 'Great for anti-aging, skin-brightening & hyperpigmentation! Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Dermaplaning (when right for your skin) to remove dead skin & peach fuzz for brighter, smoother skin, Microdermabrasion to improve tone & texture, extractions (if needed), LED light therapy, Hydrojelly Mask with specialized ingredients, and C-Power serum, hydrating serum & moisturizer with SPF.',
         durationMinutes: 90,
         priceCents: 17500,
         featured: true,
@@ -59,7 +60,7 @@ const serviceCategories = [
       {
         id: 'dapper-facial',
         name: 'Men\'s Custom Bearded "Dapper than Ever" Facial',
-        description: 'Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Dermaplaning to remove dead skin & vellus hair for brighter smoother skin, Microdermabrasion to improve tone & texture, extractions (if needed), LED light therapy, Hydrojelly Mask with specialized ingredients, and serums & moisturizer with SPF. *This facial also includes a specialized beard treatment that includes beard grooming along with a warm towel wrap.',
+        description: 'Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Dermaplaning (when right for your skin) to remove dead skin & vellus hair for brighter, smoother skin, Microdermabrasion to improve tone & texture, extractions (if needed), LED light therapy, Hydrojelly Mask with specialized ingredients, and serums & moisturizer with SPF. *This facial also includes a specialized beard treatment that includes beard grooming along with a warm towel wrap.',
         durationMinutes: 75,
         priceCents: 16000,
         image: '/services/mens_beard_facial.png',
@@ -67,7 +68,7 @@ const serviceCategories = [
       {
         id: 'microneedling',
         name: 'Microneedling',
-        description: 'Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Microneedling with tiny needles to stimulate collagen production for more youthful skin — minimizes fine lines & wrinkles, reduces hyperpigmentation, improves texture & shrinks enlarged pores. *Minimal downtime.* Calming or hydrating Mask with natural ingredients, and serums & moisturizer with SPF.',
+        description: 'Includes Pre-Cleanse & skin analysis, Cleanse & Tone, Dermaplaning (when right for your skin) to remove dead skin & vellus hair for brighter, smoother skin, Microneedling with tiny needles to stimulate collagen production for more youthful skin — minimizes fine lines & wrinkles, reduces hyperpigmentation, improves texture & shrinks enlarged pores. *Minimal downtime.* Calming or hydrating Mask with natural ingredients, and serums & moisturizer with SPF.',
         durationMinutes: 60,
         priceCents: 16500,
         image: '/services/microneedling.png',
@@ -75,7 +76,7 @@ const serviceCategories = [
       {
         id: 'chemical-peel',
         name: 'Chemical Peel (6 Session Treatment)',
-        description: 'Improves texture, barrier function & moisture retention; increased cell turnover, hydration & intercellular lipids, reduces fine lines, wrinkles & surface pigmentation. Provides smoother and softer skin, stimulates elastin & collagen production and improves acne, clogged pores & dry skin. *$125 per session or purchase the full 6-month package for $750.*',
+        description: 'Begins with Dermaplaning (when right for your skin) to remove dead skin & peach fuzz before the peel. Improves texture, barrier function & moisture retention; increased cell turnover, hydration & intercellular lipids, reduces fine lines, wrinkles & surface pigmentation. Provides smoother and softer skin, stimulates elastin & collagen production and improves acne, clogged pores & dry skin. *$125 per session or purchase the full 6-month package for $750.*',
         durationMinutes: 60,
         priceCents: 12500,
         image: '/services/chemical_peel_new.png',
@@ -186,7 +187,7 @@ const serviceCategories = [
       {
         id: 'addon-dermaplane',
         name: 'Derma-Plane',
-        description: 'Add-on dermaplaning to remove dead skin cells and vellus hair for brighter, smoother skin.',
+        description: 'Add dermaplaning to your Mini Facial for brighter, smoother skin — it gently removes dead skin cells and peach fuzz. *Already included in our other facials when right for your skin.*',
         durationMinutes: 20,
         priceCents: 2000,
         image: '/services/dermaplane_new.png',
@@ -244,7 +245,7 @@ const serviceCategories = [
   },
 ];
 
-export function ServicesSection() {
+export function ServicesSection({ promoLive = false }: { promoLive?: boolean }) {
   const router = useRouter();
   const [activeCategory, setActiveCategory] = useState('facials');
 
@@ -335,9 +336,14 @@ export function ServicesSection() {
                 <ServiceCard
                   id={service.id}
                   name={service.name}
-                  description={service.description}
+                  description={promoDescription(service, promoLive)}
                   durationMinutes={service.durationMinutes}
-                  priceCents={service.priceCents}
+                  priceCents={promoPriceCents({
+                    id: service.id,
+                    category: currentCategory.name,
+                    priceCents: service.priceCents,
+                  }, promoLive)}
+                  regularPriceCents={service.priceCents}
                   featured={service.featured}
                   image={service.image}
                   onSelect={handleServiceSelect}

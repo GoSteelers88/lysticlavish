@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import servicesData from '@/data/services.json';
+import { promoDescription, promoPriceCents } from '@/config/promotions';
 
 export const dynamic = 'force-dynamic';
 
@@ -10,7 +11,10 @@ interface Service {
   name: string;
   description: string;
   durationMinutes: number;
+  /** What the customer pays (promotion applied). */
   priceCents: number;
+  /** List price before any promotion; equal to priceCents when none applies. */
+  regularPriceCents: number;
   isActive: boolean;
   image?: string;
 }
@@ -21,9 +25,14 @@ function transformService(raw: typeof servicesData.services[0]): Service {
     id: raw.id,
     category: raw.category,
     name: raw.name,
-    description: raw.description,
+    description: promoDescription(raw),
     durationMinutes: raw.duration_minutes,
-    priceCents: raw.price_cents,
+    priceCents: promoPriceCents({
+      id: raw.id,
+      category: raw.category,
+      priceCents: raw.price_cents,
+    }),
+    regularPriceCents: raw.price_cents,
     isActive: raw.is_active,
     image: raw.image,
   };

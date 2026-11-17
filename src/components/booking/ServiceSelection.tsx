@@ -91,6 +91,12 @@ function ServiceRow({
               </div>
             </div>
             <div className="text-right flex-shrink-0">
+              {service.regularPriceCents !== undefined &&
+                service.regularPriceCents > service.priceCents && (
+                  <span className="block text-sm text-espresso-400 line-through">
+                    {formatPrice(service.regularPriceCents)}
+                  </span>
+                )}
               <span className="font-serif text-xl text-espresso-900">
                 {formatPrice(service.priceCents)}
               </span>
@@ -107,7 +113,10 @@ export interface Service {
   name: string;
   description: string;
   durationMinutes: number;
+  /** What the customer pays (promotion applied). */
   priceCents: number;
+  /** List price before any promotion. */
+  regularPriceCents?: number;
   category: string;
   image?: string;
 }

@@ -26,7 +26,7 @@ export type DaySchedule = Record<DayKey, BusinessHours | null>;
 export const BUSINESS_HOURS: DaySchedule = {
   monday: null,
   tuesday: null,
-  wednesday: { open: '19:00', close: '21:00' },
+  wednesday: null,
   thursday: { open: '19:00', close: '21:00' },
   friday: { open: '19:00', close: '21:00' },
   saturday: { open: '10:00', close: '17:00' },

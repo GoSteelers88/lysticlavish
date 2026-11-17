@@ -4,9 +4,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/Button';
-import { BadgePercent, Sparkles, Star } from 'lucide-react';
+import { Sparkles, Star } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { SaleRibbonBand, SaleRibbonHanging } from './SaleRibbon';
 
-export function HeroSection() {
+export function HeroSection({ promoLive = false }: { promoLive?: boolean }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -18,6 +20,11 @@ export function HeroSection() {
   }, []);
 
   return (
+    <>
+    {/* Sale ribbon band — below xl, where the portrait video fills the width
+        and there is no side gutter for the hanging ribbon. */}
+    {promoLive && <SaleRibbonBand className="xl:hidden" />}
+
     <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-espresso-950">
       {/* Background video */}
       <video
@@ -48,29 +55,27 @@ export function HeroSection() {
         <Star className="w-6 h-6 text-gold-200" />
       </div>
 
+      {/* Sale ribbon — xl+ only, hanging in the dark gutter beside the
+          portrait video. The hero column narrows to 42rem while it shows;
+          `right` centres the ribbon in the space between that column and the
+          screen edge (50% − 21rem half-column − ribbon width, halved). */}
+      {promoLive && (
+        <SaleRibbonHanging className="hidden xl:block absolute top-0 z-20 w-64 2xl:w-72 xl:right-[calc((50%_-_37rem)/2)] 2xl:right-[calc((50%_-_39rem)/2)]" />
+      )}
+
       {/* Content */}
       <div className="container-luxury relative z-20">
-        <div className="max-w-3xl mx-auto text-center">
+        <div className={cn('max-w-3xl mx-auto text-center', promoLive && 'xl:max-w-2xl')}>
           {/* Logo */}
           <div className="flex justify-center mb-8 animate-fade-in">
             <Image
-              src="/lystic-logo-transparent.png"
+              src="/lystic-logo-hero.png"
               alt="Lystic Lavish Beauty Bar"
               width={600}
               height={240}
               className="h-48 md:h-64 w-auto drop-shadow-2xl"
               priority
             />
-          </div>
-
-          {/* Promo Banner */}
-          <div className="mb-6 flex justify-center animate-fade-in">
-            <div className="inline-flex max-w-full items-center gap-3 rounded-full border border-gold-300/70 bg-white/90 px-5 py-3 shadow-luxury backdrop-blur">
-              <BadgePercent className="w-5 h-5 text-gold-600 flex-shrink-0" />
-              <span className="text-sm md:text-base font-semibold text-espresso-900 text-center">
-                Back Facial Special: Book now for just $65
-              </span>
-            </div>
           </div>
 
           {/* Badge */}
@@ -135,5 +140,6 @@ export function HeroSection() {
       {/* Bottom gradient fade into next section */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-champagne-50 to-transparent z-10" />
     </section>
+    </>
   );
 }

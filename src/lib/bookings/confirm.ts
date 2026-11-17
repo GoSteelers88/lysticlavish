@@ -9,6 +9,7 @@ import {
 import { createCalendarEvent } from '@/lib/google/calendar';
 import { sendCustomerConfirmation, sendBusinessNotification } from '@/lib/email';
 import servicesData from '@/data/services.json';
+import { isPromoLive, promoPriceCents } from '@/config/promotions';
 
 type ServiceRecord = (typeof servicesData.services)[number];
 
@@ -59,7 +60,18 @@ export function resolveBookingServices(booking: Booking): BookingServices | null
   return {
     services,
     serviceNames: services.map((s) => s.name),
-    totalPriceCents: services.reduce((sum, s) => sum + s.price_cents, 0),
+    // Same promotion the services API shows, locked to when the booking was
+    // created — a booking made on the sale's last night and paid just after
+    // midnight still gets the sale price it was shown.
+    totalPriceCents: services.reduce(
+      (sum, s) =>
+        sum +
+        promoPriceCents(
+          { id: s.id, category: s.category, priceCents: s.price_cents },
+          isPromoLive(booking.createdAt ? new Date(booking.createdAt) : new Date())
+        ),
+      0
+    ),
     totalDurationMinutes: services.reduce((sum, s) => sum + s.duration_minutes, 0),
   };
 }

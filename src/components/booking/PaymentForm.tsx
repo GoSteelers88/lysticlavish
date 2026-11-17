@@ -6,6 +6,7 @@ import { cn, formatPrice, formatDuration } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { AffirmCheckout, type AffirmConfig } from '@/components/booking/AffirmCheckout';
+import { PROMOTION } from '@/config/promotions';
 import {
   ChevronLeft,
   CreditCard,
@@ -21,7 +22,10 @@ interface PaymentFormProps {
     id: string;
     name: string;
     durationMinutes: number;
+    /** What the customer pays (promotion applied). */
     priceCents: number;
+    /** List price before any promotion. */
+    regularPriceCents?: number;
   }[];
   customerInfo: {
     name: string;
@@ -64,6 +68,11 @@ export function PaymentForm({
   const initializedRef = useRef(false);
 
   const totalPriceCents = services.reduce((sum, s) => sum + s.priceCents, 0);
+  const regularTotalCents = services.reduce(
+    (sum, s) => sum + Math.max(s.regularPriceCents ?? s.priceCents, s.priceCents),
+    0
+  );
+  const savingsCents = regularTotalCents - totalPriceCents;
   const totalDurationMinutes = services.reduce((sum, s) => sum + s.durationMinutes, 0);
   const depositCents = Math.ceil(totalPriceCents * 0.5);
   const remainingCents = totalPriceCents - depositCents;
@@ -230,9 +239,16 @@ export function PaymentForm({
               <span className="text-espresso-600">Services</span>
               <div className="mt-1 space-y-1">
                 {services.map((s) => (
-                  <div key={s.id} className="flex justify-between">
+                  <div key={s.id} className="flex justify-between gap-3">
                     <span className="text-espresso-800 font-medium">• {s.name}</span>
-                    <span className="text-espresso-600">{formatPrice(s.priceCents)}</span>
+                    <span className="flex-shrink-0 text-espresso-600">
+                      {s.regularPriceCents !== undefined && s.regularPriceCents > s.priceCents && (
+                        <span className="mr-1.5 text-espresso-400 line-through">
+                          {formatPrice(s.regularPriceCents)}
+                        </span>
+                      )}
+                      {formatPrice(s.priceCents)}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -256,6 +272,24 @@ export function PaymentForm({
             <span className="text-espresso-800">{customerInfo.name}</span>
           </div>
           <div className="divider-gold !my-4" />
+          {savingsCents > 0 && (
+            <>
+              <div className="flex justify-between text-sm">
+                <span className="text-espresso-600">Regular Price</span>
+                <span className="text-espresso-400 line-through">
+                  {formatPrice(regularTotalCents)}
+                </span>
+              </div>
+              <div className="flex justify-between text-sm">
+                <span className="font-medium text-emerald-700">
+                  {PROMOTION.title} Sale · {PROMOTION.percentOff}% off
+                </span>
+                <span className="font-medium text-emerald-700">
+                  −{formatPrice(savingsCents)}
+                </span>
+              </div>
+            </>
+          )}
           <div className="flex justify-between text-sm">
             <span className="text-espresso-600">Service Total</span>
             <span className="text-espresso-800">{formatPrice(totalPriceCents)}</span>

@@ -235,6 +235,7 @@ function BookingPageContent() {
                   name: s.name,
                   durationMinutes: s.durationMinutes,
                   priceCents: s.priceCents,
+                  regularPriceCents: s.regularPriceCents,
                 }))}
                 customerInfo={{
                   name: state.customerInfo.name,
@@ -276,8 +277,8 @@ function BookingPageContent() {
         <div className="container-luxury text-center text-sm text-espresso-500">
           <p>
             Need help? Call{' '}
-            <a href="tel:+18555532242" className="text-gold-600 hover:underline">
-              855-553-2242
+            <a href="tel:+18774187759" className="text-gold-600 hover:underline">
+              877-418-7759
             </a>
           </p>
         </div>

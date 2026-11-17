@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
 import { Menu, X, Phone, Clock, MapPin } from 'lucide-react';
 import { getCompactHoursSummary } from '@/config/businessHours';
+import { AffirmButton } from '@/components/AffirmButton';
 
 const navigation = [
   { name: 'Services', href: '/#services' },
@@ -58,11 +59,11 @@ export function Header() {
           <div className="flex items-center justify-between text-sm">
             <div className="flex items-center space-x-6">
               <a
-                href="tel:+18555532242"
+                href="tel:+18774187759"
                 className="flex items-center hover:text-gold-400 transition-colors"
               >
                 <Phone className="w-4 h-4 mr-2" />
-                855-553-2242
+                877-418-7759
               </a>
               <span className="flex items-center">
                 <Clock className="w-4 h-4 mr-2" />
@@ -71,7 +72,7 @@ export function Header() {
             </div>
             <span className="flex items-center">
               <MapPin className="w-4 h-4 mr-2" />
-              Charlotte, Kannapolis &amp; Surrounding Areas
+              Charlotte, Kannapolis, China Grove &amp; Surrounding Areas
             </span>
           </div>
         </div>
@@ -104,7 +105,8 @@ export function Header() {
             </div>
 
             {/* Desktop CTA */}
-            <div className="hidden lg:block">
+            <div className="hidden lg:flex items-center gap-3">
+              <AffirmButton variant="header" />
               <Link href="/booking">
                 <Button variant="primary" size="md">
                   Book Now
@@ -165,8 +167,10 @@ export function Header() {
                 </Button>
               </Link>
 
+              <AffirmButton variant="block" />
+
               <div className="flex items-center justify-center space-x-6 text-sm text-espresso-600">
-                <a href="tel:+18555532242" className="flex items-center">
+                <a href="tel:+18774187759" className="flex items-center">
                   <Phone className="w-4 h-4 mr-2" />
                   Call Us
                 </a>

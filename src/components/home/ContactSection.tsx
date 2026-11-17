@@ -20,8 +20,8 @@ const contactInfo = [
   {
     icon: Phone,
     label: 'Phone',
-    value: '855-553-2242',
-    href: 'tel:+18555532242',
+    value: '877-418-7759',
+    href: 'tel:+18774187759',
   },
   {
     icon: Mail,
@@ -32,7 +32,7 @@ const contactInfo = [
   {
     icon: MapPin,
     label: 'Location',
-    value: 'Proudly serving Charlotte, Kannapolis & surrounding areas',
+    value: 'Proudly serving Charlotte, Kannapolis, China Grove & surrounding areas',
     href: 'https://maps.google.com/maps/search/Charlotte+NC',
   },
 ];
@@ -174,9 +174,9 @@ export function ContactSection() {
             <div className="relative aspect-[4/3] lg:aspect-square rounded-3xl overflow-hidden bg-gradient-to-br from-champagne-100 to-nude-100 flex items-center justify-center">
               <div className="text-center px-8">
                 <MapPin className="w-14 h-14 text-gold-400 mx-auto mb-4" />
-                <h3 className="font-serif text-2xl text-espresso-900 mb-2">Charlotte & Kannapolis, NC</h3>
+                <h3 className="font-serif text-2xl text-espresso-900 mb-2">Charlotte, Kannapolis & China Grove, NC</h3>
                 <p className="text-espresso-600 leading-relaxed">
-                  We're a private studio proudly serving Charlotte, Kannapolis & surrounding areas. Appointment details are shared upon booking confirmation.
+                  We're a private studio proudly serving Charlotte, Kannapolis, China Grove & surrounding areas. Appointment details are shared upon booking confirmation.
                 </p>
               </div>
             </div>

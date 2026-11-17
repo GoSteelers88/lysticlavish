@@ -125,7 +125,7 @@ export function TimeSelection({
         </h3>
         <p className="text-sm text-espresso-500 mb-4">
           Available <span className="font-medium text-espresso-700">{getHoursSentence()}</span>. Questions?{' '}
-          <a href="tel:+18555532242" className="text-gold-600 hover:text-gold-700">855-553-2242</a>.
+          <a href="tel:+18774187759" className="text-gold-600 hover:text-gold-700">877-418-7759</a>.
         </p>
 
         {/* Date Carousel */}
@@ -214,7 +214,7 @@ export function TimeSelection({
           <Card variant="default" padding="md" className="text-center">
             <p className="text-espresso-600">
               No available times on this date. Please select another date or call{' '}
-              <a href="tel:+18555532242" className="text-gold-600 hover:text-gold-700 font-medium">855-553-2242</a>.
+              <a href="tel:+18774187759" className="text-gold-600 hover:text-gold-700 font-medium">877-418-7759</a>.
             </p>
           </Card>
         ) : (

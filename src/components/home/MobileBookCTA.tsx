@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
 import { Calendar } from 'lucide-react';
+import { AffirmButton } from '@/components/AffirmButton';
 
 export function MobileBookCTA() {
   const [isVisible, setIsVisible] = useState(false);
@@ -31,7 +32,7 @@ export function MobileBookCTA() {
       <div className="flex items-center gap-3">
         <div className="flex-1">
           <p className="font-serif text-espresso-900">Ready to book?</p>
-          <p className="text-sm text-espresso-500">Book your treatment today</p>
+          <AffirmButton variant="link" />
         </div>
         <Link href="/booking">
           <Button variant="primary" size="md">

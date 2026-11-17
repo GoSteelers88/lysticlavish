@@ -5,6 +5,7 @@ import { formatPrice } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { ChevronLeft, AlertCircle, Lock } from 'lucide-react';
+import { loadAffirm } from '@/lib/affirm/browser';
 
 export interface AffirmConfig {
   enabled: boolean;
@@ -43,70 +44,12 @@ interface BillingAddress {
   zipcode: string;
 }
 
-type AffirmCallbacks = {
-  // affirm.js delivers `checkout_token` (Affirm's docs call it checkout_id)
-  onSuccess: (checkout: { checkout_token?: string; checkout_id?: string }) => void;
-  onFail: (error: unknown) => void;
-  onValidationError: (error: unknown) => void;
-};
-
-type AffirmGlobal = {
-  checkout: ((checkoutObject: Record<string, unknown>) => void) & {
-    open: (callbacks: AffirmCallbacks) => void;
-  };
-  ui: { ready: (callback: () => void) => void };
-};
-
 function splitName(fullName: string): { firstName: string; lastName: string } {
   const parts = fullName.trim().split(/\s+/);
   if (parts.length < 2) return { firstName: parts[0] || '', lastName: '' };
   return { firstName: parts.slice(0, -1).join(' '), lastName: parts[parts.length - 1] };
 }
 
-let affirmLoad: Promise<AffirmGlobal> | null = null;
-
-/**
- * Load affirm.js using Affirm's official embed snippet, verbatim, so the
- * public key is handed over exactly as Affirm expects. Resolves when ready.
- */
-function loadAffirm(publicApiKey: string, scriptUrl: string): Promise<AffirmGlobal> {
-  if (affirmLoad) return affirmLoad;
-
-  affirmLoad = new Promise<AffirmGlobal>((resolve, reject) => {
-    const config = JSON.stringify({
-      public_api_key: publicApiKey,
-      script: scriptUrl,
-      locale: 'en_US',
-      country_code: 'USA',
-    });
-
-    const snippet = document.createElement('script');
-    snippet.text =
-      `var _affirm_config = ${config};` +
-      '(function(m,g,n,d,a,e,h,c){var b=m[n]||{},k=document.createElement(e),p=document.getElementsByTagName(e)[0],l=function(a,b,c){return function(){a[b]._.push([c,arguments])}};b[d]=l(b,d,"set");var f=b[d];b[a]={};b[a]._=[];f._=[];b._=[];b[a][h]=l(b,a,h);b[c]=function(){b._.push([h,arguments])};a=0;for(c="set add save post open empty reset on off trigger ready setProduct".split(" ");a<c.length;a++)f[c[a]]=l(b,d,c[a]);a=0;for(c=["get","token","url","items"];a<c.length;a++)f[c[a]]=function(){};k.async=!0;k.src=g[e];p.parentNode.insertBefore(k,p);delete g[e];f(g);m[n]=b})(window,_affirm_config,"affirm","checkout","ui","script","ready","jsReady");';
-    document.body.appendChild(snippet);
-
-    const timeout = window.setTimeout(() => {
-      affirmLoad = null;
-      reject(new Error('Affirm took too long to load'));
-    }, 15000);
-
-    const affirm = (window as unknown as { affirm?: AffirmGlobal }).affirm;
-    if (!affirm) {
-      window.clearTimeout(timeout);
-      affirmLoad = null;
-      reject(new Error('Affirm failed to initialize'));
-      return;
-    }
-
-    affirm.ui.ready(() => {
-      window.clearTimeout(timeout);
-      resolve((window as unknown as { affirm: AffirmGlobal }).affirm);
-    });
-  });
-
-  return affirmLoad;
-}
 
 export function AffirmCheckout({
   config,

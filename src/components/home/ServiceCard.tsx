@@ -13,6 +13,8 @@ export interface ServiceCardProps {
   description: string;
   durationMinutes: number;
   priceCents: number;
+  /** List price before any promotion; shown struck through when higher. */
+  regularPriceCents?: number;
   category?: string;
   onSelect?: (id: string) => void;
   featured?: boolean;
@@ -25,12 +27,14 @@ export function ServiceCard({
   description,
   durationMinutes,
   priceCents,
+  regularPriceCents,
   category,
   onSelect,
   featured = false,
   image,
 }: ServiceCardProps) {
   const [expanded, setExpanded] = useState(false);
+  const onSale = regularPriceCents !== undefined && regularPriceCents > priceCents;
 
   return (
     <Card
@@ -96,8 +100,15 @@ export function ServiceCard({
               <Clock className="w-4 h-4 mr-1.5" />
               {formatDuration(durationMinutes)}
             </div>
-            <span className="font-serif text-xl text-espresso-900">
-              {formatPrice(priceCents)}
+            <span className="flex items-baseline gap-2">
+              {onSale && (
+                <span className="text-sm text-espresso-400 line-through">
+                  {formatPrice(regularPriceCents)}
+                </span>
+              )}
+              <span className="font-serif text-xl text-espresso-900">
+                {formatPrice(priceCents)}
+              </span>
             </span>
           </div>
 

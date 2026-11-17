@@ -47,6 +47,16 @@ State managed in `src/app/booking/page.tsx`, passed to step components.
 - Affirm webhooks are only for Key/Enterprise merchants → **refunds are manual** in the Affirm dashboard; the owner also cancels the booking/calendar event herself.
 - Env: `NEXT_PUBLIC_AFFIRM_ENV` (must be exactly `sandbox` or `production`, else Affirm is hidden), `NEXT_PUBLIC_AFFIRM_PUBLIC_KEY`, `AFFIRM_PRIVATE_KEY`. Sandbox and production keys are different pairs. Sandbox modal PIN: `123456`.
 
+### "Pay with Affirm" button — `src/components/AffirmButton.tsx`
+- Header (next to Book Now), mobile menu, mobile sticky bar. Opens Affirm's payment-options modal (`affirm-product-modal`, editable example amount). Official logo is Affirm-hosted (`cdn-assets.affirm.com/.../blue_logo-transparent_bg.png`, cropped — the PNG has ~15% side padding).
+- affirm.js loads once per page via `src/lib/affirm/browser.ts`, shared with AffirmCheckout.
+- **Prequalification ("check your purchasing power") is an Affirm account setting — measured OFF on 2026-11-16 in sandbox AND production.** The owner must ask Affirm to enable it; it then appears inside the same modal with no code change.
+
+## Promotions — `src/config/promotions.ts` (the ONE place a sale is defined)
+- `promoPriceCents` feeds the services API, `resolveBookingServices` (what card deposit + Affirm charge), home cards, pay-screen savings lines; `promoDescription` appends per-service sale notes; hero ribbon = `SaleRibbon.tsx`.
+- Runs by itself between `startDate`/`endDate` (inclusive, BUSINESS_TIMEZONE). Price is locked to the booking row's `createdAt`. Home page `revalidate = 300` so the ribbon flips within 5 min.
+- `PROMO_PREVIEW=true` in `.env.local` forces it on locally. **Never set it in Vercel.**
+
 ## Multi-Service Booking
 - Service IDs encoded as `[sids:id1,id2,id3]` prefix in booking notes. Only the server writes it, it always starts with the booking's `serviceId`, and customer notes are stripped of the marker — `resolveBookingServices` ignores any prefix that doesn't match. **Always price from the booking row, never from the request body.**
 - Total duration = sum of all selected services

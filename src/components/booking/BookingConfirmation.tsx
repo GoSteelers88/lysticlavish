@@ -180,8 +180,8 @@ export function BookingConfirmation({
       {/* Contact Info */}
       <p className="text-sm text-espresso-500 animate-fade-in animation-delay-500">
         Questions? Call us at{' '}
-        <a href="tel:+18555532242" className="text-gold-600 hover:text-gold-700">
-          855-553-2242
+        <a href="tel:+18774187759" className="text-gold-600 hover:text-gold-700">
+          877-418-7759
         </a>{' '}
         or email{' '}
         <a

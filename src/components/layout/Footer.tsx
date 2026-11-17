@@ -123,11 +123,11 @@ export function Footer() {
             <ul className="space-y-4">
               <li>
                 <a
-                  href="tel:+18555532242"
+                  href="tel:+18774187759"
                   className="flex items-start text-champagne-300 hover:text-gold-400 transition-colors text-sm"
                 >
                   <Phone className="w-4 h-4 mr-3 mt-0.5 flex-shrink-0" />
-                  855-553-2242
+                  877-418-7759
                 </a>
               </li>
               <li>
@@ -141,7 +141,7 @@ export function Footer() {
               </li>
               <li className="flex items-start text-champagne-300 text-sm">
                 <MapPin className="w-4 h-4 mr-3 mt-0.5 flex-shrink-0" />
-                Proudly serving Charlotte, Kannapolis &amp; surrounding areas
+                Proudly serving Charlotte, Kannapolis, China Grove &amp; surrounding areas
               </li>
               <li className="flex items-start text-champagne-300 text-sm">
                 <Clock className="w-4 h-4 mr-3 mt-0.5 flex-shrink-0" />
