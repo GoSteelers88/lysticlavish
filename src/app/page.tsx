@@ -7,21 +7,22 @@ import { ReviewsSection } from '@/components/home/ReviewsSection';
 import { PoliciesSection } from '@/components/home/PoliciesSection';
 import { ContactSection } from '@/components/home/ContactSection';
 import { MobileBookCTA } from '@/components/home/MobileBookCTA';
-import { isPromoLive } from '@/config/promotions';
+import { promoPhase } from '@/config/promotions';
 
-// Re-render at most every 5 minutes so the sale ribbon and sale prices switch
-// on/off by themselves at the dates in src/config/promotions.ts.
+// Re-render at most every 5 minutes so the sale ribbon (teaser -> live -> off)
+// and sale prices switch by themselves at the dates in src/config/promotions.ts.
 export const revalidate = 300;
 
 export default function HomePage() {
-  const promoLive = isPromoLive();
+  const phase = promoPhase();
+  const promoLive = phase === 'live';
 
   return (
     <>
       <Header />
 
       <main className="flex-1">
-        <HeroSection promoLive={promoLive} />
+        <HeroSection promoPhase={phase} />
         <ServicesSection promoLive={promoLive} />
         <GallerySection />
         <ReviewsSection />

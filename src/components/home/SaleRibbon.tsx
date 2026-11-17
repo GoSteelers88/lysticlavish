@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Sparkles } from 'lucide-react';
-import { PROMOTION, promoDateRange } from '@/config/promotions';
+import { PROMOTION, promoDateRange, promoStartLabel } from '@/config/promotions';
 
 /** Gold satin: darker edges, a bright sheen just left of centre. */
 const GOLD_SATIN =
@@ -53,7 +53,14 @@ function Bow({ className }: { className?: string }) {
  * xl+ : a gold ribbon hanging from the top of the hero, in the dark gutter
  * beside the portrait video. Positioning comes from the parent.
  */
-export function SaleRibbonHanging({ className }: { className?: string }) {
+export function SaleRibbonHanging({
+  className,
+  teaser = false,
+}: {
+  className?: string;
+  /** Before the sale starts: announce it, no Book Now (prices are still regular). */
+  teaser?: boolean;
+}) {
   return (
     <aside
       aria-label={`${PROMOTION.title} sale`}
@@ -69,7 +76,7 @@ export function SaleRibbonHanging({ className }: { className?: string }) {
         <div className="pointer-events-none absolute inset-y-0 right-2 border-r-2 border-dashed border-espresso-950/25" />
 
         <p className="text-2xs font-semibold uppercase tracking-[0.4em] text-espresso-800">
-          Limited Time
+          {teaser ? 'Coming Soon' : 'Limited Time'}
         </p>
         <h2 className="mt-3 font-serif text-4xl 2xl:text-5xl leading-[1.05]">
           {PROMOTION.title}
@@ -88,12 +95,18 @@ export function SaleRibbonHanging({ className }: { className?: string }) {
         </p>
         <p className="mt-3 text-lg font-medium">{PROMOTION.appliesTo}*</p>
 
-        <Link
-          href="/booking"
-          className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-espresso-950 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-gold-300 transition-colors hover:bg-black"
-        >
-          Book Now
-        </Link>
+        {teaser ? (
+          <p className="mt-6 inline-flex w-full items-center justify-center rounded-full border-2 border-espresso-950 px-4 py-2.5 text-sm font-semibold uppercase tracking-[0.15em] text-espresso-950">
+            Starts {promoStartLabel()}
+          </p>
+        ) : (
+          <Link
+            href="/booking"
+            className="mt-6 inline-flex w-full items-center justify-center rounded-full bg-espresso-950 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-gold-300 transition-colors hover:bg-black"
+          >
+            Book Now
+          </Link>
+        )}
         <p className="mt-3 text-2xs leading-snug text-espresso-800">*{PROMOTION.finePrint}</p>
         <p className="mt-1 text-2xs font-semibold uppercase tracking-[0.2em] text-espresso-950">
           {promoDateRange()}
@@ -109,15 +122,17 @@ export function SaleRibbonHanging({ className }: { className?: string }) {
  * Below xl: a ribbon band above the hero (phones, tablets, small windows),
  * where the video fills the width and there is no side gutter.
  */
-export function SaleRibbonBand({ className }: { className?: string }) {
-  return (
-    <div className={className}>
-      <div className="bg-espresso-950 px-2 py-3">
-        <Link
-          href="/booking"
-          className="relative mx-auto block max-w-xl"
-          style={{ filter: 'drop-shadow(0 6px 10px rgba(0,0,0,0.5))' }}
-        >
+export function SaleRibbonBand({
+  className,
+  teaser = false,
+}: {
+  className?: string;
+  /** Before the sale starts: announce it, not a booking link (prices are still regular). */
+  teaser?: boolean;
+}) {
+  const ribbonClass = 'relative mx-auto block max-w-xl';
+  const ribbonStyle = { filter: 'drop-shadow(0 6px 10px rgba(0,0,0,0.5))' };
+  const ribbon = (
           <div
             className="px-9 py-2.5 text-center text-espresso-950"
             style={{ background: GOLD_SATIN, clipPath: NOTCHED_ENDS }}
@@ -134,11 +149,30 @@ export function SaleRibbonBand({ className }: { className?: string }) {
               *{PROMOTION.finePrint}
             </p>
             <p className="mt-0.5 text-[10px] font-semibold leading-tight text-espresso-950">
-              {promoDateRange()} ·{' '}
-              <span className="underline underline-offset-2">Book now</span>
+              {teaser ? (
+                <>Starts {promoStartLabel()} · Through {promoDateRange().split(' – ')[1]}</>
+              ) : (
+                <>
+                  {promoDateRange()} ·{' '}
+                  <span className="underline underline-offset-2">Book now</span>
+                </>
+              )}
             </p>
           </div>
-        </Link>
+  );
+
+  return (
+    <div className={className}>
+      <div className="bg-espresso-950 px-2 py-3">
+        {teaser ? (
+          <div className={ribbonClass} style={ribbonStyle}>
+            {ribbon}
+          </div>
+        ) : (
+          <Link href="/booking" className={ribbonClass} style={ribbonStyle}>
+            {ribbon}
+          </Link>
+        )}
       </div>
     </div>
   );

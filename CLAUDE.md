@@ -54,8 +54,8 @@ State managed in `src/app/booking/page.tsx`, passed to step components.
 
 ## Promotions — `src/config/promotions.ts` (the ONE place a sale is defined)
 - `promoPriceCents` feeds the services API, `resolveBookingServices` (what card deposit + Affirm charge), home cards, pay-screen savings lines; `promoDescription` appends per-service sale notes; hero ribbon = `SaleRibbon.tsx`.
-- Runs by itself between `startDate`/`endDate` (inclusive, BUSINESS_TIMEZONE). Price is locked to the booking row's `createdAt`. Home page `revalidate = 300` so the ribbon flips within 5 min.
-- `PROMO_PREVIEW=true` in `.env.local` forces it on locally. **Never set it in Vercel.**
+- Phases (`promoPhase`): `announceDate`..day before `startDate` = **teaser** (ribbon says "Coming Soon / Starts Thu, Nov 19", no Book Now, regular prices); `startDate`..`endDate` = **live** (sale prices, Book Now); otherwise off. Inclusive, BUSINESS_TIMEZONE. Price is locked to the booking row's `createdAt`. Home page `revalidate = 300` so phases flip within 5 min.
+- `PROMO_PREVIEW=true` (live) or `PROMO_PREVIEW=teaser` in `.env.local` forces a phase locally. **Never set it in Vercel.**
 
 ## Multi-Service Booking
 - Service IDs encoded as `[sids:id1,id2,id3]` prefix in booking notes. Only the server writes it, it always starts with the booking's `serviceId`, and customer notes are stripped of the marker — `resolveBookingServices` ignores any prefix that doesn't match. **Always price from the booking row, never from the request body.**

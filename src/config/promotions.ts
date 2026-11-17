@@ -13,6 +13,11 @@ import { formatInTimeZone } from 'date-fns-tz';
  */
 export const PROMOTION = {
   active: true,
+  /**
+   * From this day the hero ribbon is up as a "Starts Thu, Nov 19" teaser.
+   * Prices stay regular (and the ribbon has no Book Now) until startDate.
+   */
+  announceDate: '2026-11-16',
   /** First and last day of the sale, inclusive, as yyyy-MM-dd in BUSINESS_TIMEZONE. */
   startDate: '2026-11-19',
   endDate: '2026-11-29',
@@ -37,22 +42,43 @@ export const PROMOTION = {
 
 const TIMEZONE = process.env.BUSINESS_TIMEZONE || 'America/New_York';
 
+export type PromoPhase = 'off' | 'teaser' | 'live';
+
 /**
- * Is the sale on at `at`? Server-side only (reads env): pages pass the answer
- * down to client components as a prop so server HTML and hydration agree.
+ * Where the sale is at `at`: 'teaser' (ribbon up, regular prices), 'live'
+ * (sale prices), or 'off'. Server-side only (reads env): pages pass the
+ * answer down to client components as a prop so server HTML and hydration
+ * agree.
  *
- * PROMO_PREVIEW=true forces it on — for previewing locally before the start
- * date. Never set it in Vercel.
+ * PROMO_PREVIEW=true forces 'live', PROMO_PREVIEW=teaser forces 'teaser' —
+ * for previewing locally. Never set it in Vercel.
  */
-export function isPromoLive(at: Date = new Date()): boolean {
-  if (!PROMOTION.active) return false;
-  if (process.env.PROMO_PREVIEW === 'true') return true;
-  if (Number.isNaN(at.getTime())) return false;
+export function promoPhase(at: Date = new Date()): PromoPhase {
+  if (!PROMOTION.active) return 'off';
+  const preview = process.env.PROMO_PREVIEW;
+  if (preview === 'true') return 'live';
+  if (preview === 'teaser') return 'teaser';
+  if (Number.isNaN(at.getTime())) return 'off';
   const day = formatInTimeZone(at, TIMEZONE, 'yyyy-MM-dd');
-  return day >= PROMOTION.startDate && day <= PROMOTION.endDate;
+  if (day >= PROMOTION.startDate && day <= PROMOTION.endDate) return 'live';
+  if (day >= PROMOTION.announceDate && day < PROMOTION.startDate) return 'teaser';
+  return 'off';
+}
+
+/** Are sale prices in effect at `at`? (Only in the 'live' phase.) */
+export function isPromoLive(at: Date = new Date()): boolean {
+  return promoPhase(at) === 'live';
 }
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+/** "Thu, Nov 19" — the sale's first day, from the config string. */
+export function promoStartLabel(): string {
+  const [y, m, d] = PROMOTION.startDate.split('-').map(Number);
+  const weekday = WEEKDAYS[new Date(Date.UTC(y, m - 1, d)).getUTCDay()];
+  return `${weekday}, ${MONTHS[m - 1]} ${d}`;
+}
 
 /** "Nov 19 – Nov 29" — read straight from the config strings, no time zone math. */
 export function promoDateRange(): string {

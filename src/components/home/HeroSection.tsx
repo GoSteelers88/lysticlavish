@@ -7,8 +7,11 @@ import { Button } from '@/components/ui/Button';
 import { Sparkles, Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { SaleRibbonBand, SaleRibbonHanging } from './SaleRibbon';
+import type { PromoPhase } from '@/config/promotions';
 
-export function HeroSection({ promoLive = false }: { promoLive?: boolean }) {
+export function HeroSection({ promoPhase = 'off' }: { promoPhase?: PromoPhase }) {
+  const showRibbon = promoPhase !== 'off';
+  const teaser = promoPhase === 'teaser';
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -23,7 +26,7 @@ export function HeroSection({ promoLive = false }: { promoLive?: boolean }) {
     <>
     {/* Sale ribbon band — below xl, where the portrait video fills the width
         and there is no side gutter for the hanging ribbon. */}
-    {promoLive && <SaleRibbonBand className="xl:hidden" />}
+    {showRibbon && <SaleRibbonBand className="xl:hidden" teaser={teaser} />}
 
     <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-espresso-950">
       {/* Background video */}
@@ -59,13 +62,13 @@ export function HeroSection({ promoLive = false }: { promoLive?: boolean }) {
           portrait video. The hero column narrows to 42rem while it shows;
           `right` centres the ribbon in the space between that column and the
           screen edge (50% − 21rem half-column − ribbon width, halved). */}
-      {promoLive && (
-        <SaleRibbonHanging className="hidden xl:block absolute top-0 z-20 w-64 2xl:w-72 xl:right-[calc((50%_-_37rem)/2)] 2xl:right-[calc((50%_-_39rem)/2)]" />
+      {showRibbon && (
+        <SaleRibbonHanging teaser={teaser} className="hidden xl:block absolute top-0 z-20 w-64 2xl:w-72 xl:right-[calc((50%_-_37rem)/2)] 2xl:right-[calc((50%_-_39rem)/2)]" />
       )}
 
       {/* Content */}
       <div className="container-luxury relative z-20">
-        <div className={cn('max-w-3xl mx-auto text-center', promoLive && 'xl:max-w-2xl')}>
+        <div className={cn('max-w-3xl mx-auto text-center', showRibbon && 'xl:max-w-2xl')}>
           {/* Logo */}
           <div className="flex justify-center mb-8 animate-fade-in">
             <Image
