@@ -80,6 +80,15 @@ export function promoStartLabel(): string {
   return `${weekday}, ${MONTHS[m - 1]} ${d}`;
 }
 
+const WEEKDAYS_LONG = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+/** "Sunday, Nov 29" — the sale's last day, from the config string. */
+export function promoEndLabel(): string {
+  const [y, m, d] = PROMOTION.endDate.split('-').map(Number);
+  const weekday = WEEKDAYS_LONG[new Date(Date.UTC(y, m - 1, d)).getUTCDay()];
+  return `${weekday}, ${MONTHS[m - 1]} ${d}`;
+}
+
 /** "Nov 19 – Nov 29" — read straight from the config strings, no time zone math. */
 export function promoDateRange(): string {
   const label = (ymd: string) => {
