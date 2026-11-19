@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Sparkles } from 'lucide-react';
-import { PROMOTION, promoDateRange, promoStartLabel } from '@/config/promotions';
+import { PROMOTION, promoEndLabel, promoStartLabel } from '@/config/promotions';
 
 /** Gold satin: darker edges, a bright sheen just left of centre. */
 const GOLD_SATIN =
@@ -109,7 +109,7 @@ export function SaleRibbonHanging({
         )}
         <p className="mt-3 text-2xs leading-snug text-espresso-800">*{PROMOTION.finePrint}</p>
         <p className="mt-1 text-2xs font-semibold uppercase tracking-[0.2em] text-espresso-950">
-          {promoDateRange()}
+          Through {promoEndLabel()}
         </p>
       </div>
 
@@ -150,10 +150,10 @@ export function SaleRibbonBand({
             </p>
             <p className="mt-0.5 text-[10px] font-semibold leading-tight text-espresso-950">
               {teaser ? (
-                <>Starts {promoStartLabel()} · Through {promoDateRange().split(' – ')[1]}</>
+                <>Starts {promoStartLabel()} · Through {promoEndLabel()}</>
               ) : (
                 <>
-                  {promoDateRange()} ·{' '}
+                  Through {promoEndLabel()} ·{' '}
                   <span className="underline underline-offset-2">Book now</span>
                 </>
               )}
